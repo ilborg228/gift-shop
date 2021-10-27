@@ -4,24 +4,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.samara.giftshop.entity.ProductEntity;
-import ru.samara.giftshop.service.GoodsService;
+import ru.samara.giftshop.service.CategoryServiceImpl;
+import ru.samara.giftshop.service.ProductService;
 
 import java.util.List;
 
 @RestController
-public class GoodsController {
+public class ProductController {
 
-    private GoodsService service;
+    private final ProductService productService;
+    private final CategoryServiceImpl categoryService;
 
     @Autowired
-    public GoodsController(GoodsService service) {
-        this.service = service;
+    public ProductController(ProductService service, CategoryServiceImpl categoryService) {
+        this.productService = service;
+        this.categoryService = categoryService;
     }
 
     @PostMapping("/addproduct")
-    public ResponseEntity addProduct(@RequestBody ProductEntity product){
+    public ResponseEntity<?> addProduct(@RequestBody ProductEntity product, @RequestParam Long categoryId){
         try {
-            service.saveItem(product);
+            product.setCategory(categoryService.getItemByID(categoryId));
+            productService.addItem(product);
             return ResponseEntity.ok("Товар успешно добавлен");
         }
         catch (Exception e){
@@ -31,13 +35,13 @@ public class GoodsController {
 
     @GetMapping("/allgoods")
     public List<ProductEntity> getAllProducts(){
-        return service.getAllItems();
+        return productService.getAllItems();
     }
 
     @DeleteMapping("/deleteproduct")
-    public ResponseEntity deleteProduct(@RequestBody ProductEntity p){
+    public ResponseEntity<?> deleteProduct(@RequestParam Long id){
         try {
-            service.deleteItem(p.getId());
+            productService.deleteItem(id);
             return ResponseEntity.ok("Товар успешно удалён");
         }
         catch (Exception e){
@@ -46,9 +50,9 @@ public class GoodsController {
     }
 
     @PutMapping("/updateproduct")
-    public ResponseEntity updateProduct(@RequestBody ProductEntity p){
+    public ResponseEntity<?> updateProduct(@RequestBody ProductEntity p){
         try {
-            service.updateItems(p);
+            productService.updateItems(p);
             return ResponseEntity.ok("Товар успешно обновлен");
         }
         catch (Exception e){

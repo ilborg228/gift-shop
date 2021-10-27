@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="goods")
 @Data
-public class ProductEntity {
+public class ProductEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
@@ -23,6 +23,5 @@ public class ProductEntity {
     private Integer width;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    //@JoinColumn(name = "category_id")
     private CategoryEntity category;
 }

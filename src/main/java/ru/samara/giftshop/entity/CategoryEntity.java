@@ -8,7 +8,7 @@ import java.util.List;
 
 @Entity
 @Data
-public class CategoryEntity {
+public class CategoryEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -18,6 +18,4 @@ public class CategoryEntity {
 
     @OneToMany(mappedBy = "category",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<ProductEntity> products = new ArrayList<>();
-
-
 }

@@ -4,38 +4,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.samara.giftshop.entity.CategoryEntity;
-import ru.samara.giftshop.entity.ProductEntity;
-import ru.samara.giftshop.service.CategoryService;
-import ru.samara.giftshop.service.ProductService;
+import ru.samara.giftshop.service.CategoryServiceImpl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 public class CategoryController {
 
-    private CategoryService service;
+    private final CategoryServiceImpl service;
 
     @Autowired
-    private ProductService service2;
-
-    @Autowired
-    public CategoryController(CategoryService categoryService) {
+    public CategoryController(CategoryServiceImpl categoryService) {
         this.service = categoryService;
     }
 
     @GetMapping("/allcategories")
     public List<CategoryEntity> getAllCategories(){
-        List<CategoryEntity> l= service.getAllItems();
-        return service.getAllItems();
+        List<CategoryEntity> l = service.getAllItems();
+        return l;
     }
 
     @PostMapping("/addcategory")
-    public ResponseEntity addCategory(@RequestBody CategoryEntity category){
+    public ResponseEntity<?> addCategory(@RequestBody CategoryEntity category){
         try {
-            category.getProducts().addAll(service2.getAllItems());
             service.addItem(category);
-            return ResponseEntity.ok("Товар успешно добавлен");
+            return ResponseEntity.ok("Категория успешно добавлена");
         }
         catch (Exception e){
             return ResponseEntity.badRequest().body(e);
@@ -43,9 +36,9 @@ public class CategoryController {
     }
 
     @DeleteMapping("/deletecategory")
-    public ResponseEntity deleteCategory(@RequestBody CategoryEntity c){
+    public ResponseEntity<?> deleteCategory(@RequestParam Long id){
         try {
-            service.deleteItem(c.getId());
+            service.deleteItem(id);
             return ResponseEntity.ok("Товар успешно удалён");
         }
         catch (Exception e){

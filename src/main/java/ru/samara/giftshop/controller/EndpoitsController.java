@@ -18,6 +18,7 @@ public class EndpoitsController {
         l.put("/addproduct","POST");
         l.put("/addcategory","POST");
         l.put("/deleteproduct","DELETE");
+        l.put("/deletecategory","DELETE");
         l.put("/updateproduct","UPDATE");
         return l;
     }
