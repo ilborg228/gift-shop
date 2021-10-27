@@ -1,31 +1,18 @@
 package ru.samara.giftshop.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import ru.samara.giftshop.entity.ProductEntity;
+import ru.samara.giftshop.exceptions.NoSuchProductException;
 import ru.samara.giftshop.exceptions.ProductAlreadyExistException;
-import ru.samara.giftshop.repository.GoodsRepository;
 
 import java.util.List;
 
-@Service
-public class GoodsService {
+public interface GoodsService {
 
-    private GoodsRepository repo;
+    void saveItem(ProductEntity product) throws ProductAlreadyExistException;
 
-    @Autowired
-    public GoodsService(GoodsRepository repo) {
-        this.repo = repo;
-    }
+    List<ProductEntity> getAllItems();
 
-    public void saveProduct(ProductEntity product) throws ProductAlreadyExistException {
-        if(!repo.existsByName(product.getName()))
-            repo.save(product);
-        else
-            throw new ProductAlreadyExistException();
-    }
+    void deleteItem(Long id) throws NoSuchProductException;
 
-    public List<ProductEntity> selectAllGoods() {
-        return (List<ProductEntity>) repo.findAll();
-    }
+    void updateItems(ProductEntity p) throws NoSuchProductException;
 }

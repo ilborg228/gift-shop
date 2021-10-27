@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Data
 public class ProductEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     private String name;
@@ -21,4 +21,8 @@ public class ProductEntity {
     private Integer height;
 
     private Integer width;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    //@JoinColumn(name = "category_id")
+    private CategoryEntity category;
 }

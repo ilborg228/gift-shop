@@ -2,10 +2,7 @@ package ru.samara.giftshop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.samara.giftshop.entity.ProductEntity;
 import ru.samara.giftshop.service.GoodsService;
 
@@ -24,7 +21,7 @@ public class GoodsController {
     @PostMapping("/addproduct")
     public ResponseEntity addProduct(@RequestBody ProductEntity product){
         try {
-            service.saveProduct(product);
+            service.saveItem(product);
             return ResponseEntity.ok("Товар успешно добавлен");
         }
         catch (Exception e){
@@ -34,6 +31,28 @@ public class GoodsController {
 
     @GetMapping("/allgoods")
     public List<ProductEntity> getAllProducts(){
-        return service.selectAllGoods();
+        return service.getAllItems();
+    }
+
+    @DeleteMapping("/deleteproduct")
+    public ResponseEntity deleteProduct(@RequestBody ProductEntity p){
+        try {
+            service.deleteItem(p.getId());
+            return ResponseEntity.ok("Товар успешно удалён");
+        }
+        catch (Exception e){
+            return ResponseEntity.badRequest().body(e);
+        }
+    }
+
+    @PutMapping("/updateproduct")
+    public ResponseEntity updateProduct(@RequestBody ProductEntity p){
+        try {
+            service.updateItems(p);
+            return ResponseEntity.ok("Товар успешно обновлен");
+        }
+        catch (Exception e){
+            return ResponseEntity.badRequest().body(e);
+        }
     }
 }
