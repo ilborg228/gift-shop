@@ -24,7 +24,7 @@ public class ProductController {
     @PostMapping("/addproduct")
     public ResponseEntity<?> addProduct(@RequestBody ProductEntity product, @RequestParam Long categoryId){
         try {
-            product.setCategory(categoryService.getItemByID(categoryId));
+            product.setCategory(categoryService.findById(categoryId));
             productService.addItem(product);
             return ResponseEntity.ok("Товар успешно добавлен");
         }
@@ -33,7 +33,7 @@ public class ProductController {
         }
     }
 
-    @GetMapping("/allgoods")
+    @GetMapping("/allproducts")
     public List<ProductEntity> getAllProducts(){
         return productService.getAllItems();
     }
