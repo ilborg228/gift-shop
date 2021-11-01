@@ -2,27 +2,25 @@ package ru.samara.giftshop.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import ru.samara.giftshop.exceptions.ApiException;
 import ru.samara.giftshop.exceptions.NoSuchCategoryException;
+import ru.samara.giftshop.exceptions.NoSuchProductException;
 
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
-@ControllerAdvice
+@RestControllerAdvice
 public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(NoSuchCategoryException.class)
-    public ResponseEntity<Object> handleCityNotFoundException(NoSuchCategoryException ex, WebRequest request) {
+    @ExceptionHandler(value = {NoSuchCategoryException.class, NoSuchProductException.class})
+    public ResponseEntity<?> handleCityNotFoundException(RuntimeException ex) {
 
-        Map<String, Object> body = new HashMap<>();
-        body.put("timestamp", LocalDateTime.now());
-        body.put("message", "Category not found");
+        ApiException apiException = new ApiException(ex.getMessage(),ex,
+                HttpStatus.NOT_FOUND, ZonedDateTime.now(ZoneId.of("Z")));
 
-        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(apiException, HttpStatus.NOT_FOUND);
     }
 }

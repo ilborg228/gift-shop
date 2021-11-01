@@ -8,6 +8,7 @@ import ru.samara.giftshop.service.CategoryServiceImpl;
 import ru.samara.giftshop.service.ProductService;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class ProductController {
@@ -23,40 +24,25 @@ public class ProductController {
 
     @PostMapping("/addproduct")
     public ResponseEntity<?> addProduct(@RequestBody ProductEntity product, @RequestParam Long categoryId){
-        try {
-            product.setCategory(categoryService.findById(categoryId));
-            productService.addItem(product);
-            return ResponseEntity.ok("Товар успешно добавлен");
-        }
-        catch (Exception e){
-            return ResponseEntity.badRequest().body(e);
-        }
+        product.setCategory(categoryService.findById(categoryId));
+        productService.addItem(product);
+        return ResponseEntity.ok("Товар успешно добавлен");
     }
 
     @GetMapping("/allproducts")
-    public List<ProductEntity> getAllProducts(){
-        return productService.getAllItems();
+    public ResponseEntity<?> getAllProducts(){
+        return ResponseEntity.of(Optional.of(productService.getAllItems()));
     }
 
     @DeleteMapping("/deleteproduct")
     public ResponseEntity<?> deleteProduct(@RequestParam Long id){
-        try {
-            productService.deleteItem(id);
-            return ResponseEntity.ok("Товар успешно удалён");
-        }
-        catch (Exception e){
-            return ResponseEntity.badRequest().body(e);
-        }
+        productService.deleteItem(id);
+        return ResponseEntity.ok("Товар успешно удалён");
     }
 
     @PutMapping("/updateproduct")
     public ResponseEntity<?> updateProduct(@RequestBody ProductEntity p){
-        try {
-            productService.updateItems(p);
-            return ResponseEntity.ok("Товар успешно обновлен");
-        }
-        catch (Exception e){
-            return ResponseEntity.badRequest().body(e);
-        }
+        productService.updateItems(p);
+        return ResponseEntity.ok("Товар успешно обновлен");
     }
 }

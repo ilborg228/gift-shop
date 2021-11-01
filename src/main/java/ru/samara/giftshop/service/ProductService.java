@@ -8,11 +8,11 @@ import java.util.List;
 
 public interface ProductService {
 
-    void addItem(ProductEntity product) throws ProductAlreadyExistException;
+    void addItem(ProductEntity product);
 
     List<ProductEntity> getAllItems();
 
-    void deleteItem(Long id) throws NoSuchProductException;
+    void deleteItem(Long id);
 
-    void updateItems(ProductEntity p) throws NoSuchProductException;
+    void updateItems(ProductEntity p);
 }

@@ -1,6 +1,5 @@
 package ru.samara.giftshop.service;
 
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.samara.giftshop.entity.CategoryEntity;
@@ -10,7 +9,6 @@ import ru.samara.giftshop.exceptions.NoSuchProductException;
 import ru.samara.giftshop.repository.CategoryRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CategoryServiceImpl implements CategoryService{
@@ -23,7 +21,7 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     @Override
-    public void saveNewItem(CategoryEntity category) throws CategoryAlreadyExistException {
+    public void saveNewItem(CategoryEntity category){
         if (!repo.existsByCategoryName(category.getCategoryName()))
             repo.save(category);
         else
@@ -36,7 +34,7 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     @Override
-    public void delete(Long id) throws NoSuchProductException {
+    public void delete(Long id) {
         if (repo.findById(id).isPresent()) {
             repo.delete(repo.findById(id).get());
         } else {
@@ -45,7 +43,7 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     @Override
-    public void update(CategoryEntity p) throws NoSuchProductException {
+    public void update(CategoryEntity p){
         if (repo.findById(p.getId()).isPresent()) {
             repo.save(p);
         } else {
@@ -54,7 +52,7 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     @Override
-    public CategoryEntity findById(Long id) throws NoSuchCategoryException {
+    public CategoryEntity findById(Long id){
         return repo.findById(id)
                 .orElseThrow(()->new NoSuchCategoryException(id));
     }

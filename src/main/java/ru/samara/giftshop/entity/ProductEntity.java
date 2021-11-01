@@ -20,8 +20,6 @@ public class ProductEntity{
 
     private Integer height;
 
-    private Integer width;
-
     @ManyToOne(fetch = FetchType.LAZY)
     private CategoryEntity category;
 }

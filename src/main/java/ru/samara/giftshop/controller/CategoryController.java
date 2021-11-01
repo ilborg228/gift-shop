@@ -28,33 +28,19 @@ public class CategoryController {
 
     @GetMapping("/categories/{id}")
     public ResponseEntity<?> getOneCategory(@PathVariable Long id) throws NoSuchCategoryException {
-        try {
-            return ResponseEntity.of(Optional.of(service.findById(id)));
-        }
-        catch (Exception e){
-            return ResponseEntity.badRequest().body(e);
-        }
+        Optional<?> op = Optional.of(service.findById(id));
+        return ResponseEntity.of(op);
     }
 
     @PostMapping("/addcategory")
     public ResponseEntity<?> addCategory(@RequestBody CategoryEntity category){
-        try {
-            service.saveNewItem(category);
-            return ResponseEntity.ok("Категория успешно добавлена");
-        }
-        catch (Exception e){
-            return ResponseEntity.badRequest().body(e);
-        }
+        service.saveNewItem(category);
+        return ResponseEntity.ok("Категория успешно добавлена");
     }
 
     @DeleteMapping("/deletecategory")
     public ResponseEntity<?> deleteCategory(@RequestParam Long id){
-        try {
-            service.delete(id);
-            return ResponseEntity.ok("Товар успешно удалён");
-        }
-        catch (Exception e){
-            return ResponseEntity.badRequest().body(e);
-        }
+        service.delete(id);
+        return ResponseEntity.ok("Товар успешно удалён");
     }
 }

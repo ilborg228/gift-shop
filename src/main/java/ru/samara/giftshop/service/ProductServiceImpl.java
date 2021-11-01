@@ -20,7 +20,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void addItem(ProductEntity product) throws ProductAlreadyExistException {
+    public void addItem(ProductEntity product) {
         if(!repo.existsByName(product.getName())){
             repo.save(product);
         }
@@ -35,7 +35,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void deleteItem(Long id) throws NoSuchProductException{
+    public void deleteItem(Long id){
         if(repo.findById(id).isPresent()) {
             repo.delete(repo.findById(id).get());
         }
@@ -45,14 +45,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void updateItems(ProductEntity p) throws NoSuchProductException{
+    public void updateItems(ProductEntity p){
         if(repo.findById(p.getId()).isPresent()) {
             ProductEntity old = repo.findById(p.getId()).get();
             if(old.getName()!=null && p.getName()==null) p.setName(old.getName());
             if(old.getPrice()!=null && p.getPrice()==null) p.setPrice(old.getPrice());
             if(old.getImgSource()!=null && p.getImgSource()==null) p.setImgSource(old.getImgSource());
             if(old.getHeight()!=null && p.getHeight()==null) p.setHeight(old.getHeight());
-            if(old.getWidth()!=null && p.getWidth()==null) p.setWidth(old.getWidth());
             repo.save(p);
         }
         else {
