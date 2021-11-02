@@ -1,8 +1,6 @@
 package ru.samara.giftshop.service;
 
 import ru.samara.giftshop.entity.CategoryEntity;
-import ru.samara.giftshop.exceptions.CategoryAlreadyExistException;
-
 import java.util.List;
 
 public interface CategoryService {
