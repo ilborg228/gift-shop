@@ -8,6 +8,7 @@ import ru.samara.giftshop.exceptions.ProductAlreadyExistException;
 import ru.samara.giftshop.repository.GoodsRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -20,7 +21,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void addItem(ProductEntity product) {
+    public void saveNewItem(ProductEntity product) {
         if(!repo.existsByName(product.getName())){
             repo.save(product);
         }
@@ -29,13 +30,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductEntity> getAllItems() {
+    public List<ProductEntity> findAll() {
         List<ProductEntity> l = (List<ProductEntity>) repo.findAll();
         return (List<ProductEntity>) repo.findAll();
     }
 
     @Override
-    public void deleteItem(Long id){
+    public void delete(Long id){
         if(repo.findById(id).isPresent()) {
             repo.delete(repo.findById(id).get());
         }
@@ -45,13 +46,15 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void updateItems(ProductEntity p){
-        if(repo.findById(p.getId()).isPresent()) {
-            ProductEntity old = repo.findById(p.getId()).get();
+    public void update(ProductEntity p){
+        Optional<ProductEntity> op = repo.findById(p.getId());
+        if(op.isPresent()) {
+            ProductEntity old = op.get();
             if(old.getName()!=null && p.getName()==null) p.setName(old.getName());
             if(old.getPrice()!=null && p.getPrice()==null) p.setPrice(old.getPrice());
             if(old.getImgSource()!=null && p.getImgSource()==null) p.setImgSource(old.getImgSource());
             if(old.getHeight()!=null && p.getHeight()==null) p.setHeight(old.getHeight());
+            if(old.getCategory()!=null && p.getCategory()==null) p.setCategory(old.getCategory());
             repo.save(p);
         }
         else {

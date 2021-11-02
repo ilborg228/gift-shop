@@ -18,11 +18,11 @@ class ProductServiceTest {
 
     @Test
     void selectAllGoods() {
-        System.out.println(service.getAllItems());
+        System.out.println(service.findAll());
     }
 
     @Test
     void deleteProduct() {
-        assertDoesNotThrow(()->service.deleteItem(100L));
+        assertDoesNotThrow(()->service.delete(100L));
     }
 }

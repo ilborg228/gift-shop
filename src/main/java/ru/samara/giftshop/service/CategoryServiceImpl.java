@@ -3,12 +3,14 @@ package ru.samara.giftshop.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.samara.giftshop.entity.CategoryEntity;
+import ru.samara.giftshop.entity.ProductEntity;
 import ru.samara.giftshop.exceptions.CategoryAlreadyExistException;
 import ru.samara.giftshop.exceptions.NoSuchCategoryException;
 import ru.samara.giftshop.exceptions.NoSuchProductException;
 import ru.samara.giftshop.repository.CategoryRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoryServiceImpl implements CategoryService{
@@ -44,9 +46,13 @@ public class CategoryServiceImpl implements CategoryService{
 
     @Override
     public void update(CategoryEntity p){
-        if (repo.findById(p.getId()).isPresent()) {
+        Optional<CategoryEntity> op = repo.findById(p.getId());
+        if(op.isPresent()) {
+            CategoryEntity old = op.get();
+            if(old.getCategoryName()!=null && p.getCategoryName()==null) p.setCategoryName(old.getCategoryName());
             repo.save(p);
-        } else {
+        }
+        else {
             throw new NoSuchProductException();
         }
     }

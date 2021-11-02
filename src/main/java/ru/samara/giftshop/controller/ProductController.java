@@ -7,7 +7,6 @@ import ru.samara.giftshop.entity.ProductEntity;
 import ru.samara.giftshop.service.CategoryServiceImpl;
 import ru.samara.giftshop.service.ProductService;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -22,27 +21,27 @@ public class ProductController {
         this.categoryService = categoryService;
     }
 
-    @PostMapping("/addproduct")
-    public ResponseEntity<?> addProduct(@RequestBody ProductEntity product, @RequestParam Long categoryId){
+    @PostMapping("/addproduct/{categoryId}")
+    public ResponseEntity<?> addProduct(@RequestBody ProductEntity product, @PathVariable Long categoryId){
         product.setCategory(categoryService.findById(categoryId));
-        productService.addItem(product);
+        productService.saveNewItem(product);
         return ResponseEntity.ok("Товар успешно добавлен");
     }
 
     @GetMapping("/allproducts")
     public ResponseEntity<?> getAllProducts(){
-        return ResponseEntity.of(Optional.of(productService.getAllItems()));
+        return ResponseEntity.of(Optional.of(productService.findAll()));
     }
 
-    @DeleteMapping("/deleteproduct")
-    public ResponseEntity<?> deleteProduct(@RequestParam Long id){
-        productService.deleteItem(id);
+    @DeleteMapping("/deleteproduct/{id}")
+    public ResponseEntity<?> deleteProduct(@PathVariable Long id){
+        productService.delete(id);
         return ResponseEntity.ok("Товар успешно удалён");
     }
 
     @PutMapping("/updateproduct")
     public ResponseEntity<?> updateProduct(@RequestBody ProductEntity p){
-        productService.updateItems(p);
+        productService.update(p);
         return ResponseEntity.ok("Товар успешно обновлен");
     }
 }

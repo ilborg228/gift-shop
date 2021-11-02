@@ -38,9 +38,15 @@ public class CategoryController {
         return ResponseEntity.ok("Категория успешно добавлена");
     }
 
-    @DeleteMapping("/deletecategory")
-    public ResponseEntity<?> deleteCategory(@RequestParam Long id){
+    @DeleteMapping("/deletecategory/{id}")
+    public ResponseEntity<?> deleteCategory(@PathVariable Long id){
         service.delete(id);
         return ResponseEntity.ok("Товар успешно удалён");
+    }
+
+    @PutMapping("/updatecategory")
+    public ResponseEntity<?> updateCategory(@RequestBody CategoryEntity entity){
+        service.update(entity);
+        return ResponseEntity.ok("Категория успешно обновлена");
     }
 }
