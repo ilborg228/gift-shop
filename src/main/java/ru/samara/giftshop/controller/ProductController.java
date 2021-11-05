@@ -7,7 +7,7 @@ import ru.samara.giftshop.entity.ProductEntity;
 import ru.samara.giftshop.service.CategoryServiceImpl;
 import ru.samara.giftshop.service.ProductService;
 
-import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class ProductController {
@@ -21,42 +21,27 @@ public class ProductController {
         this.categoryService = categoryService;
     }
 
-    @PostMapping("/addproduct")
-    public ResponseEntity<?> addProduct(@RequestBody ProductEntity product, @RequestParam Long categoryId){
-        try {
-            product.setCategory(categoryService.getItemByID(categoryId));
-            productService.addItem(product);
-            return ResponseEntity.ok("Товар успешно добавлен");
-        }
-        catch (Exception e){
-            return ResponseEntity.badRequest().body(e);
-        }
+    @PostMapping("/addproduct/{categoryId}")
+    public ResponseEntity<?> addProduct(@RequestBody ProductEntity product, @PathVariable Long categoryId){
+        product.setCategory(categoryService.findById(categoryId));
+        productService.saveNewItem(product);
+        return ResponseEntity.ok("Товар успешно добавлен");
     }
 
-    @GetMapping("/allgoods")
-    public List<ProductEntity> getAllProducts(){
-        return productService.getAllItems();
+    @GetMapping("/allproducts")
+    public ResponseEntity<?> getAllProducts(){
+        return ResponseEntity.of(Optional.of(productService.findAll()));
     }
 
-    @DeleteMapping("/deleteproduct")
-    public ResponseEntity<?> deleteProduct(@RequestParam Long id){
-        try {
-            productService.deleteItem(id);
-            return ResponseEntity.ok("Товар успешно удалён");
-        }
-        catch (Exception e){
-            return ResponseEntity.badRequest().body(e);
-        }
+    @DeleteMapping("/deleteproduct/{id}")
+    public ResponseEntity<?> deleteProduct(@PathVariable Long id){
+        productService.delete(id);
+        return ResponseEntity.ok("Товар успешно удалён");
     }
 
     @PutMapping("/updateproduct")
     public ResponseEntity<?> updateProduct(@RequestBody ProductEntity p){
-        try {
-            productService.updateItems(p);
-            return ResponseEntity.ok("Товар успешно обновлен");
-        }
-        catch (Exception e){
-            return ResponseEntity.badRequest().body(e);
-        }
+        productService.update(p);
+        return ResponseEntity.ok("Товар успешно обновлен");
     }
 }

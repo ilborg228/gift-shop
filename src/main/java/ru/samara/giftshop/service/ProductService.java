@@ -1,18 +1,16 @@
 package ru.samara.giftshop.service;
 
 import ru.samara.giftshop.entity.ProductEntity;
-import ru.samara.giftshop.exceptions.NoSuchProductException;
-import ru.samara.giftshop.exceptions.ProductAlreadyExistException;
 
 import java.util.List;
 
 public interface ProductService {
 
-    void addItem(ProductEntity product) throws ProductAlreadyExistException;
+    void saveNewItem(ProductEntity product);
 
-    List<ProductEntity> getAllItems();
+    List<ProductEntity> findAll();
 
-    void deleteItem(Long id) throws NoSuchProductException;
+    void delete(Long id);
 
-    void updateItems(ProductEntity p) throws NoSuchProductException;
+    void update(ProductEntity p);
 }

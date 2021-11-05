@@ -1,20 +1,17 @@
 package ru.samara.giftshop.service;
 
 import ru.samara.giftshop.entity.CategoryEntity;
-import ru.samara.giftshop.exceptions.CategoryAlreadyExistException;
-import ru.samara.giftshop.exceptions.NoSuchProductException;
-
 import java.util.List;
 
 public interface CategoryService {
 
-    void addItem(CategoryEntity category) throws CategoryAlreadyExistException;
+    void saveNewItem(CategoryEntity category);
 
-    List<CategoryEntity> getAllItems();
+    List<CategoryEntity> findAll();
 
-    void deleteItem(Long id) throws NoSuchProductException;
+    void delete(Long id);
 
-    void updateItems(CategoryEntity p) throws NoSuchProductException;
+    void update(CategoryEntity p);
 
-    CategoryEntity getItemByID(Long categoryId) throws NoSuchProductException;
+    CategoryEntity findById(Long id);
 }
