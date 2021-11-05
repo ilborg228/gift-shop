@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.samara.giftshop.entity.ProductEntity;
 import ru.samara.giftshop.exceptions.NoSuchProductException;
 import ru.samara.giftshop.exceptions.ProductAlreadyExistException;
-import ru.samara.giftshop.repository.GoodsRepository;
+import ru.samara.giftshop.repository.ProductsRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,10 +13,9 @@ import java.util.Optional;
 @Service
 public class ProductServiceImpl implements ProductService {
 
-    private GoodsRepository repo;
+    private final ProductsRepository repo;
 
-    @Autowired
-    public ProductServiceImpl(GoodsRepository repo) {
+    public ProductServiceImpl(ProductsRepository repo) {
         this.repo = repo;
     }
 
@@ -32,7 +31,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductEntity> findAll() {
         List<ProductEntity> l = (List<ProductEntity>) repo.findAll();
-        return (List<ProductEntity>) repo.findAll();
+        return l;
     }
 
     @Override
