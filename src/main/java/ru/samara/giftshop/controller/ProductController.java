@@ -40,6 +40,15 @@ public class ProductController {
         return ResponseEntity.of(Optional.of(l));
     }
 
+    @GetMapping("/products/{categoryName}")
+    public ResponseEntity<?> getProductByName(@PathVariable String categoryName){
+        List<ProductDTO> l = categoryService.findByName(categoryName)
+                .stream()
+                .map(ProductDTO::toDTO)
+                .collect(Collectors.toList());
+        return ResponseEntity.of(Optional.of(l));
+    }
+
     @DeleteMapping("/deleteproduct/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable Long id){
         productService.delete(id);

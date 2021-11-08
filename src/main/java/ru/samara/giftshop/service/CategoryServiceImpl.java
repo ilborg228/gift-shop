@@ -60,6 +60,13 @@ public class CategoryServiceImpl implements CategoryService{
     @Override
     public CategoryEntity findById(Long id){
         return repo.findById(id)
-                .orElseThrow(()->new NoSuchCategoryException(id));
+                .orElseThrow(()->new NoSuchCategoryException(Long.toString(id)));
+    }
+
+    @Override
+    public List<ProductEntity> findByName(String categoryName) {
+        CategoryEntity c = repo.findByCategoryName(categoryName)
+                .orElseThrow(()->new NoSuchCategoryException(categoryName));
+        return c.getProducts();
     }
 }

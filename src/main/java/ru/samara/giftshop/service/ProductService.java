@@ -2,6 +2,7 @@ package ru.samara.giftshop.service;
 
 import ru.samara.giftshop.entity.ProductEntity;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface ProductService {

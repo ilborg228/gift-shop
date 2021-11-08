@@ -2,7 +2,7 @@ package ru.samara.giftshop.exceptions;
 
 public class NoSuchCategoryException extends RuntimeException{
 
-    public NoSuchCategoryException(Long id) {
-        super("Нет "+id+" категории");
+    public NoSuchCategoryException(String e) {
+        super("Нет "+e+" категории");
     }
 }
