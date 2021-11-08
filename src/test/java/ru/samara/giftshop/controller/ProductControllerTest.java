@@ -1,23 +1,52 @@
 package ru.samara.giftshop.controller;
 
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.web.servlet.MockMvc;
+import ru.samara.giftshop.config.MyConfig;
+import ru.samara.giftshop.service.ProductService;
+import ru.samara.giftshop.service.ProductServiceImpl;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+@ContextConfiguration(classes = {MyConfig.class})
+@WebMvcTest(ProductController.class)
 class ProductControllerTest {
+    private final ProductService service;
 
-    @MockBean
-    private ProductController controller;
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Autowired
+    public ProductControllerTest(ProductService service) {
+        this.service = service;
+    }
 
     @Test
     void getAllProducts() {
-        //controller.addProduct(new ProductEntity());
-        System.out.println(controller.getAllProducts());
+        assertThat(service).isNotNull();
+
+    }
+
+    @Test
+    void addProduct() {
+    }
+
+    @Test
+    void testGetAllProducts() {
+    }
+
+    @Test
+    void getProductByName() {
+    }
+
+    @Test
+    void deleteProduct() {
+    }
+
+    @Test
+    void updateProduct() {
     }
 }

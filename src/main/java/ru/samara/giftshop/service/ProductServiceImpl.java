@@ -1,5 +1,6 @@
 package ru.samara.giftshop.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.samara.giftshop.entity.ProductEntity;
@@ -11,13 +12,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
     private final ProductsRepository repo;
-
-    public ProductServiceImpl(ProductsRepository repo) {
-        this.repo = repo;
-    }
 
     @Override
     public void saveNewItem(ProductEntity product) {

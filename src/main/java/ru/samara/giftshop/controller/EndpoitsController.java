@@ -15,6 +15,7 @@ public class EndpoitsController {
         Map<String,String> l = new HashMap<>();
         l.put("/allgoods","GET");
         l.put("/allcategories","GET");
+        l.put("/products/{categoryName}","GET");
         l.put("/categories/{id}","GET");
         l.put("/addproduct/{categoryId}","POST");
         l.put("/addcategory","POST");

@@ -1,5 +1,6 @@
 package ru.samara.giftshop.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,13 +14,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
+@RequiredArgsConstructor
 public class CategoryController {
 
     private final CategoryServiceImpl service;
-
-    public CategoryController(CategoryServiceImpl categoryService) {
-        this.service = categoryService;
-    }
 
     @GetMapping("/allcategories")
     public ResponseEntity<?> getAllCategories(){

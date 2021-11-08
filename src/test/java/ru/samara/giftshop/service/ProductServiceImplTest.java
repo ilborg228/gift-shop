@@ -179,7 +179,7 @@ class ProductServiceImplTest {
         productEntity.setCategory(categoryEntity);
         productEntity.setHeight(1);
         productEntity.setImgSource("Img Source");
-        Optional<ProductEntity> ofResult = Optional.<ProductEntity>of(productEntity);
+        Optional<ProductEntity> ofResult = Optional.of(productEntity);
 
         CategoryEntity categoryEntity1 = new CategoryEntity();
         categoryEntity1.setCategoryName("Category Name");

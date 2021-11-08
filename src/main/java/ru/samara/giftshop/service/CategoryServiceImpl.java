@@ -1,5 +1,6 @@
 package ru.samara.giftshop.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.samara.giftshop.entity.CategoryEntity;
@@ -13,14 +14,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService{
 
-    private CategoryRepository repo;
-
-    @Autowired
-    public CategoryServiceImpl(CategoryRepository repo) {
-        this.repo = repo;
-    }
+    private final CategoryRepository repo;
 
     @Override
     public void saveNewItem(CategoryEntity category){

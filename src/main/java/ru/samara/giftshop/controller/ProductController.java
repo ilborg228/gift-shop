@@ -1,5 +1,6 @@
 package ru.samara.giftshop.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,15 +15,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
+@RequiredArgsConstructor
 public class ProductController {
 
     private final ProductService productService;
     private final CategoryServiceImpl categoryService;
-
-    public ProductController(ProductService service, CategoryServiceImpl categoryService) {
-        this.productService = service;
-        this.categoryService = categoryService;
-    }
 
     @PostMapping("/addproduct/{categoryId}")
     public ResponseEntity<?> addProduct(@RequestBody ProductEntity product, @PathVariable Long categoryId){
