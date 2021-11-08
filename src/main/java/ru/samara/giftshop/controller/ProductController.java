@@ -3,11 +3,15 @@ package ru.samara.giftshop.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.samara.giftshop.DTO.CategoryDTO;
+import ru.samara.giftshop.DTO.ProductDTO;
 import ru.samara.giftshop.entity.ProductEntity;
 import ru.samara.giftshop.service.CategoryServiceImpl;
 import ru.samara.giftshop.service.ProductService;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 public class ProductController {
@@ -15,7 +19,6 @@ public class ProductController {
     private final ProductService productService;
     private final CategoryServiceImpl categoryService;
 
-    @Autowired
     public ProductController(ProductService service, CategoryServiceImpl categoryService) {
         this.productService = service;
         this.categoryService = categoryService;
@@ -30,7 +33,11 @@ public class ProductController {
 
     @GetMapping("/allproducts")
     public ResponseEntity<?> getAllProducts(){
-        return ResponseEntity.of(Optional.of(productService.findAll()));
+        List<ProductDTO> l = productService.findAll()
+                .stream()
+                .map(ProductDTO::toDTO)
+                .collect(Collectors.toList());
+        return ResponseEntity.of(Optional.of(l));
     }
 
     @DeleteMapping("/deleteproduct/{id}")

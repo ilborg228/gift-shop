@@ -15,10 +15,11 @@ public class EndpoitsController {
         Map<String,String> l = new HashMap<>();
         l.put("/allgoods","GET");
         l.put("/allcategories","GET");
-        l.put("/addproduct","POST");
+        l.put("/categories/{id}","GET");
+        l.put("/addproduct/{categoryId}","POST");
         l.put("/addcategory","POST");
-        l.put("/deleteproduct","DELETE");
-        l.put("/deletecategory","DELETE");
+        l.put("/deleteproduct/{id}","DELETE");
+        l.put("/deletecategory/{id}","DELETE");
         l.put("/updateproduct","UPDATE");
         return l;
     }

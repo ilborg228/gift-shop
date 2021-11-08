@@ -25,7 +25,7 @@ public class ProductEntity{
 
     private Integer height;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @ToString.Exclude
     private CategoryEntity category;
 

@@ -21,9 +21,11 @@ public class CategoryEntity{
 
     private String categoryName;
 
+    private String imgSource;
+
     @OneToMany(mappedBy = "category",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @ToString.Exclude
-    private List<ProductEntity> products = new ArrayList<>();
+    private List<ProductEntity> products;
 
     @Override
     public boolean equals(Object o) {
