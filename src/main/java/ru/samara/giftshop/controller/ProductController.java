@@ -1,13 +1,11 @@
 package ru.samara.giftshop.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.samara.giftshop.DTO.CategoryDTO;
 import ru.samara.giftshop.DTO.ProductDTO;
 import ru.samara.giftshop.entity.ProductEntity;
-import ru.samara.giftshop.service.CategoryServiceImpl;
+import ru.samara.giftshop.service.CategoryService;
 import ru.samara.giftshop.service.ProductService;
 
 import java.util.List;
@@ -19,13 +17,13 @@ import java.util.stream.Collectors;
 public class ProductController {
 
     private final ProductService productService;
-    private final CategoryServiceImpl categoryService;
+    private final CategoryService categoryService;
 
     @PostMapping("/addproduct/{categoryId}")
-    public ResponseEntity<?> addProduct(@RequestBody ProductEntity product, @PathVariable Long categoryId){
+    public ResponseEntity<?> addProduct(@PathVariable Long categoryId,@RequestBody ProductEntity product){
         product.setCategory(categoryService.findById(categoryId));
         productService.saveNewItem(product);
-        return ResponseEntity.ok("Товар успешно добавлен");
+        return ResponseEntity.status(201).body("Товар успешно добавлен");
     }
 
     @GetMapping("/allproducts")

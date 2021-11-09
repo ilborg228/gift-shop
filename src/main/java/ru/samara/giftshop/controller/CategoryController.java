@@ -37,7 +37,7 @@ public class CategoryController {
     @PostMapping("/addcategory")
     public ResponseEntity<?> addCategory(@RequestBody CategoryEntity category){
         service.saveNewItem(category);
-        return ResponseEntity.ok("Категория успешно добавлена");
+        return ResponseEntity.status(201).body(category);
     }
 
     @DeleteMapping("/deletecategory/{id}")

@@ -14,12 +14,10 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.samara.giftshop.entity.CategoryEntity;
 import ru.samara.giftshop.entity.ProductEntity;
 import ru.samara.giftshop.exceptions.NoSuchProductException;
@@ -75,12 +73,12 @@ class ProductServiceImplTest {
         productEntity.setHeight(1);
         productEntity.setImgSource("Img Source");
         when(this.productsRepository.save(any())).thenReturn(productEntity);
-        when(this.productsRepository.existsByName((String) any())).thenReturn(false);
+        when(this.productsRepository.existsByName(any())).thenReturn(false);
 
         CategoryEntity categoryEntity1 = new CategoryEntity();
         categoryEntity1.setCategoryName("Category Name");
         categoryEntity1.setId(123L);
-        categoryEntity1.setProducts(new ArrayList<ProductEntity>());
+        categoryEntity1.setProducts(new ArrayList());
 
         ProductEntity productEntity1 = new ProductEntity();
         productEntity1.setId(123L);
@@ -90,8 +88,8 @@ class ProductServiceImplTest {
         productEntity1.setHeight(1);
         productEntity1.setImgSource("Img Source");
         this.productServiceImpl.saveNewItem(productEntity1);
-        verify(this.productsRepository).existsByName((String) any());
-        verify(this.productsRepository).save((ProductEntity) any());
+        verify(this.productsRepository).existsByName(any());
+        verify(this.productsRepository).save(any());
         assertTrue(this.productServiceImpl.findAll().isEmpty());
     }
 
@@ -107,7 +105,7 @@ class ProductServiceImplTest {
         CategoryEntity categoryEntity = new CategoryEntity();
         categoryEntity.setCategoryName("Category Name");
         categoryEntity.setId(123L);
-        categoryEntity.setProducts(new ArrayList<ProductEntity>());
+        categoryEntity.setProducts(new ArrayList());
 
         ProductEntity productEntity = new ProductEntity();
         productEntity.setId(123L);
@@ -129,7 +127,7 @@ class ProductServiceImplTest {
     @Test
     void testDelete2() {
         doNothing().when(this.productsRepository).delete(any());
-        when(this.productsRepository.findById(any())).thenReturn(Optional.<ProductEntity>empty());
+        when(this.productsRepository.findById(any())).thenReturn(Optional.empty());
         assertThrows(NoSuchProductException.class, () -> this.productServiceImpl.delete(123L));
         verify(this.productsRepository).findById(any());
     }
@@ -148,21 +146,21 @@ class ProductServiceImplTest {
         productEntity.setCategory(categoryEntity);
         productEntity.setHeight(1);
         productEntity.setImgSource("Img Source");
-        Optional<ProductEntity> ofResult = Optional.<ProductEntity>of(productEntity);
-        doNothing().when(this.productsRepository).delete((ProductEntity) any());
-        when(this.productsRepository.findById((Long) any())).thenReturn(ofResult);
+        Optional<ProductEntity> ofResult = Optional.of(productEntity);
+        doNothing().when(this.productsRepository).delete(any());
+        when(this.productsRepository.findById(any())).thenReturn(ofResult);
         this.productServiceImpl.delete(123L);
-        verify(this.productsRepository).delete((ProductEntity) any());
-        verify(this.productsRepository, atLeast(1)).findById((Long) any());
+        verify(this.productsRepository).delete(any());
+        verify(this.productsRepository, atLeast(1)).findById(any());
         assertTrue(this.productServiceImpl.findAll().isEmpty());
     }
 
     @Test
     void testDelete4() {
-        doNothing().when(this.productsRepository).delete((ProductEntity) any());
-        when(this.productsRepository.findById((Long) any())).thenReturn(Optional.<ProductEntity>empty());
+        doNothing().when(this.productsRepository).delete(any());
+        when(this.productsRepository.findById(any())).thenReturn(Optional.empty());
         assertThrows(NoSuchProductException.class, () -> this.productServiceImpl.delete(123L));
-        verify(this.productsRepository).findById((Long) any());
+        verify(this.productsRepository).findById(any());
     }
 
     @Test
@@ -170,7 +168,7 @@ class ProductServiceImplTest {
         CategoryEntity categoryEntity = new CategoryEntity();
         categoryEntity.setCategoryName("Category Name");
         categoryEntity.setId(123L);
-        categoryEntity.setProducts(new ArrayList<ProductEntity>());
+        categoryEntity.setProducts(new ArrayList());
 
         ProductEntity productEntity = new ProductEntity();
         productEntity.setId(123L);
@@ -184,7 +182,7 @@ class ProductServiceImplTest {
         CategoryEntity categoryEntity1 = new CategoryEntity();
         categoryEntity1.setCategoryName("Category Name");
         categoryEntity1.setId(123L);
-        categoryEntity1.setProducts(new ArrayList<ProductEntity>());
+        categoryEntity1.setProducts(new ArrayList());
 
         ProductEntity productEntity1 = new ProductEntity();
         productEntity1.setId(123L);
@@ -193,13 +191,13 @@ class ProductServiceImplTest {
         productEntity1.setCategory(categoryEntity1);
         productEntity1.setHeight(1);
         productEntity1.setImgSource("Img Source");
-        when(this.productsRepository.save((ProductEntity) any())).thenReturn(productEntity1);
-        when(this.productsRepository.findById((Long) any())).thenReturn(ofResult);
+        when(this.productsRepository.save(any())).thenReturn(productEntity1);
+        when(this.productsRepository.findById(any())).thenReturn(ofResult);
 
         CategoryEntity categoryEntity2 = new CategoryEntity();
         categoryEntity2.setCategoryName("Category Name");
         categoryEntity2.setId(123L);
-        categoryEntity2.setProducts(new ArrayList<ProductEntity>());
+        categoryEntity2.setProducts(new ArrayList());
 
         ProductEntity productEntity2 = new ProductEntity();
         productEntity2.setId(123L);
@@ -209,8 +207,8 @@ class ProductServiceImplTest {
         productEntity2.setHeight(1);
         productEntity2.setImgSource("Img Source");
         this.productServiceImpl.update(productEntity2);
-        verify(this.productsRepository).findById((Long) any());
-        verify(this.productsRepository).save((ProductEntity) any());
+        verify(this.productsRepository).findById(any());
+        verify(this.productsRepository).save(any());
         assertTrue(this.productServiceImpl.findAll().isEmpty());
     }
 
@@ -228,12 +226,12 @@ class ProductServiceImplTest {
         productEntity.setCategory(categoryEntity);
         productEntity.setHeight(1);
         productEntity.setImgSource("Img Source");
-        Optional<ProductEntity> ofResult = Optional.<ProductEntity>of(productEntity);
+        Optional<ProductEntity> ofResult = Optional.of(productEntity);
 
         CategoryEntity categoryEntity1 = new CategoryEntity();
         categoryEntity1.setCategoryName("Category Name");
         categoryEntity1.setId(123L);
-        categoryEntity1.setProducts(new ArrayList<ProductEntity>());
+        categoryEntity1.setProducts(new ArrayList());
 
         ProductEntity productEntity1 = new ProductEntity();
         productEntity1.setId(123L);
@@ -242,13 +240,13 @@ class ProductServiceImplTest {
         productEntity1.setCategory(categoryEntity1);
         productEntity1.setHeight(1);
         productEntity1.setImgSource("Img Source");
-        when(this.productsRepository.save((ProductEntity) any())).thenReturn(productEntity1);
-        when(this.productsRepository.findById((Long) any())).thenReturn(ofResult);
+        when(this.productsRepository.save(any())).thenReturn(productEntity1);
+        when(this.productsRepository.findById(any())).thenReturn(ofResult);
 
         CategoryEntity categoryEntity2 = new CategoryEntity();
         categoryEntity2.setCategoryName("Category Name");
         categoryEntity2.setId(123L);
-        categoryEntity2.setProducts(new ArrayList<ProductEntity>());
+        categoryEntity2.setProducts(new ArrayList());
 
         ProductEntity productEntity2 = new ProductEntity();
         productEntity2.setId(123L);
@@ -258,8 +256,8 @@ class ProductServiceImplTest {
         productEntity2.setHeight(1);
         productEntity2.setImgSource("Img Source");
         this.productServiceImpl.update(productEntity2);
-        verify(this.productsRepository).findById((Long) any());
-        verify(this.productsRepository).save((ProductEntity) any());
+        verify(this.productsRepository).findById(any());
+        verify(this.productsRepository).save(any());
         assertTrue(this.productServiceImpl.findAll().isEmpty());
     }
 
@@ -268,7 +266,7 @@ class ProductServiceImplTest {
         CategoryEntity categoryEntity = new CategoryEntity();
         categoryEntity.setCategoryName("Category Name");
         categoryEntity.setId(123L);
-        categoryEntity.setProducts(new ArrayList<ProductEntity>());
+        categoryEntity.setProducts(new ArrayList());
 
         ProductEntity productEntity = new ProductEntity();
         productEntity.setId(123L);
@@ -277,12 +275,12 @@ class ProductServiceImplTest {
         productEntity.setCategory(categoryEntity);
         productEntity.setHeight(1);
         productEntity.setImgSource("Img Source");
-        Optional<ProductEntity> ofResult = Optional.<ProductEntity>of(productEntity);
+        Optional<ProductEntity> ofResult = Optional.of(productEntity);
 
         CategoryEntity categoryEntity1 = new CategoryEntity();
         categoryEntity1.setCategoryName("Category Name");
         categoryEntity1.setId(123L);
-        categoryEntity1.setProducts(new ArrayList<ProductEntity>());
+        categoryEntity1.setProducts(new ArrayList());
 
         ProductEntity productEntity1 = new ProductEntity();
         productEntity1.setId(123L);
@@ -291,13 +289,13 @@ class ProductServiceImplTest {
         productEntity1.setCategory(categoryEntity1);
         productEntity1.setHeight(1);
         productEntity1.setImgSource("Img Source");
-        when(this.productsRepository.save((ProductEntity) any())).thenReturn(productEntity1);
-        when(this.productsRepository.findById((Long) any())).thenReturn(ofResult);
+        when(this.productsRepository.save(any())).thenReturn(productEntity1);
+        when(this.productsRepository.findById(any())).thenReturn(ofResult);
 
         CategoryEntity categoryEntity2 = new CategoryEntity();
         categoryEntity2.setCategoryName("Category Name");
         categoryEntity2.setId(123L);
-        categoryEntity2.setProducts(new ArrayList<ProductEntity>());
+        categoryEntity2.setProducts(new ArrayList());
 
         ProductEntity productEntity2 = new ProductEntity();
         productEntity2.setId(123L);
@@ -307,8 +305,8 @@ class ProductServiceImplTest {
         productEntity2.setHeight(1);
         productEntity2.setImgSource("Img Source");
         this.productServiceImpl.update(productEntity2);
-        verify(this.productsRepository).findById((Long) any());
-        verify(this.productsRepository).save((ProductEntity) any());
+        verify(this.productsRepository).findById(any());
+        verify(this.productsRepository).save(any());
         assertTrue(this.productServiceImpl.findAll().isEmpty());
     }
 
@@ -317,7 +315,7 @@ class ProductServiceImplTest {
         CategoryEntity categoryEntity = new CategoryEntity();
         categoryEntity.setCategoryName("Category Name");
         categoryEntity.setId(123L);
-        categoryEntity.setProducts(new ArrayList<ProductEntity>());
+        categoryEntity.setProducts(new ArrayList());
 
         ProductEntity productEntity = new ProductEntity();
         productEntity.setId(123L);
@@ -326,12 +324,12 @@ class ProductServiceImplTest {
         productEntity.setCategory(categoryEntity);
         productEntity.setHeight(null);
         productEntity.setImgSource("Img Source");
-        Optional<ProductEntity> ofResult = Optional.<ProductEntity>of(productEntity);
+        Optional<ProductEntity> ofResult = Optional.of(productEntity);
 
         CategoryEntity categoryEntity1 = new CategoryEntity();
         categoryEntity1.setCategoryName("Category Name");
         categoryEntity1.setId(123L);
-        categoryEntity1.setProducts(new ArrayList<ProductEntity>());
+        categoryEntity1.setProducts(new ArrayList());
 
         ProductEntity productEntity1 = new ProductEntity();
         productEntity1.setId(123L);
@@ -340,13 +338,13 @@ class ProductServiceImplTest {
         productEntity1.setCategory(categoryEntity1);
         productEntity1.setHeight(1);
         productEntity1.setImgSource("Img Source");
-        when(this.productsRepository.save((ProductEntity) any())).thenReturn(productEntity1);
-        when(this.productsRepository.findById((Long) any())).thenReturn(ofResult);
+        when(this.productsRepository.save(any())).thenReturn(productEntity1);
+        when(this.productsRepository.findById(any())).thenReturn(ofResult);
 
         CategoryEntity categoryEntity2 = new CategoryEntity();
         categoryEntity2.setCategoryName("Category Name");
         categoryEntity2.setId(123L);
-        categoryEntity2.setProducts(new ArrayList<ProductEntity>());
+        categoryEntity2.setProducts(new ArrayList());
 
         ProductEntity productEntity2 = new ProductEntity();
         productEntity2.setId(123L);
@@ -356,8 +354,8 @@ class ProductServiceImplTest {
         productEntity2.setHeight(1);
         productEntity2.setImgSource("Img Source");
         this.productServiceImpl.update(productEntity2);
-        verify(this.productsRepository).findById((Long) any());
-        verify(this.productsRepository).save((ProductEntity) any());
+        verify(this.productsRepository).findById(any());
+        verify(this.productsRepository).save(any());
         assertTrue(this.productServiceImpl.findAll().isEmpty());
     }
 
@@ -366,7 +364,7 @@ class ProductServiceImplTest {
         CategoryEntity categoryEntity = new CategoryEntity();
         categoryEntity.setCategoryName("Category Name");
         categoryEntity.setId(123L);
-        categoryEntity.setProducts(new ArrayList<ProductEntity>());
+        categoryEntity.setProducts(new ArrayList());
 
         ProductEntity productEntity = new ProductEntity();
         productEntity.setId(123L);
@@ -375,12 +373,12 @@ class ProductServiceImplTest {
         productEntity.setCategory(categoryEntity);
         productEntity.setHeight(1);
         productEntity.setImgSource(null);
-        Optional<ProductEntity> ofResult = Optional.<ProductEntity>of(productEntity);
+        Optional<ProductEntity> ofResult = Optional.of(productEntity);
 
         CategoryEntity categoryEntity1 = new CategoryEntity();
         categoryEntity1.setCategoryName("Category Name");
         categoryEntity1.setId(123L);
-        categoryEntity1.setProducts(new ArrayList<ProductEntity>());
+        categoryEntity1.setProducts(new ArrayList());
 
         ProductEntity productEntity1 = new ProductEntity();
         productEntity1.setId(123L);
@@ -389,13 +387,13 @@ class ProductServiceImplTest {
         productEntity1.setCategory(categoryEntity1);
         productEntity1.setHeight(1);
         productEntity1.setImgSource("Img Source");
-        when(this.productsRepository.save((ProductEntity) any())).thenReturn(productEntity1);
-        when(this.productsRepository.findById((Long) any())).thenReturn(ofResult);
+        when(this.productsRepository.save(any())).thenReturn(productEntity1);
+        when(this.productsRepository.findById(any())).thenReturn(ofResult);
 
         CategoryEntity categoryEntity2 = new CategoryEntity();
         categoryEntity2.setCategoryName("Category Name");
         categoryEntity2.setId(123L);
-        categoryEntity2.setProducts(new ArrayList<ProductEntity>());
+        categoryEntity2.setProducts(new ArrayList());
 
         ProductEntity productEntity2 = new ProductEntity();
         productEntity2.setId(123L);
@@ -405,8 +403,8 @@ class ProductServiceImplTest {
         productEntity2.setHeight(1);
         productEntity2.setImgSource("Img Source");
         this.productServiceImpl.update(productEntity2);
-        verify(this.productsRepository).findById((Long) any());
-        verify(this.productsRepository).save((ProductEntity) any());
+        verify(this.productsRepository).findById(any());
+        verify(this.productsRepository).save(any());
         assertTrue(this.productServiceImpl.findAll().isEmpty());
     }
 
@@ -415,7 +413,7 @@ class ProductServiceImplTest {
         CategoryEntity categoryEntity = new CategoryEntity();
         categoryEntity.setCategoryName("Category Name");
         categoryEntity.setId(123L);
-        categoryEntity.setProducts(new ArrayList<ProductEntity>());
+        categoryEntity.setProducts(new ArrayList());
 
         ProductEntity productEntity = new ProductEntity();
         productEntity.setId(123L);
@@ -424,13 +422,13 @@ class ProductServiceImplTest {
         productEntity.setCategory(categoryEntity);
         productEntity.setHeight(1);
         productEntity.setImgSource("Img Source");
-        when(this.productsRepository.save((ProductEntity) any())).thenReturn(productEntity);
-        when(this.productsRepository.findById((Long) any())).thenReturn(Optional.<ProductEntity>empty());
+        when(this.productsRepository.save(any())).thenReturn(productEntity);
+        when(this.productsRepository.findById(any())).thenReturn(Optional.empty());
 
         CategoryEntity categoryEntity1 = new CategoryEntity();
         categoryEntity1.setCategoryName("Category Name");
         categoryEntity1.setId(123L);
-        categoryEntity1.setProducts(new ArrayList<ProductEntity>());
+        categoryEntity1.setProducts(new ArrayList());
 
         ProductEntity productEntity1 = new ProductEntity();
         productEntity1.setId(123L);
@@ -440,7 +438,7 @@ class ProductServiceImplTest {
         productEntity1.setHeight(1);
         productEntity1.setImgSource("Img Source");
         assertThrows(NoSuchProductException.class, () -> this.productServiceImpl.update(productEntity1));
-        verify(this.productsRepository).findById((Long) any());
+        verify(this.productsRepository).findById(any());
     }
 
     @Test
@@ -448,7 +446,7 @@ class ProductServiceImplTest {
         CategoryEntity categoryEntity = new CategoryEntity();
         categoryEntity.setCategoryName("Category Name");
         categoryEntity.setId(123L);
-        categoryEntity.setProducts(new ArrayList<ProductEntity>());
+        categoryEntity.setProducts(new ArrayList());
 
         ProductEntity productEntity = new ProductEntity();
         productEntity.setId(123L);
@@ -457,12 +455,12 @@ class ProductServiceImplTest {
         productEntity.setCategory(categoryEntity);
         productEntity.setHeight(1);
         productEntity.setImgSource("Img Source");
-        Optional<ProductEntity> ofResult = Optional.<ProductEntity>of(productEntity);
+        Optional<ProductEntity> ofResult = Optional.of(productEntity);
 
         CategoryEntity categoryEntity1 = new CategoryEntity();
         categoryEntity1.setCategoryName("Category Name");
         categoryEntity1.setId(123L);
-        categoryEntity1.setProducts(new ArrayList<ProductEntity>());
+        categoryEntity1.setProducts(new ArrayList());
 
         ProductEntity productEntity1 = new ProductEntity();
         productEntity1.setId(123L);
@@ -471,13 +469,13 @@ class ProductServiceImplTest {
         productEntity1.setCategory(categoryEntity1);
         productEntity1.setHeight(1);
         productEntity1.setImgSource("Img Source");
-        when(this.productsRepository.save((ProductEntity) any())).thenReturn(productEntity1);
-        when(this.productsRepository.findById((Long) any())).thenReturn(ofResult);
+        when(this.productsRepository.save(any())).thenReturn(productEntity1);
+        when(this.productsRepository.findById(any())).thenReturn(ofResult);
 
         CategoryEntity categoryEntity2 = new CategoryEntity();
         categoryEntity2.setCategoryName("Category Name");
         categoryEntity2.setId(123L);
-        categoryEntity2.setProducts(new ArrayList<ProductEntity>());
+        categoryEntity2.setProducts(new ArrayList());
 
         ProductEntity productEntity2 = new ProductEntity();
         productEntity2.setId(123L);
@@ -487,8 +485,8 @@ class ProductServiceImplTest {
         productEntity2.setHeight(1);
         productEntity2.setImgSource("Img Source");
         this.productServiceImpl.update(productEntity2);
-        verify(this.productsRepository).findById((Long) any());
-        verify(this.productsRepository).save((ProductEntity) any());
+        verify(this.productsRepository).findById(any());
+        verify(this.productsRepository).save(any());
         assertEquals("Name", productEntity2.getName());
         assertTrue(this.productServiceImpl.findAll().isEmpty());
     }
