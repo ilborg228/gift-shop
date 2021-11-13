@@ -3,6 +3,7 @@ package ru.samara.giftshop.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.samara.giftshop.controller.ProductController;
 import ru.samara.giftshop.entity.ProductEntity;
 import ru.samara.giftshop.exceptions.NoSuchProductException;
 import ru.samara.giftshop.exceptions.ProductAlreadyExistException;
@@ -33,9 +34,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void delete(Long id){
-        if(repo.findById(id).isPresent()) {
-            repo.delete(repo.findById(id).get());
+    public ProductEntity delete(Long id){
+        Optional<ProductEntity> op =repo.findById(id);
+        if(op.isPresent()) {
+            repo.delete(op.get());
+            return op.get();
         }
         else {
             throw new NoSuchProductException();
