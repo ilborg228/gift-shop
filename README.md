@@ -1,3 +1,30 @@
 # gift-shop
+###### GiftShop REST API with JWT authentication
 
-Rest API for my site. Using PostgreSQL, Spring Boot
+### Prerequisites
+- JDK 1.8+  
+- Maven
+
+### Technology stack:
+* Spring Boot
+* Spring Data JPA
+* PostgreSQL
+* Spring Security
+* JWT (JSON Web Tokens)
+
+There are three user accounts :
+```
+Admin - admin:admin
+User - user:password
+Disabled - disabled:password (this user is disabled)
+```
+
+All endpoints for CRUD operations can be seen in:
+ - [EndpointsController](https://github.com/ilborg228/gift-shop/blob/master/src/main/java/ru/samara/giftshop/controller/EndpoitsController.java) 
+```
+/auth - authentication endpoint (HTTP method: POST) - place your credentials in JSON format in request body as JwtAuthenticationRequest 
+
+Use Bearer Token for any listed request:
+/category/** - endpoint for CRUD operations on categories (a valid JWT token must be present in the request header)   
+/product/** - endpoint for CRUD operations on products (a valid JWT token must be present in the request header)     
+```
