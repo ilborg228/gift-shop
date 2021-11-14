@@ -1,6 +1,7 @@
 package ru.samara.giftshop.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.samara.giftshop.DTO.ProductDTO;
@@ -14,6 +15,8 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE,
+        consumes = MediaType.APPLICATION_JSON_VALUE)
 public class ProductController {
 
     private final ProductService productService;
@@ -46,13 +49,13 @@ public class ProductController {
 
     @DeleteMapping("/deleteproduct/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable Long id){
-        productService.delete(id);
-        return ResponseEntity.ok("Товар успешно удалён");
+        ProductEntity p = productService.delete(id);
+        return ResponseEntity.ok(p);
     }
 
     @PutMapping("/updateproduct")
     public ResponseEntity<?> updateProduct(@RequestBody ProductEntity p){
         productService.update(p);
-        return ResponseEntity.ok("Товар успешно обновлен");
+        return ResponseEntity.ok(p);
     }
 }

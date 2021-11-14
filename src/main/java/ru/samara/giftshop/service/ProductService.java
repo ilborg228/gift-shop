@@ -11,7 +11,7 @@ public interface ProductService {
 
     List<ProductEntity> findAll();
 
-    void delete(Long id);
+    ProductEntity delete(Long id);
 
     void update(ProductEntity p);
 }

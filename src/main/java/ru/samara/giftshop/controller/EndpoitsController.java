@@ -13,7 +13,7 @@ public class EndpoitsController {
     @GetMapping
     public Map<String,String> getAllEndpoints(){
         Map<String,String> l = new HashMap<>();
-        l.put("/allgoods","GET");
+        l.put("/allproducts","GET");
         l.put("/allcategories","GET");
         l.put("/products/{categoryName}","GET");
         l.put("/categories/{id}","GET");
