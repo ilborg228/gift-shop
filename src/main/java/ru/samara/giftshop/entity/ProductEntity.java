@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name="goods")
+@Table(name="product")
 @Getter
 @Setter
 @ToString

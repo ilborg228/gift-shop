@@ -11,7 +11,7 @@ import ru.samara.giftshop.service.ProductServiceImpl;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ContextConfiguration(classes = {MyConfig.class})
+@ContextConfiguration(classes = {ProductServiceImpl.class})
 @WebMvcTest(ProductController.class)
 class ProductControllerTest {
     private final ProductService service;
@@ -28,25 +28,5 @@ class ProductControllerTest {
     void getAllProducts() {
         assertThat(service).isNotNull();
 
-    }
-
-    @Test
-    void addProduct() {
-    }
-
-    @Test
-    void testGetAllProducts() {
-    }
-
-    @Test
-    void getProductByName() {
-    }
-
-    @Test
-    void deleteProduct() {
-    }
-
-    @Test
-    void updateProduct() {
     }
 }

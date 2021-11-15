@@ -3,12 +3,11 @@ package ru.samara.giftshop.service;
 import ru.samara.giftshop.entity.CategoryEntity;
 import ru.samara.giftshop.entity.ProductEntity;
 
-import java.util.Collection;
 import java.util.List;
 
 public interface CategoryService {
 
-    void saveNewItem(CategoryEntity category);
+    CategoryEntity saveNewItem(CategoryEntity category);
 
     List<CategoryEntity> findAll();
 
