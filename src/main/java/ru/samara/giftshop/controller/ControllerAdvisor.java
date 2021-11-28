@@ -13,13 +13,22 @@ import java.time.ZonedDateTime;
 @RestControllerAdvice
 public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(value = {NoSuchCategoryException.class, NoSuchProductException.class,
-            ProductAlreadyExistException.class, CategoryAlreadyExistException.class})
-    public ResponseEntity<?> handleCityNotFoundException(RuntimeException ex) {
+    @ExceptionHandler(value = {NoSuchCategoryException.class, NoSuchProductException.class})
+    public ResponseEntity<?> handleNotFoundException(RuntimeException ex) {
 
         ApiException apiException = new ApiException(ex.getMessage(),ex,
                 HttpStatus.NOT_FOUND, ZonedDateTime.now(ZoneId.of("Z")));
 
         return new ResponseEntity<>(apiException, HttpStatus.NOT_FOUND);
+    }
+
+
+    @ExceptionHandler(value = { ProductAlreadyExistException.class, CategoryAlreadyExistException.class})
+    public ResponseEntity<?> handleAlreadyExistException(RuntimeException ex) {
+
+        ApiException apiException = new ApiException(ex.getMessage(),ex,
+                HttpStatus.BAD_REQUEST, ZonedDateTime.now(ZoneId.of("Z")));
+
+        return new ResponseEntity<>(apiException, HttpStatus.BAD_REQUEST);
     }
 }
