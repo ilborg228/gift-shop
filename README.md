@@ -2,8 +2,8 @@
 ###### GiftShop REST API with JWT authentication
 
 ### Prerequisites
-- JDK 1.8+  
-- Maven
+* [Java Development Kit (JDK) 11](https://www.oracle.com/java/technologies/downloads/#java11)
+* [Maven 3](https://maven.apache.org/download.cgi)
 
 ### Technology stack:
 * Spring Boot
@@ -28,12 +28,6 @@ Use Bearer Token for any listed request:
 /category/** - endpoint for CRUD operations on categories (a valid JWT token must be present in the request header)   
 /product/** - endpoint for CRUD operations on products (a valid JWT token must be present in the request header)     
 ```
-Prerequisites
--------------
-
-* [Java Development Kit (JDK) 11](https://www.oracle.com/java/technologies/downloads/#java11)
-* [Maven 3](https://maven.apache.org/download.cgi)
-
 Build and Run
 -------------
 
