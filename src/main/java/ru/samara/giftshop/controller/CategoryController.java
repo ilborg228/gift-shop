@@ -38,8 +38,8 @@ public class CategoryController {
 
     @PostMapping("/addcategory")
     public ResponseEntity<?> addCategory(@RequestBody CategoryEntity category){
-        service.saveNewItem(category);
-        return ResponseEntity.status(201).body(category);
+        CategoryEntity c = service.saveNewItem(category);
+        return ResponseEntity.status(201).body(c);
     }
 
     @DeleteMapping("/deletecategory/{id}")

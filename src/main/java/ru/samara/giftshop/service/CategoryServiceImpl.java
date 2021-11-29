@@ -1,7 +1,6 @@
 package ru.samara.giftshop.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.samara.giftshop.entity.CategoryEntity;
 import ru.samara.giftshop.entity.ProductEntity;
@@ -20,9 +19,9 @@ public class CategoryServiceImpl implements CategoryService{
     private final CategoryRepository repo;
 
     @Override
-    public void saveNewItem(CategoryEntity category){
+    public CategoryEntity saveNewItem(CategoryEntity category){
         if (!repo.existsByCategoryName(category.getCategoryName()))
-            repo.save(category);
+            return repo.save(category);
         else
             throw new CategoryAlreadyExistException();
     }

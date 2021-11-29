@@ -23,7 +23,8 @@ public class ProductController {
     private final CategoryService categoryService;
 
     @PostMapping("/addproduct/{categoryId}")
-    public ResponseEntity<?> addProduct(@PathVariable Long categoryId,@RequestBody ProductEntity product){
+    public ResponseEntity<?> addProduct
+            (@PathVariable Long categoryId,@RequestBody ProductEntity product){
         product.setCategory(categoryService.findById(categoryId));
         productService.saveNewItem(product);
         return ResponseEntity.status(201).body("Товар успешно добавлен");
