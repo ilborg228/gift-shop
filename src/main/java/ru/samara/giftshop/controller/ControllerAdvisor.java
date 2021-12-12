@@ -13,7 +13,7 @@ import java.time.ZonedDateTime;
 @RestControllerAdvice
 public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(value = {NoSuchCategoryException.class, NoSuchProductException.class})
+    @ExceptionHandler(value = {CategoryNotFoundException.class, ProductNotFoundException.class})
     public ResponseEntity<?> handleNotFoundException(RuntimeException ex) {
 
         ApiException apiException = new ApiException(ex.getMessage(),ex,

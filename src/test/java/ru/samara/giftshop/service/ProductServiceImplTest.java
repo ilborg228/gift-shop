@@ -19,7 +19,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 import ru.samara.giftshop.entity.CategoryEntity;
 import ru.samara.giftshop.entity.ProductEntity;
-import ru.samara.giftshop.exceptions.NoSuchProductException;
+import ru.samara.giftshop.exceptions.ProductNotFoundException;
 import ru.samara.giftshop.exceptions.ProductAlreadyExistException;
 import ru.samara.giftshop.repository.ProductsRepository;
 
@@ -94,8 +94,8 @@ class ProductServiceImplTest {
 
     @Test
     void testFindAll() {
-        when(this.productsRepository.findAll()).thenThrow(new NoSuchProductException());
-        assertThrows(NoSuchProductException.class, () -> this.productServiceImpl.findAll());
+        when(this.productsRepository.findAll()).thenThrow(new ProductNotFoundException(""));
+        assertThrows(ProductNotFoundException.class, () -> this.productServiceImpl.findAll());
         verify(this.productsRepository).findAll();
     }
 
@@ -127,7 +127,7 @@ class ProductServiceImplTest {
     void testDelete2() {
         doNothing().when(this.productsRepository).delete(any());
         when(this.productsRepository.findById(any())).thenReturn(Optional.empty());
-        assertThrows(NoSuchProductException.class, () -> this.productServiceImpl.delete(123L));
+        assertThrows(ProductNotFoundException.class, () -> this.productServiceImpl.delete(123L));
         verify(this.productsRepository).findById(any());
     }
 
@@ -158,7 +158,7 @@ class ProductServiceImplTest {
     void testDelete4() {
         doNothing().when(this.productsRepository).delete(any());
         when(this.productsRepository.findById(any())).thenReturn(Optional.empty());
-        assertThrows(NoSuchProductException.class, () -> this.productServiceImpl.delete(123L));
+        assertThrows(ProductNotFoundException.class, () -> this.productServiceImpl.delete(123L));
         verify(this.productsRepository).findById(any());
     }
 
@@ -436,7 +436,7 @@ class ProductServiceImplTest {
         productEntity1.setCategory(categoryEntity1);
         productEntity1.setHeight(1);
         productEntity1.setImgSource("Img Source");
-        assertThrows(NoSuchProductException.class, () -> this.productServiceImpl.update(productEntity1));
+        assertThrows(ProductNotFoundException.class, () -> this.productServiceImpl.update(productEntity1));
         verify(this.productsRepository).findById(any());
     }
 

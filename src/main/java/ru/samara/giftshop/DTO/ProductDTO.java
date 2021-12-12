@@ -22,10 +22,4 @@ public class ProductDTO {
     private Integer height;
 
     private CategoryEntity category;
-
-    public static ProductDTO toDTO(ProductEntity p){
-        CategoryEntity category = p.getCategory();
-        category.setProducts(null);
-        return new ProductDTO(p.getName(),p.getPrice(),p.getImgSource(),p.getHeight(),category);
-    }
 }

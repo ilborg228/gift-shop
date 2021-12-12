@@ -11,17 +11,10 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 @AllArgsConstructor
-public class CategoryDTO {
+public class CategoryDTO{
     private String categoryName;
 
     private String imgSource;
 
     private List<ProductEntity> products;
-
-    public static CategoryDTO toDTO(CategoryEntity c){
-        List<ProductEntity> products = c.getProducts().stream()
-                .peek(p->p.setCategory(null))
-                .collect(Collectors.toList());
-        return new CategoryDTO(c.getCategoryName(),c.getImgSource(),products);
-    }
 }

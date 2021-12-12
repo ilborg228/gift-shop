@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 import ru.samara.giftshop.entity.CategoryEntity;
 import ru.samara.giftshop.entity.ProductEntity;
 import ru.samara.giftshop.exceptions.CategoryAlreadyExistException;
-import ru.samara.giftshop.exceptions.NoSuchCategoryException;
-import ru.samara.giftshop.exceptions.NoSuchProductException;
+import ru.samara.giftshop.exceptions.CategoryNotFoundException;
+import ru.samara.giftshop.exceptions.ProductNotFoundException;
 import ru.samara.giftshop.repository.CategoryRepository;
 
 import java.util.List;
@@ -36,7 +36,7 @@ public class CategoryServiceImpl implements CategoryService{
         if (repo.findById(id).isPresent()) {
             repo.delete(repo.findById(id).get());
         } else {
-            throw new NoSuchProductException();
+            throw new ProductNotFoundException(id.toString());
         }
     }
 
@@ -49,20 +49,20 @@ public class CategoryServiceImpl implements CategoryService{
             repo.save(p);
         }
         else {
-            throw new NoSuchProductException();
+            throw new ProductNotFoundException(p.getId().toString());
         }
     }
 
     @Override
     public CategoryEntity findById(Long id){
         return repo.findById(id)
-                .orElseThrow(()->new NoSuchCategoryException(Long.toString(id)));
+                .orElseThrow(()->new CategoryNotFoundException(Long.toString(id)));
     }
 
     @Override
     public List<ProductEntity> findByName(String categoryName) {
         CategoryEntity c = repo.findByCategoryName(categoryName)
-                .orElseThrow(()->new NoSuchCategoryException(categoryName));
+                .orElseThrow(()->new CategoryNotFoundException(categoryName));
         return c.getProducts();
     }
 }

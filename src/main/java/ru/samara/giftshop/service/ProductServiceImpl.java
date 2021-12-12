@@ -1,11 +1,9 @@
 package ru.samara.giftshop.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.samara.giftshop.controller.ProductController;
 import ru.samara.giftshop.entity.ProductEntity;
-import ru.samara.giftshop.exceptions.NoSuchProductException;
+import ru.samara.giftshop.exceptions.ProductNotFoundException;
 import ru.samara.giftshop.exceptions.ProductAlreadyExistException;
 import ru.samara.giftshop.repository.ProductsRepository;
 
@@ -41,7 +39,7 @@ public class ProductServiceImpl implements ProductService {
             return op.get();
         }
         else {
-            throw new NoSuchProductException();
+            throw new ProductNotFoundException(id.toString());
         }
     }
 
@@ -58,7 +56,7 @@ public class ProductServiceImpl implements ProductService {
             repo.save(p);
         }
         else {
-            throw new NoSuchProductException();
+            throw new ProductNotFoundException(p.getId().toString());
         }
     }
 }

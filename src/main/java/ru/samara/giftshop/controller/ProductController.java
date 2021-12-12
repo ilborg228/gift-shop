@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.samara.giftshop.DTO.DTOMapper;
 import ru.samara.giftshop.DTO.ProductDTO;
 import ru.samara.giftshop.entity.ProductEntity;
 import ru.samara.giftshop.service.CategoryService;
@@ -34,16 +35,16 @@ public class ProductController {
     public ResponseEntity<?> getAllProducts(){
         List<ProductDTO> l = productService.findAll()
                 .stream()
-                .map(ProductDTO::toDTO)
+                .map(DTOMapper::toProductDTO)
                 .collect(Collectors.toList());
         return ResponseEntity.of(Optional.of(l));
     }
 
     @GetMapping("/products/{categoryName}")
-    public ResponseEntity<?> getProductByName(@PathVariable String categoryName){
+    public ResponseEntity<?> getProductsByCategoryName(@PathVariable String categoryName){
         List<ProductDTO> l = categoryService.findByName(categoryName)
                 .stream()
-                .map(ProductDTO::toDTO)
+                .map(DTOMapper::toProductDTO)
                 .collect(Collectors.toList());
         return ResponseEntity.of(Optional.of(l));
     }
