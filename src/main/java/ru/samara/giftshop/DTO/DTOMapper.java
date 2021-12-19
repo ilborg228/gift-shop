@@ -24,6 +24,6 @@ public class DTOMapper {
     }
 
     public static UserDTO toUserDTO(UserEntity u){
-        return new UserDTO(u.getName(),u.getRole());
+        return new UserDTO(u.getLogin(),u.getRole().getAuthority());
     }
 }

@@ -51,7 +51,7 @@ public class CategoryController {
     }
 
     @PutMapping("/updatecategory")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> updateCategory(@RequestBody CategoryEntity entity){
         service.update(entity);
         return ResponseEntity.ok("Категория успешно обновлена");

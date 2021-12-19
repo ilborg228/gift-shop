@@ -17,7 +17,7 @@ public class UserEntity {
     private Long id;
 
     @NotNull
-    private String username;
+    private String login;
 
     @NotNull
     private String password;
@@ -25,6 +25,5 @@ public class UserEntity {
     @NotNull
     private boolean enabled;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    private List<RoleEntity> roles;
+    private Role role;
 }
