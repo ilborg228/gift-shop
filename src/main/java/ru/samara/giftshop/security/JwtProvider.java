@@ -35,7 +35,7 @@ public class JwtProvider {
                 .setSubject(user.getLogin())
                 .setExpiration(accessExpiration)
                 .signWith(SignatureAlgorithm.HS512, jwtAccessSecret)
-                .claim("roles", user.getRoles())
+                .claim("role", user.getRole())
                 .compact();
         return accessToken;
     }
