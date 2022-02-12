@@ -1,11 +1,7 @@
 package ru.samara.giftshop.DTO;
 
-import ru.samara.giftshop.DTO.CategoryDTO;
-import ru.samara.giftshop.DTO.ProductDTO;
 import ru.samara.giftshop.entity.CategoryEntity;
 import ru.samara.giftshop.entity.ProductEntity;
-import ru.samara.giftshop.security.UserDTO;
-import ru.samara.giftshop.security.UserEntity;
 
 import java.util.List;
 import java.util.stream.Collectors;
