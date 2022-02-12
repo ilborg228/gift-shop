@@ -3,7 +3,6 @@ package ru.samara.giftshop.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.samara.giftshop.DTO.CategoryDTO;
 import ru.samara.giftshop.DTO.DTOMapper;
@@ -51,7 +50,6 @@ public class CategoryController {
     }
 
     @PutMapping("/updatecategory")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> updateCategory(@RequestBody CategoryEntity entity){
         service.update(entity);
         return ResponseEntity.ok("Категория успешно обновлена");
