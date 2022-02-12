@@ -1,4 +1,4 @@
-package ru.samara.giftshop.entity;
+package ru.samara.giftshop.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;

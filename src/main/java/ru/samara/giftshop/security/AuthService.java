@@ -1,15 +1,10 @@
-package ru.samara.giftshop.service;
+package ru.samara.giftshop.security;
 
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import ru.samara.giftshop.entity.UserEntity;
-import ru.samara.giftshop.security.JwtAuthentication;
-import ru.samara.giftshop.security.JwtProvider;
-import ru.samara.giftshop.security.JwtRequest;
-import ru.samara.giftshop.security.JwtResponse;
 
 import javax.security.auth.message.AuthException;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package ru.samara.giftshop.controller;
+package ru.samara.giftshop.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -6,10 +6,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.samara.giftshop.security.RefreshJwtRequest;
-import ru.samara.giftshop.service.AuthService;
-import ru.samara.giftshop.security.JwtRequest;
-import ru.samara.giftshop.security.JwtResponse;
 
 import javax.security.auth.message.AuthException;
 

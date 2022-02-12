@@ -3,7 +3,6 @@ package ru.samara.giftshop.security;
 import io.jsonwebtoken.Claims;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import ru.samara.giftshop.entity.Role;
 
 import java.util.List;
 import java.util.stream.Collectors;

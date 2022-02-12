@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
-import ru.samara.giftshop.entity.UserEntity;
 
 import java.time.Instant;
 import java.time.LocalDateTime;

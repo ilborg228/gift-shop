@@ -1,11 +1,10 @@
-package ru.samara.giftshop.entity;
+package ru.samara.giftshop.security;
 
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 @Table(name = "users")
 @Getter

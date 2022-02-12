@@ -1,10 +1,10 @@
-package ru.samara.giftshop.service;
+package ru.samara.giftshop.security;
 
 import lombok.AllArgsConstructor;
 import org.springframework.lang.NonNull;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import ru.samara.giftshop.entity.UserEntity;
+import ru.samara.giftshop.security.UserEntity;
 import ru.samara.giftshop.repository.UserRepository;
 
 @AllArgsConstructor

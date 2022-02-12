@@ -1,4 +1,4 @@
-package ru.samara.giftshop.DTO;
+package ru.samara.giftshop.security;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
