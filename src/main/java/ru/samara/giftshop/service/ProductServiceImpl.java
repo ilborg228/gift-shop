@@ -3,8 +3,7 @@ package ru.samara.giftshop.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.samara.giftshop.entity.ProductEntity;
-import ru.samara.giftshop.exceptions.ProductNotFoundException;
-import ru.samara.giftshop.exceptions.ProductAlreadyExistException;
+import ru.samara.giftshop.exceptions.*;
 import ru.samara.giftshop.repository.ProductsRepository;
 
 import java.util.List;
@@ -22,7 +21,7 @@ public class ProductServiceImpl implements ProductService {
             repo.save(product);
         }
         else
-            throw new ProductAlreadyExistException();
+            throw new ApiException(DataValidationResponse.PRODUCT_ALREADY_EXIST);
     }
 
     @Override
@@ -39,7 +38,7 @@ public class ProductServiceImpl implements ProductService {
             return op.get();
         }
         else {
-            throw new ProductNotFoundException(id.toString());
+            throw new ApiException(DataNotFoundResponse.PRODUCT_NOT_FOUND);
         }
     }
 
@@ -56,7 +55,7 @@ public class ProductServiceImpl implements ProductService {
             repo.save(p);
         }
         else {
-            throw new ProductNotFoundException(p.getId().toString());
+            throw new ApiException(DataNotFoundResponse.PRODUCT_NOT_FOUND);
         }
     }
 }

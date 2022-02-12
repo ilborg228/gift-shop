@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.samara.giftshop.DTO.CategoryDTO;
 import ru.samara.giftshop.DTO.DTOMapper;
 import ru.samara.giftshop.entity.CategoryEntity;
-import ru.samara.giftshop.exceptions.CategoryNotFoundException;
 import ru.samara.giftshop.service.CategoryServiceImpl;
 
 import java.util.List;
@@ -32,7 +31,7 @@ public class CategoryController {
     }
 
     @GetMapping("/categories/{id}")
-    public ResponseEntity<?> getOneCategory(@PathVariable Long id) throws CategoryNotFoundException {
+    public ResponseEntity<?> getOneCategory(@PathVariable Long id) {
         Optional<?> op = Optional.of(DTOMapper.toCategoryDTO(service.findById(id)));
         return ResponseEntity.of(op);
     }

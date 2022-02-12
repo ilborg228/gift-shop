@@ -50,4 +50,5 @@ public class DataNotFoundResponse extends AbstractResponse{
         code.description = this.description;
         code.oldCode = this.oldCode;
         return code;
+    }
 }

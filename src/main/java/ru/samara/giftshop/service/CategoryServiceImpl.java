@@ -34,7 +34,7 @@ public class CategoryServiceImpl implements CategoryService{
         if (repo.findById(id).isPresent()) {
             repo.delete(repo.findById(id).get());
         } else {
-            throw new ProductNotFoundException(id.toString());
+            throw new ApiException(DataNotFoundResponse.PRODUCT_NOT_FOUND);
         }
     }
 
@@ -47,20 +47,20 @@ public class CategoryServiceImpl implements CategoryService{
             repo.save(p);
         }
         else {
-            throw new ProductNotFoundException(p.getId().toString());
+            throw new ApiException(DataNotFoundResponse.PRODUCT_NOT_FOUND);
         }
     }
 
     @Override
     public CategoryEntity findById(Long id){
         return repo.findById(id)
-                .orElseThrow(()->new CategoryNotFoundException(Long.toString(id)));
+                .orElseThrow(()->new ApiException(DataNotFoundResponse.CATEGORY_NOT_FOUND));
     }
 
     @Override
     public List<ProductEntity> findByName(String categoryName) {
         CategoryEntity c = repo.findByCategoryName(categoryName)
-                .orElseThrow(()->new CategoryNotFoundException(categoryName));
+                .orElseThrow(()->new ApiException(DataNotFoundResponse.CATEGORY_NOT_FOUND));
         return c.getProducts();
     }
 }
