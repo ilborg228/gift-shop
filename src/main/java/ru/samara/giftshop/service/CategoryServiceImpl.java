@@ -4,9 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.samara.giftshop.entity.CategoryEntity;
 import ru.samara.giftshop.entity.ProductEntity;
-import ru.samara.giftshop.exceptions.CategoryAlreadyExistException;
-import ru.samara.giftshop.exceptions.CategoryNotFoundException;
-import ru.samara.giftshop.exceptions.ProductNotFoundException;
+import ru.samara.giftshop.exceptions.*;
 import ru.samara.giftshop.repository.CategoryRepository;
 
 import java.util.List;
@@ -23,7 +21,7 @@ public class CategoryServiceImpl implements CategoryService{
         if (!repo.existsByCategoryName(category.getCategoryName()))
             return repo.save(category);
         else
-            throw new CategoryAlreadyExistException();
+            throw new ApiException(DataValidationResponse.CATEGORY_ALREADY_EXIST);
     }
 
     @Override

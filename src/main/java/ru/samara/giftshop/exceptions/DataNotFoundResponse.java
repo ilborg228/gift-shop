@@ -2,27 +2,26 @@ package ru.samara.giftshop.exceptions;
 
 import org.springframework.http.HttpStatus;
 
-public class DataValidationResponse extends AbstractResponse {
-
+public class DataNotFoundResponse extends AbstractResponse{
     private static final HttpStatus BAD_STATUS = HttpStatus.BAD_REQUEST;
-    static final int MIN_CODE = 1000;
-    static final int MAX_CODE = 1999;
+    static final int MIN_CODE = 2000;
+    static final int MAX_CODE = 2999;
 
-    public static final DataValidationResponse CATEGORY_ALREADY_EXIST =
-            new DataValidationResponse(1000,"Category already exists");
+    public static final DataNotFoundResponse CATEGORY_NOT_FOUND =
+            new DataNotFoundResponse(2000,"Category not found");
 
-    public static final DataValidationResponse PRODUCT_ALREADY_EXIST =
-            new DataValidationResponse(1001,"Product already exists");
+    public static final DataNotFoundResponse PRODUCT_NOT_FOUND =
+            new DataNotFoundResponse(2001,"Category not found");
 
-    DataValidationResponse(int code, String error) {
+    DataNotFoundResponse(int code, String error) {
         super(code, error, BAD_STATUS);
     }
 
-    DataValidationResponse(int code, int oldCode, String error) {
+    DataNotFoundResponse(int code, int oldCode, String error) {
         super(code, oldCode, error, BAD_STATUS);
     }
 
-    DataValidationResponse(int code, String error, HttpStatus status) {
+    DataNotFoundResponse(int code, String error, HttpStatus status) {
         super(code, error, status);
     }
 
@@ -51,5 +50,4 @@ public class DataValidationResponse extends AbstractResponse {
         code.description = this.description;
         code.oldCode = this.oldCode;
         return code;
-    }
 }
