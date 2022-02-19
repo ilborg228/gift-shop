@@ -16,14 +16,13 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE,
-        consumes = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 public class ProductController {
 
     private final ProductService productService;
     private final CategoryService categoryService;
 
-    @PostMapping("/addproduct/{categoryId}")
+    @PostMapping("/product/{categoryId}")
     public ResponseEntity<?> addProduct
             (@PathVariable Long categoryId,@RequestBody ProductEntity product){
         product.setCategory(categoryService.findById(categoryId));
@@ -31,7 +30,7 @@ public class ProductController {
         return ResponseEntity.status(201).body("Товар успешно добавлен");
     }
 
-    @GetMapping("/allproducts")
+    @GetMapping("/product")
     public ResponseEntity<?> getAllProducts(){
         List<ProductDTO> l = productService.findAll()
                 .stream()
@@ -40,22 +39,22 @@ public class ProductController {
         return ResponseEntity.of(Optional.of(l));
     }
 
-    @GetMapping("/products/{categoryName}")
-    public ResponseEntity<?> getProductsByCategoryName(@PathVariable String categoryName){
-        List<ProductDTO> l = categoryService.findByName(categoryName)
-                .stream()
-                .map(DTOMapper::toProductDTO)
-                .collect(Collectors.toList());
-        return ResponseEntity.of(Optional.of(l));
-    }
+//    @GetMapping("/products/{categoryName}")
+//    public ResponseEntity<?> getProductsByCategoryName(@PathVariable String categoryName){
+//        List<ProductDTO> l = categoryService.findByName(categoryName)
+//                .stream()
+//                .map(DTOMapper::toProductDTO)
+//                .collect(Collectors.toList());
+//        return ResponseEntity.of(Optional.of(l));
+//    }
 
-    @DeleteMapping("/deleteproduct/{id}")
+    @DeleteMapping("/product/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable Long id){
         ProductEntity p = productService.delete(id);
         return ResponseEntity.ok(p);
     }
 
-    @PutMapping("/updateproduct")
+    @PatchMapping("/product")
     public ResponseEntity<?> updateProduct(@RequestBody ProductEntity p){
         productService.update(p);
         return ResponseEntity.ok(p);

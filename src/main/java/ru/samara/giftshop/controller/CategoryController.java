@@ -15,40 +15,39 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE,
-        consumes = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 public class CategoryController {
 
     private final CategoryServiceImpl service;
 
-    @GetMapping("/allcategories")
+    @GetMapping("/category")
     public ResponseEntity<?> getAllCategories(){
         List<CategoryDTO> l = service.findAll()
                 .stream()
                 .map(DTOMapper::toCategoryDTO)
                 .collect(Collectors.toList());
-        return ResponseEntity.of(Optional.of(l));
+        return ResponseEntity.ok(l);
     }
 
-    @GetMapping("/categories/{id}")
+    @GetMapping("/category/{id}")
     public ResponseEntity<?> getOneCategory(@PathVariable Long id) {
         Optional<?> op = Optional.of(DTOMapper.toCategoryDTO(service.findById(id)));
         return ResponseEntity.of(op);
     }
 
-    @PostMapping("/addcategory")
+    @PostMapping("/category")
     public ResponseEntity<?> addCategory(@RequestBody CategoryEntity category){
         CategoryEntity c = service.saveNewItem(category);
         return ResponseEntity.status(201).body(c);
     }
 
-    @DeleteMapping("/deletecategory/{id}")
+    @DeleteMapping("/category/{id}")
     public ResponseEntity<?> deleteCategory(@PathVariable Long id){
         service.delete(id);
         return ResponseEntity.ok("Товар успешно удалён");
     }
 
-    @PutMapping("/updatecategory")
+    @PatchMapping("/category")
     public ResponseEntity<?> updateCategory(@RequestBody CategoryEntity entity){
         service.update(entity);
         return ResponseEntity.ok("Категория успешно обновлена");

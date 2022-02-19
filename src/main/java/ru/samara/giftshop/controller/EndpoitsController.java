@@ -13,15 +13,15 @@ public class EndpoitsController {
     @GetMapping
     public Map<String,String> getAllEndpoints(){
         Map<String,String> l = new HashMap<>();
-        l.put("/allproducts","GET");
-        l.put("/allcategories","GET");
-        l.put("/products/{categoryName}","GET");
-        l.put("/categories/{id}","GET");
-        l.put("/addproduct/{categoryId}","POST");
-        l.put("/addcategory","POST");
-        l.put("/deleteproduct/{id}","DELETE");
-        l.put("/deletecategory/{id}","DELETE");
-        l.put("/updateproduct","UPDATE");
+        l.put("/product","GET");
+        l.put("/category","GET");
+        l.put("/product/{categoryName}","GET");
+        l.put("/category/{id}","GET");
+        l.put("/product/{categoryId}","POST");
+        l.put("/category","POST");
+        l.put("/product/{id}","DELETE");
+        l.put("/category/{id}","DELETE");
+        l.put("/product","PATCH");
         return l;
     }
 }
