@@ -13,6 +13,8 @@ public class DataValidationResponse extends AbstractResponse {
 
     public static final DataValidationResponse PRODUCT_ALREADY_EXIST =
             new DataValidationResponse(1001,"Product already exists");
+    public static final DataValidationResponse COMMENT_LENGTH_IS_NOT_CORRET =
+            new DataValidationResponse(1001,"Comment length must be greater, then {0}");
 
     DataValidationResponse(int code, String error) {
         super(code, error, BAD_STATUS);

@@ -2,7 +2,7 @@ package ru.samara.giftshop.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.samara.giftshop.entity.ProductEntity;
+import ru.samara.giftshop.entity.Product;
 import ru.samara.giftshop.exceptions.*;
 import ru.samara.giftshop.repository.ProductsRepository;
 
@@ -16,7 +16,7 @@ public class ProductServiceImpl implements ProductService {
     private final ProductsRepository repo;
 
     @Override
-    public void saveNewItem(ProductEntity product) {
+    public void saveNewItem(Product product) {
         if(!repo.existsByName(product.getName())){
             repo.save(product);
         }
@@ -25,14 +25,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductEntity> findAll() {
-        List<ProductEntity> l = (List<ProductEntity>) repo.findAll();
+    public List<Product> findAll() {
+        List<Product> l = (List<Product>) repo.findAll();
         return l;
     }
 
     @Override
-    public ProductEntity delete(Long id){
-        Optional<ProductEntity> op =repo.findById(id);
+    public Product delete(Long id){
+        Optional<Product> op =repo.findById(id);
         if(op.isPresent()) {
             repo.delete(op.get());
             return op.get();
@@ -43,10 +43,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void update(ProductEntity p){
-        Optional<ProductEntity> op = repo.findById(p.getId());
+    public void update(Product p){
+        Optional<Product> op = repo.findById(p.getId());
         if(op.isPresent()) {
-            ProductEntity old = op.get();
+            Product old = op.get();
             if(old.getName()!=null && p.getName()==null) p.setName(old.getName());
             if(old.getPrice()!=null && p.getPrice()==null) p.setPrice(old.getPrice());
             if(old.getImgSource()!=null && p.getImgSource()==null) p.setImgSource(old.getImgSource());

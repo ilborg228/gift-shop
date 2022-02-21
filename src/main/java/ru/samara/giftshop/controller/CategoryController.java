@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.samara.giftshop.DTO.CategoryDTO;
 import ru.samara.giftshop.DTO.DTOMapper;
-import ru.samara.giftshop.entity.CategoryEntity;
+import ru.samara.giftshop.entity.Category;
 import ru.samara.giftshop.service.CategoryServiceImpl;
 
 import java.util.List;
@@ -36,8 +36,8 @@ public class CategoryController {
     }
 
     @PostMapping("/category")
-    public ResponseEntity<?> addCategory(@RequestBody CategoryEntity category){
-        CategoryEntity c = service.saveNewItem(category);
+    public ResponseEntity<?> addCategory(@RequestBody Category category){
+        Category c = service.saveNewItem(category);
         return ResponseEntity.status(201).body(c);
     }
 
@@ -48,7 +48,7 @@ public class CategoryController {
     }
 
     @PatchMapping("/category")
-    public ResponseEntity<?> updateCategory(@RequestBody CategoryEntity entity){
+    public ResponseEntity<?> updateCategory(@RequestBody Category entity){
         service.update(entity);
         return ResponseEntity.ok("Категория успешно обновлена");
     }

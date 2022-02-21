@@ -2,8 +2,8 @@ package ru.samara.giftshop.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.samara.giftshop.entity.CategoryEntity;
-import ru.samara.giftshop.entity.ProductEntity;
+import ru.samara.giftshop.entity.Category;
+import ru.samara.giftshop.entity.Product;
 import ru.samara.giftshop.exceptions.*;
 import ru.samara.giftshop.repository.CategoryRepository;
 
@@ -17,7 +17,7 @@ public class CategoryServiceImpl implements CategoryService{
     private final CategoryRepository repo;
 
     @Override
-    public CategoryEntity saveNewItem(CategoryEntity category){
+    public Category saveNewItem(Category category){
         if (!repo.existsByCategoryName(category.getCategoryName()))
             return repo.save(category);
         else
@@ -25,8 +25,8 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     @Override
-    public List<CategoryEntity> findAll() {
-        return (List<CategoryEntity>) repo.findAll();
+    public List<Category> findAll() {
+        return (List<Category>) repo.findAll();
     }
 
     @Override
@@ -39,10 +39,10 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     @Override
-    public void update(CategoryEntity p){
-        Optional<CategoryEntity> op = repo.findById(p.getId());
+    public void update(Category p){
+        Optional<Category> op = repo.findById(p.getId());
         if(op.isPresent()) {
-            CategoryEntity old = op.get();
+            Category old = op.get();
             if(old.getCategoryName()!=null && p.getCategoryName()==null) p.setCategoryName(old.getCategoryName());
             repo.save(p);
         }
@@ -52,14 +52,14 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     @Override
-    public CategoryEntity findById(Long id){
+    public Category findById(Long id){
         return repo.findById(id)
                 .orElseThrow(()->new ApiException(DataNotFoundResponse.CATEGORY_NOT_FOUND));
     }
 
     @Override
-    public List<ProductEntity> findByName(String categoryName) {
-        CategoryEntity c = repo.findByCategoryName(categoryName)
+    public List<Product> findByName(String categoryName) {
+        Category c = repo.findByCategoryName(categoryName)
                 .orElseThrow(()->new ApiException(DataNotFoundResponse.CATEGORY_NOT_FOUND));
         return c.getProducts();
     }

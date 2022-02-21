@@ -1,17 +1,16 @@
 package ru.samara.giftshop.service;
 
-import ru.samara.giftshop.entity.ProductEntity;
+import ru.samara.giftshop.entity.Product;
 
-import java.util.Collection;
 import java.util.List;
 
 public interface ProductService {
 
-    void saveNewItem(ProductEntity product);
+    void saveNewItem(Product product);
 
-    List<ProductEntity> findAll();
+    List<Product> findAll();
 
-    ProductEntity delete(Long id);
+    Product delete(Long id);
 
-    void update(ProductEntity p);
+    void update(Product p);
 }

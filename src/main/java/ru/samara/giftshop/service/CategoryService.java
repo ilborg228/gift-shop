@@ -1,21 +1,21 @@
 package ru.samara.giftshop.service;
 
-import ru.samara.giftshop.entity.CategoryEntity;
-import ru.samara.giftshop.entity.ProductEntity;
+import ru.samara.giftshop.entity.Category;
+import ru.samara.giftshop.entity.Product;
 
 import java.util.List;
 
 public interface CategoryService {
 
-    CategoryEntity saveNewItem(CategoryEntity category);
+    Category saveNewItem(Category category);
 
-    List<CategoryEntity> findAll();
+    List<Category> findAll();
 
     void delete(Long id);
 
-    void update(CategoryEntity p);
+    void update(Category p);
 
-    CategoryEntity findById(Long id);
+    Category findById(Long id);
 
-    List<ProductEntity> findByName(String categoryName);
+    List<Product> findByName(String categoryName);
 }

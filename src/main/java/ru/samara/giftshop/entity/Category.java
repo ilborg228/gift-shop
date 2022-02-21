@@ -4,37 +4,35 @@ import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name="product")
+@Table(name="category")
 @Getter
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class ProductEntity {
+public class Category {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    private String name;
-
-    private Double price;
+    private String categoryName;
 
     private String imgSource;
 
-    private Integer height;
-
-    @ManyToOne(fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "category",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @ToString.Exclude
-    private CategoryEntity category;
+    private List<Product> products;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        ProductEntity that = (ProductEntity) o;
-        return id != null && Objects.equals(id, that.id);
+        Category category = (Category) o;
+        return id != null && Objects.equals(id, category.id);
     }
 
     @Override

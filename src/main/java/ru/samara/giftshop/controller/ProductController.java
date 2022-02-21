@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.samara.giftshop.DTO.DTOMapper;
 import ru.samara.giftshop.DTO.ProductDTO;
-import ru.samara.giftshop.entity.ProductEntity;
+import ru.samara.giftshop.entity.Product;
 import ru.samara.giftshop.service.CategoryService;
 import ru.samara.giftshop.service.ProductService;
 
@@ -24,7 +24,7 @@ public class ProductController {
 
     @PostMapping("/product/{categoryId}")
     public ResponseEntity<?> addProduct
-            (@PathVariable Long categoryId,@RequestBody ProductEntity product){
+            (@PathVariable Long categoryId,@RequestBody Product product){
         product.setCategory(categoryService.findById(categoryId));
         productService.saveNewItem(product);
         return ResponseEntity.status(201).body("Товар успешно добавлен");
@@ -50,12 +50,12 @@ public class ProductController {
 
     @DeleteMapping("/product/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable Long id){
-        ProductEntity p = productService.delete(id);
+        Product p = productService.delete(id);
         return ResponseEntity.ok(p);
     }
 
     @PatchMapping("/product")
-    public ResponseEntity<?> updateProduct(@RequestBody ProductEntity p){
+    public ResponseEntity<?> updateProduct(@RequestBody Product p){
         productService.update(p);
         return ResponseEntity.ok(p);
     }
