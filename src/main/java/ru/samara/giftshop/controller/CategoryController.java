@@ -18,11 +18,11 @@ import java.util.stream.Collectors;
 @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 public class CategoryController {
 
-    private final CategoryServiceImpl service;
+    private final CategoryServiceImpl categoryService;
 
     @GetMapping("/category")
     public ResponseEntity<?> getAllCategories(){
-        List<CategoryDTO> l = service.findAll()
+        List<CategoryDTO> l = categoryService.findAll()
                 .stream()
                 .map(DTOMapper::toCategoryDTO)
                 .collect(Collectors.toList());
@@ -31,25 +31,25 @@ public class CategoryController {
 
     @GetMapping("/category/{id}")
     public ResponseEntity<?> getOneCategory(@PathVariable Long id) {
-        Optional<?> op = Optional.of(DTOMapper.toCategoryDTO(service.findById(id)));
+        Optional<?> op = Optional.of(DTOMapper.toCategoryDTO(categoryService.findById(id)));
         return ResponseEntity.of(op);
     }
 
     @PostMapping("/category")
     public ResponseEntity<?> addCategory(@RequestBody Category category){
-        Category c = service.saveNewItem(category);
+        Category c = categoryService.saveNewItem(category);
         return ResponseEntity.status(201).body(c);
     }
 
     @DeleteMapping("/category/{id}")
     public ResponseEntity<?> deleteCategory(@PathVariable Long id){
-        service.delete(id);
+        categoryService.delete(id);
         return ResponseEntity.ok("Товар успешно удалён");
     }
 
     @PatchMapping("/category")
     public ResponseEntity<?> updateCategory(@RequestBody Category entity){
-        service.update(entity);
+        categoryService.update(entity);
         return ResponseEntity.ok("Категория успешно обновлена");
     }
 }

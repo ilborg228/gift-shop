@@ -7,6 +7,4 @@ import ru.samara.giftshop.entity.Product;
 @Repository
 public interface ProductsRepository extends CrudRepository<Product, Long> {
     boolean existsByName(String name);
-
-    Iterable<Product> findAllByName(String name);
 }

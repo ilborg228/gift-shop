@@ -13,12 +13,12 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
-    private final ProductsRepository repo;
+    private final ProductsRepository productsRepository;
 
     @Override
     public void saveNewItem(Product product) {
-        if(!repo.existsByName(product.getName())){
-            repo.save(product);
+        if(!productsRepository.existsByName(product.getName())){
+            productsRepository.save(product);
         }
         else
             throw new ApiException(DataValidationResponse.PRODUCT_ALREADY_EXIST);
@@ -26,15 +26,15 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> findAll() {
-        List<Product> l = (List<Product>) repo.findAll();
+        List<Product> l = (List<Product>) productsRepository.findAll();
         return l;
     }
 
     @Override
     public Product delete(Long id){
-        Optional<Product> op =repo.findById(id);
+        Optional<Product> op = productsRepository.findById(id);
         if(op.isPresent()) {
-            repo.delete(op.get());
+            productsRepository.delete(op.get());
             return op.get();
         }
         else {
@@ -44,7 +44,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void update(Product p){
-        Optional<Product> op = repo.findById(p.getId());
+        Optional<Product> op = productsRepository.findById(p.getId());
         if(op.isPresent()) {
             Product old = op.get();
             if(old.getName()!=null && p.getName()==null) p.setName(old.getName());
@@ -52,7 +52,7 @@ public class ProductServiceImpl implements ProductService {
             if(old.getImgSource()!=null && p.getImgSource()==null) p.setImgSource(old.getImgSource());
             if(old.getHeight()!=null && p.getHeight()==null) p.setHeight(old.getHeight());
             if(old.getCategory()!=null && p.getCategory()==null) p.setCategory(old.getCategory());
-            repo.save(p);
+            productsRepository.save(p);
         }
         else {
             throw new ApiException(DataNotFoundResponse.PRODUCT_NOT_FOUND);

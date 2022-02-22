@@ -1,13 +1,16 @@
 package ru.samara.giftshop.controller
 
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import ru.samara.giftshop.entity.Comment
 import ru.samara.giftshop.entity.Product
 import ru.samara.giftshop.service.CommentService
 
 @RestController
+@RequestMapping(produces = [MediaType.APPLICATION_JSON_VALUE])
 class CommentController(private val commentService: CommentService) {
 
     @PostMapping("/comment")
@@ -16,7 +19,7 @@ class CommentController(private val commentService: CommentService) {
         data.text=text
         val product = Product()
         product.id=productId
-        data.product= product
+        data.product = product
         return ResponseEntity.status(201).body(commentService.addComment(data))
     }
 }
