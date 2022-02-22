@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.*;
 import ru.samara.giftshop.DTO.DTOMapper;
 import ru.samara.giftshop.DTO.ProductDTO;
 import ru.samara.giftshop.entity.Product;
+import ru.samara.giftshop.exceptions.ApiException;
+import ru.samara.giftshop.exceptions.DataNotFoundResponse;
+import ru.samara.giftshop.repository.ProductsRepository;
 import ru.samara.giftshop.service.CategoryService;
 import ru.samara.giftshop.service.ProductService;
 
@@ -20,6 +23,7 @@ import java.util.stream.Collectors;
 public class ProductController {
 
     private final ProductService productService;
+    private final ProductsRepository productsRepository;
     private final CategoryService categoryService;
 
     @PostMapping("/product/{categoryId}")
@@ -39,14 +43,13 @@ public class ProductController {
         return ResponseEntity.of(Optional.of(l));
     }
 
-//    @GetMapping("/products/{categoryName}")
-//    public ResponseEntity<?> getProductsByCategoryName(@PathVariable String categoryName){
-//        List<ProductDTO> l = categoryService.findByName(categoryName)
-//                .stream()
-//                .map(DTOMapper::toProductDTO)
-//                .collect(Collectors.toList());
-//        return ResponseEntity.of(Optional.of(l));
-//    }
+    @GetMapping("/product/{id}")
+    public ProductDTO getProductsByCategoryName(@PathVariable Long id){
+        ProductDTO p = DTOMapper.toProductDTO(
+                productsRepository.findById(id).orElseThrow(
+                        ()-> new ApiException(DataNotFoundResponse.PRODUCT_NOT_FOUND)));
+        return p;
+    }
 
     @DeleteMapping("/product/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable Long id){
