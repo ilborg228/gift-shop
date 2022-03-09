@@ -46,8 +46,7 @@ public class ProductController {
     @GetMapping("/product/{id}")
     public ProductDTO getProductsByCategoryName(@PathVariable Long id){
         ProductDTO p = DTOMapper.toProductDTO(
-                productsRepository.findById(id).orElseThrow(
-                        ()-> new ApiException(DataNotFoundResponse.PRODUCT_NOT_FOUND)));
+                productsRepository.findById(id).orElseThrow(()-> new ApiException(DataNotFoundResponse.PRODUCT_NOT_FOUND)));
         return p;
     }
 
