@@ -16,12 +16,12 @@ class CommentControllerTest : BaseTest() {
 
     @Test
     fun addComment() {
-//        val comment = Comment()
-//        comment.text = "asdf"
-//        comment.product = productsRepository.save(Product())
-//        mockMvc.perform(post("/comment")
-//            .content(jsonMapper.writeValueAsString(comment))
-//            .contentType(MediaType.APPLICATION_JSON))
-//            .andExpect(status().`is`(HttpStatus.CREATED.value()))
+        val comment = Comment()
+        comment.text = "asdf"
+        comment.product = productsRepository.save(Product())
+        mockMvc.perform(post("/comment")
+            .content(jsonMapper.writeValueAsString(comment))
+            .contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().`is`(HttpStatus.CREATED.value()))
     }
 }
