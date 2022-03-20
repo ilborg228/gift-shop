@@ -1,21 +1,28 @@
-version: "3.7"
 services:
   api_service:
     build: .
-    restart: always
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - mysqldb
+    networks:
+      - spring
     ports:
       - 8080:8080
-    depends_on:
-      - mysql_db
-    links:
-      - mysql_db:app_db
-  mysql_db:
-    image: "mysql/mysql-server:8.0.27"
-    restart: always
+
+  mysqldb:
+    image: "mysql/mysql-server:5.7"
+    restart: unless-stopped
     ports:
       - 3306:3306
+    networks:
+      - spring
     environment:
       MYSQL_DATABASE: gift_shop
-      MYSQL_USER: root
+      MYSQL_USER: finley
       MYSQL_PASSWORD: password
       MYSQL_ROOT_PASSWORD: password
+
+networks:
+  spring:
+    driver: bridge

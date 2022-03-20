@@ -1,5 +1,5 @@
-FROM adoptopenjdk:11-jre-hotspot
-COPY ./target/gift-shop-0.0.1-SNAPSHOT.jar /usr/app/
-WORKDIR /usr/app
+FROM openjdk:11
+VOLUME /main-app
+ADD target/gift-shop-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "gift-shop-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-jar","/app.jar"]
