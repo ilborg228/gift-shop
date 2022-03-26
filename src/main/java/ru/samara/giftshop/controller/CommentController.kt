@@ -24,13 +24,7 @@ class CommentController(private val commentService: CommentService) {
     }
 
     @GetMapping("/comment/{productId}")
-    fun getComment(@PathVariable productId : Long,
-                   @RequestBody req:Comment): ResponseEntity<Any> {
-        val data = Comment()
-        data.text=req.text
-        val product = Product()
-        product.id=productId
-        data.product = product
-        return ResponseEntity.status(201).body(commentService.addComment(data))
+    fun getComments(@PathVariable productId : Long): ResponseEntity<Any> {
+        return ResponseEntity.ok(commentService.getComments(productId))
     }
 }

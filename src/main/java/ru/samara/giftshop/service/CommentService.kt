@@ -7,7 +7,7 @@ import ru.samara.giftshop.exceptions.DataValidationResponse
 import ru.samara.giftshop.repository.CommentRepository
 
 @Service
-class CommentService (val commentRepository: CommentRepository){
+class CommentService (private val commentRepository: CommentRepository){
 
     private val commentLength: Int = 3
 
@@ -16,5 +16,9 @@ class CommentService (val commentRepository: CommentRepository){
             commentRepository.save(data)
         else
             throw ApiException(DataValidationResponse.COMMENT_LENGTH_IS_NOT_CORRET,commentLength)
+    }
+
+    fun getComments(productId: Long): MutableIterable<Comment>? {
+        return commentRepository.findAllByProductId(productId);
     }
 }
