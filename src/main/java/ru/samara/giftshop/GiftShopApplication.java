@@ -28,15 +28,30 @@ public class GiftShopApplication {
 
     @PostConstruct
     private void init(){
-        Category category = new Category();
-        category.setCategoryName("test");
-        category.setImgSource("http://samaragiftshop.ru/src/shop/2.jpg");
+        Category category1 = new Category();
+        category1.setCategoryName("test");
+        category1.setImgSource("http://samaragiftshop.ru/src/shop/2.jpg");
+        Category category2 = new Category();
+        category2.setCategoryName("test2");
+        category2.setImgSource("http://samaragiftshop.ru/src/shop/2.jpg");
         categoryRepository.saveAllAndFlush(List.of(category1,category2));
 
-        Product product = new Product();
-        product.setName("test-тест1");
-        product.setImgSource("http://samaragiftshop.ru/src/shop/2.jpg");
-        product.setCategory(category);
+        Product product1 = new Product();
+        product1.setName("test-тест1");
+        product1.setImgSource("http://samaragiftshop.ru/src/shop/2.jpg");
+        product1.setCategory(category1);
+        Product product2 = new Product();
+        product2.setName("test-тест2");
+        product2.setImgSource("http://samaragiftshop.ru/src/shop/2.jpg");
+        product2.setCategory(category1);
+        Product product3 = new Product();
+        product3.setName("test-тест3");
+        product3.setImgSource("http://samaragiftshop.ru/src/shop/2.jpg");
+        product3.setCategory(category1);
+        Product product4 = new Product();
+        product4.setName("test-тест4");
+        product4.setImgSource("http://samaragiftshop.ru/src/shop/2.jpg");
+        product4.setCategory(category1);
         productsRepository.saveAllAndFlush(List.of(product4,product1,product2,product3));
     }
 
