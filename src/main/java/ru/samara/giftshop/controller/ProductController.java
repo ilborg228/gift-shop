@@ -34,9 +34,9 @@ public class ProductController {
         return ResponseEntity.status(201).body("Товар успешно добавлен");
     }
 
-    @GetMapping("/product")
-    public ResponseEntity<?> getAllProducts(){
-        List<ProductDTO> l = productService.findAll()
+    @GetMapping("/products/{categoryId}")
+    public ResponseEntity<?> getAllProducts(@PathVariable Long categoryId){
+        List<ProductDTO> l = productService.getByCategoryId(categoryId)
                 .stream()
                 .map(DTOMapper::toProductDTO)
                 .collect(Collectors.toList());
@@ -44,7 +44,7 @@ public class ProductController {
     }
 
     @GetMapping("/product/{id}")
-    public ProductDTO getProductsByCategoryName(@PathVariable Long id){
+    public ProductDTO getProductsByCategoryId(@PathVariable Long id){
         ProductDTO p = DTOMapper.toProductDTO(
                 productsRepository.findById(id).orElseThrow(()-> new ApiException(DataNotFoundResponse.PRODUCT_NOT_FOUND)));
         return p;

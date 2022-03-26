@@ -13,8 +13,6 @@ public class DTOMapper {
     }
 
     public static ProductDTO toProductDTO(Product p){
-        Category category = p.getCategory();
-        category.setProducts(null);
-        return new ProductDTO(p.getName(),p.getPrice(),p.getImgSource(),p.getHeight(),category);
+        return new ProductDTO(p.getName(),p.getPrice(),p.getImgSource(),p.getHeight(), p.getCategory().getId());
     }
 }

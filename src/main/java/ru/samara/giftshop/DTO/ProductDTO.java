@@ -17,5 +17,5 @@ public class ProductDTO {
 
     private Integer height;
 
-    private Category category;
+    private Long categoryId;
 }

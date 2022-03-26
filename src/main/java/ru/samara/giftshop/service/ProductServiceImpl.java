@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.samara.giftshop.entity.Product;
 import ru.samara.giftshop.exceptions.*;
+import ru.samara.giftshop.repository.CategoryRepository;
 import ru.samara.giftshop.repository.ProductsRepository;
 
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.Optional;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductsRepository productsRepository;
+    private final CategoryRepository categoryRepository;
 
     @Override
     public void saveNewItem(Product product) {
@@ -25,9 +27,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> findAll() {
-        List<Product> l = (List<Product>) productsRepository.findAll();
-        return l;
+    public List<Product> getByCategoryId(Long categoryId) {
+        if(!categoryRepository.existsById(categoryId)){
+            throw new ApiException(DataNotFoundResponse.CATEGORY_NOT_FOUND);
+        }
+        return productsRepository.getProductsByCategoryId(categoryId);
     }
 
     @Override
