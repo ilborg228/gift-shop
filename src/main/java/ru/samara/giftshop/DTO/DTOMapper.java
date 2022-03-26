@@ -9,10 +9,7 @@ import java.util.stream.Collectors;
 public class DTOMapper {
 
     public static CategoryDTO toCategoryDTO(Category c){
-        List<Product> products = c.getProducts().stream()
-                .peek(p->p.setCategory(null))
-                .collect(Collectors.toList());
-        return new CategoryDTO(c.getCategoryName(),c.getImgSource(),products);
+        return new CategoryDTO(c.getCategoryName(),c.getImgSource(),c.getId());
     }
 
     public static ProductDTO toProductDTO(Product p){
