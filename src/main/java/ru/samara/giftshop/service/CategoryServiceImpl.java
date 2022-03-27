@@ -52,12 +52,6 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     @Override
-    public Category findById(Long id){
-        return repo.findById(id)
-                .orElseThrow(()->new ApiException(DataNotFoundResponse.CATEGORY_NOT_FOUND));
-    }
-
-    @Override
     public List<Product> findByName(String categoryName) {
         Category c = repo.findByCategoryName(categoryName)
                 .orElseThrow(()->new ApiException(DataNotFoundResponse.CATEGORY_NOT_FOUND));

@@ -52,14 +52,12 @@ public class ProductController {
     }
 
     @DeleteMapping("/product/{id}")
-    public ResponseEntity<?> deleteProduct(@PathVariable Long id){
-        Product p = productService.delete(id);
-        return ResponseEntity.ok(p);
+    public void deleteProduct(@PathVariable Long id){
+        productService.delete(id);
     }
 
     @PatchMapping("/product")
-    public ResponseEntity<?> updateProduct(@RequestBody Product p){
+    public void updateProduct(@RequestBody Product p){
         productService.update(p);
-        return ResponseEntity.ok(p);
     }
 }

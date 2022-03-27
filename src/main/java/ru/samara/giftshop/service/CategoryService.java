@@ -15,7 +15,5 @@ public interface CategoryService {
 
     void update(Category p);
 
-    Category findById(Long id);
-
     List<Product> findByName(String categoryName);
 }

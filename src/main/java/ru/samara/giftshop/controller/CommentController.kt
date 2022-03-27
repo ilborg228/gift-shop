@@ -18,13 +18,12 @@ import ru.samara.giftshop.service.CommentService
 class CommentController(private val commentService: CommentService) {
 
     @PostMapping("/comment")
-    fun addComment(@RequestBody comment: Comment)
-    : ResponseEntity<Any>? {
-        return ResponseEntity.status(201).body(commentService.addComment(comment))
+    fun addComment(@RequestBody comment: Comment) {
+        return commentService.addComment(comment)
     }
 
     @GetMapping("/comment/{productId}")
-    fun getComments(@PathVariable productId : Long): ResponseEntity<Any> {
-        return ResponseEntity.ok(commentService.getComments(productId))
+    fun getComments(@PathVariable productId : Long): MutableIterable<Comment>? {
+        return commentService.getComments(productId)
     }
 }

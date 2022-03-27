@@ -21,18 +21,12 @@ public class CategoryController {
     private final CategoryServiceImpl categoryService;
 
     @GetMapping("/category")
-    public ResponseEntity<?> getAllCategories(){
+    public List<CategoryDTO> getAllCategories(){
         List<CategoryDTO> l = categoryService.findAll()
                 .stream()
                 .map(DTOMapper::toCategoryDTO)
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(l);
-    }
-
-    @GetMapping("/category/{id}")
-    public ResponseEntity<?> getOneCategory(@PathVariable Long id) {
-        Optional<?> op = Optional.of(DTOMapper.toCategoryDTO(categoryService.findById(id)));
-        return ResponseEntity.of(op);
+        return l;
     }
 
     @PostMapping("/category")
