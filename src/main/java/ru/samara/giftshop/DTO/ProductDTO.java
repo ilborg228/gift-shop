@@ -8,16 +8,15 @@ import ru.samara.giftshop.entity.Category;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class ProductDTO {
+    private Long id;
+
     private String name;
 
     private Double price;
 
     private String imgSource;
-
-    private Integer height;
 
     private Long categoryId;
 }

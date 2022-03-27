@@ -1,5 +1,6 @@
 package ru.samara.giftshop.DTO;
 
+import org.springframework.util.StringUtils;
 import ru.samara.giftshop.entity.Category;
 import ru.samara.giftshop.entity.Product;
 
@@ -13,11 +14,24 @@ public class DTOMapper {
     }
 
     public static ProductDTO toProductDTO(Product p){
-        return new ProductDTO(p.getName(),p.getPrice(),p.getImgSource(),p.getHeight(), p.getCategory().getId());
+        ProductDTO dto = new ProductDTO();
+        dto.setId(p.getId());
+        dto.setName(p.getName());
+        dto.setPrice(p.getPrice());
+        dto.setImgSource(p.getImgSource());
+        dto.setCategoryId(p.getCategory().getId());
+        return dto;
     }
 
     public static ProductDetails toProductDetails(Product p){
-        return new ProductDetails(p.getName(),p.getPrice(),p.getImgSource(),
-                p.getHeight(), p.getCategory().getId(),p.getDescription());
+        ProductDetails dto = new ProductDetails();
+        dto.setId(p.getId());
+        dto.setName(p.getName());
+        dto.setPrice(p.getPrice());
+        dto.setImgSource(p.getImgSource());
+        dto.setCategoryId(p.getCategory().getId());
+        dto.setDescription(p.getDescription());
+        dto.setHeight(p.getHeight());
+        return dto;
     }
 }

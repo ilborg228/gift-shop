@@ -36,12 +36,12 @@ public class ProductController {
     }
 
     @GetMapping("/products/{categoryId}")
-    public ResponseEntity<?> getAllProducts(@PathVariable Long categoryId){
+    public List<ProductDTO> getAllProducts(@PathVariable Long categoryId){
         List<ProductDTO> l = productService.getByCategoryId(categoryId)
                 .stream()
                 .map(DTOMapper::toProductDTO)
                 .collect(Collectors.toList());
-        return ResponseEntity.of(Optional.of(l));
+        return l;
     }
 
     @GetMapping("/product/{id}")
