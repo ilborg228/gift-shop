@@ -18,12 +18,14 @@ public class ProductServiceImpl implements ProductService {
     private final CategoryRepository categoryRepository;
 
     @Override
-    public void saveNewItem(Product product) {
-        if(!productsRepository.existsByName(product.getName())){
-            productsRepository.save(product);
-        }
-        else
+    public void saveNewItem(Product product, Long categoryId) {
+        if(productsRepository.existsByName(product.getName())){
             throw new ApiException(DataValidationResponse.PRODUCT_ALREADY_EXIST);
+        }
+        if(!categoryRepository.existsById(categoryId)){
+            throw new ApiException(DataNotFoundResponse.CATEGORY_NOT_FOUND);
+        }
+        productsRepository.save(product);
     }
 
     @Override

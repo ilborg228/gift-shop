@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ProductService {
 
-    void saveNewItem(Product product);
+    void saveNewItem(Product product, Long categoryId);
 
     List<Product> getByCategoryId(Long categoryId);
 
