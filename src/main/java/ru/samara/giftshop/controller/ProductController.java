@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.samara.giftshop.DTO.DTOMapper;
 import ru.samara.giftshop.DTO.ProductDTO;
+import ru.samara.giftshop.DTO.ProductDetails;
 import ru.samara.giftshop.entity.Product;
 import ru.samara.giftshop.exceptions.ApiException;
 import ru.samara.giftshop.exceptions.DataNotFoundResponse;
@@ -44,8 +45,8 @@ public class ProductController {
     }
 
     @GetMapping("/product/{id}")
-    public ProductDTO getProductsByCategoryId(@PathVariable Long id){
-        ProductDTO p = DTOMapper.toProductDTO(
+    public ProductDetails getProductDetails(@PathVariable Long id){
+        ProductDetails p = DTOMapper.toProductDetails(
                 productsRepository.findById(id).orElseThrow(()-> new ApiException(DataNotFoundResponse.PRODUCT_NOT_FOUND)));
         return p;
     }
