@@ -2,44 +2,30 @@ package ru.samara.giftshop.entity;
 
 import lombok.Data;
 import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name="comment")
+@Data
 public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String text;
+    public String text;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Product product;
 
-    public Long getId() {
-        return id;
-    }
+    private Date creation;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @Enumerated(EnumType.STRING)
+    private ScoreValue scoreValue;
 
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
+    public enum ScoreValue {
+        ONE, TWO, THREE, FOUR, FIVE
     }
 }

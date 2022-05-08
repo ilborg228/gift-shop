@@ -1,11 +1,9 @@
-package ru.samara.giftshop.DTO;
+package ru.samara.giftshop.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import ru.samara.giftshop.entity.Product;
-import java.util.List;
 
 @Getter
 @Setter

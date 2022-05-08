@@ -4,13 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.samara.giftshop.DTO.CategoryDTO;
-import ru.samara.giftshop.DTO.DTOMapper;
+import ru.samara.giftshop.dto.CategoryDTO;
+import ru.samara.giftshop.dto.DTOMapper;
 import ru.samara.giftshop.entity.Category;
 import ru.samara.giftshop.service.CategoryServiceImpl;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController

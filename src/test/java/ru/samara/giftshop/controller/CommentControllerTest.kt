@@ -18,7 +18,7 @@ class CommentControllerTest : BaseTest() {
     fun addComment() {
         val comment = Comment()
         comment.text = "asdf"
-        comment.product = productsRepository.save(Product())
+        comment.product = productRepository.save(Product())
         mockMvc.perform(post("/comment")
             .content(jsonMapper.writeValueAsString(comment))
             .contentType(MediaType.APPLICATION_JSON))

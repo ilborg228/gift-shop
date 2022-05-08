@@ -4,18 +4,17 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.samara.giftshop.DTO.DTOMapper;
-import ru.samara.giftshop.DTO.ProductDTO;
-import ru.samara.giftshop.DTO.ProductDetails;
+import ru.samara.giftshop.dto.DTOMapper;
+import ru.samara.giftshop.dto.ProductDTO;
+import ru.samara.giftshop.dto.ProductDetails;
 import ru.samara.giftshop.entity.Product;
 import ru.samara.giftshop.exceptions.ApiException;
 import ru.samara.giftshop.exceptions.DataNotFoundResponse;
-import ru.samara.giftshop.repository.ProductsRepository;
+import ru.samara.giftshop.repository.ProductRepository;
 import ru.samara.giftshop.service.CategoryService;
 import ru.samara.giftshop.service.ProductService;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -24,7 +23,7 @@ import java.util.stream.Collectors;
 public class ProductController {
 
     private final ProductService productService;
-    private final ProductsRepository productsRepository;
+    private final ProductRepository productRepository;
     private final CategoryService categoryService;
 
     @PostMapping("/product/{categoryId}")
@@ -46,7 +45,7 @@ public class ProductController {
     @GetMapping("/product/{id}")
     public ProductDetails getProductDetails(@PathVariable Long id){
         ProductDetails p = DTOMapper.toProductDetails(
-                productsRepository.findById(id).orElseThrow(()-> new ApiException(DataNotFoundResponse.PRODUCT_NOT_FOUND)));
+                productRepository.findById(id).orElseThrow(()-> new ApiException(DataNotFoundResponse.PRODUCT_NOT_FOUND)));
         return p;
     }
 

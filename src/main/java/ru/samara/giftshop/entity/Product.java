@@ -26,7 +26,6 @@ public class Product {
     private String description;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @ToString.Exclude
     private Category category;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

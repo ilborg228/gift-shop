@@ -1,11 +1,12 @@
 package ru.samara.giftshop.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.stereotype.Service;
 import ru.samara.giftshop.entity.Product;
 import ru.samara.giftshop.exceptions.*;
 import ru.samara.giftshop.repository.CategoryRepository;
-import ru.samara.giftshop.repository.ProductsRepository;
+import ru.samara.giftshop.repository.ProductRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,18 +15,20 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
-    private final ProductsRepository productsRepository;
+    private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
+    private final StreamBridge streamBridge;
 
     @Override
     public void saveNewItem(Product product, Long categoryId) {
-        if(productsRepository.existsByName(product.getName())){
+        if(productRepository.existsByName(product.getName())){
             throw new ApiException(DataValidationResponse.PRODUCT_ALREADY_EXIST);
         }
         if(!categoryRepository.existsById(categoryId)){
             throw new ApiException(DataNotFoundResponse.CATEGORY_NOT_FOUND);
         }
-        productsRepository.save(product);
+        productRepository.saveAndFlush(product);
+        streamBridge.send("notificationEventSupplier-out-0",product.getId());
     }
 
     @Override
@@ -33,14 +36,14 @@ public class ProductServiceImpl implements ProductService {
         if(!categoryRepository.existsById(categoryId)){
             throw new ApiException(DataNotFoundResponse.CATEGORY_NOT_FOUND);
         }
-        return productsRepository.getProductsByCategoryId(categoryId);
+        return productRepository.getProductsByCategoryId(categoryId);
     }
 
     @Override
     public Product delete(Long id){
-        Optional<Product> op = productsRepository.findById(id);
+        Optional<Product> op = productRepository.findById(id);
         if(op.isPresent()) {
-            productsRepository.delete(op.get());
+            productRepository.delete(op.get());
             return op.get();
         }
         else {
@@ -50,7 +53,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void update(Product p){
-        Optional<Product> op = productsRepository.findById(p.getId());
+        Optional<Product> op = productRepository.findById(p.getId());
         if(op.isPresent()) {
             Product old = op.get();
             if(old.getName()!=null && p.getName()==null) p.setName(old.getName());
@@ -58,7 +61,7 @@ public class ProductServiceImpl implements ProductService {
             if(old.getImgSource()!=null && p.getImgSource()==null) p.setImgSource(old.getImgSource());
             if(old.getHeight()!=null && p.getHeight()==null) p.setHeight(old.getHeight());
             if(old.getCategory()!=null && p.getCategory()==null) p.setCategory(old.getCategory());
-            productsRepository.save(p);
+            productRepository.save(p);
         }
         else {
             throw new ApiException(DataNotFoundResponse.PRODUCT_NOT_FOUND);

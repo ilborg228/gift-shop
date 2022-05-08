@@ -7,7 +7,7 @@ import ru.samara.giftshop.entity.Category;
 import ru.samara.giftshop.entity.Product;
 import ru.samara.giftshop.repository.CategoryRepository;
 import ru.samara.giftshop.repository.CommentRepository;
-import ru.samara.giftshop.repository.ProductsRepository;
+import ru.samara.giftshop.repository.ProductRepository;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -18,7 +18,7 @@ public class GiftShopApplication {
     @Autowired
     private  CategoryRepository categoryRepository;
     @Autowired
-    private  ProductsRepository productsRepository;
+    private ProductRepository productRepository;
     @Autowired
     private  CommentRepository commentRepository;
 
@@ -52,7 +52,7 @@ public class GiftShopApplication {
         product4.setName("test-тест4");
         product4.setImgSource("http://samaragiftshop.ru/src/shop/2.jpg");
         product4.setCategory(category1);
-        productsRepository.saveAllAndFlush(List.of(product4,product1,product2,product3));
+        productRepository.saveAllAndFlush(List.of(product4,product1,product2,product3));
     }
 
 }

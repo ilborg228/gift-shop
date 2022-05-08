@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.samara.giftshop.repository.CategoryRepository;
 import ru.samara.giftshop.repository.CommentRepository;
-import ru.samara.giftshop.repository.ProductsRepository;
+import ru.samara.giftshop.repository.ProductRepository;
 
 public class BaseTest {
 
@@ -14,7 +14,7 @@ public class BaseTest {
     @Autowired
     protected ObjectMapper jsonMapper;
     @Autowired
-    protected ProductsRepository productsRepository;
+    protected ProductRepository productRepository;
     @Autowired
     protected CategoryRepository categoryRepository;
     @Autowired

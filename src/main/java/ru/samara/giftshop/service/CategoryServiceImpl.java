@@ -53,7 +53,7 @@ public class CategoryServiceImpl implements CategoryService{
 
     @Override
     public List<Product> findByName(String categoryName) {
-        Category c = repo.findByCategoryName(categoryName)
+        Category c = repo.getByCategoryName(categoryName)
                 .orElseThrow(()->new ApiException(DataNotFoundResponse.CATEGORY_NOT_FOUND));
         return c.getProducts();
     }

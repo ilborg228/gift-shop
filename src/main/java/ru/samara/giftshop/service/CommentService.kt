@@ -19,6 +19,6 @@ class CommentService (private val commentRepository: CommentRepository){
     }
 
     fun getComments(productId: Long): MutableIterable<Comment>? {
-        return commentRepository.findAllByProductId(productId);
+        return commentRepository.getAllByProductId(productId);
     }
 }

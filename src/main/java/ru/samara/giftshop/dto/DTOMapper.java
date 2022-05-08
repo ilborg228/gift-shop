@@ -1,11 +1,7 @@
-package ru.samara.giftshop.DTO;
+package ru.samara.giftshop.dto;
 
-import org.springframework.util.StringUtils;
 import ru.samara.giftshop.entity.Category;
 import ru.samara.giftshop.entity.Product;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class DTOMapper {
 
