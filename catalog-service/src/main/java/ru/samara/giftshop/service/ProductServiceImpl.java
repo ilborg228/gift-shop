@@ -1,7 +1,6 @@
 package ru.samara.giftshop.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.stereotype.Service;
 import ru.samara.giftshop.entity.Product;
 import ru.samara.giftshop.exceptions.*;
@@ -17,7 +16,6 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
-    private final StreamBridge streamBridge;
 
     @Override
     public void saveNewItem(Product product, Long categoryId) {
@@ -28,7 +26,6 @@ public class ProductServiceImpl implements ProductService {
             throw new ApiException(DataNotFoundResponse.CATEGORY_NOT_FOUND);
         }
         productRepository.saveAndFlush(product);
-        streamBridge.send("notificationEventSupplier-out-0",product.getId());
     }
 
     @Override

@@ -1,7 +1,6 @@
 package ru.samara.giftshop.entity;
 
 import lombok.Data;
-import lombok.Getter;
 
 import javax.persistence.*;
 import java.util.Date;

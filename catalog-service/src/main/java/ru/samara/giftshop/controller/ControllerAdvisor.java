@@ -10,8 +10,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import ru.samara.giftshop.exceptions.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 
 @RestControllerAdvice
 public class ControllerAdvisor extends ResponseEntityExceptionHandler {

@@ -1,9 +1,6 @@
 package ru.samara.giftshop.exceptions;
 
-import org.springframework.http.HttpStatus;
-
 import java.text.MessageFormat;
-import java.time.ZonedDateTime;
 
 public class ApiException extends AbstractException{
     public ApiException(IResponse error) {
