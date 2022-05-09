@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.samara.giftshop.dto.CategoryDTO;
 import ru.samara.giftshop.dto.DTOMapper;
 import ru.samara.giftshop.entity.Category;
-import ru.samara.giftshop.service.CategoryServiceImpl;
+import ru.samara.giftshop.service.CategoryService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,15 +19,14 @@ import java.util.stream.Collectors;
 @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 public class CategoryController {
 
-    private final CategoryServiceImpl categoryService;
+    private final CategoryService categoryService;
 
     @GetMapping("/category")
     public List<CategoryDTO> getAllCategories(){
-        List<CategoryDTO> l = categoryService.findAll()
+        return categoryService.findAll()
                 .stream()
                 .map(DTOMapper::toCategoryDTO)
                 .collect(Collectors.toList());
-        return l;
     }
 
     @PostMapping("/category")
@@ -37,14 +36,14 @@ public class CategoryController {
     }
 
     @DeleteMapping("/category/{id}")
-    public ResponseEntity<?> deleteCategory(@PathVariable Long id){
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteCategory(@PathVariable Long id){
         categoryService.delete(id);
-        return ResponseEntity.ok("Товар успешно удалён");
     }
 
     @PatchMapping("/category")
-    public ResponseEntity<?> updateCategory(@RequestBody Category entity){
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateCategory(@RequestBody Category entity){
         categoryService.update(entity);
-        return ResponseEntity.ok("Категория успешно обновлена");
     }
 }

@@ -31,7 +31,7 @@ public class MyConfiguration {
     }
 
     @Bean
-    public RestTemplate getRestTemplate(RestTemplateBuilder builder){
-        return builder.build();
+    public RestTemplate getRestTemplate(RestTemplateBuilder restTemplateBuilder){
+        return restTemplateBuilder.build();
     }
 }

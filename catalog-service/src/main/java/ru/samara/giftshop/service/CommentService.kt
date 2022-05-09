@@ -7,7 +7,7 @@ import ru.samara.giftshop.exceptions.DataValidationResponse
 import ru.samara.giftshop.repository.CommentRepository
 
 @Service
-class CommentService (private val commentRepository: CommentRepository){
+class CommentService (private val commentRepository: CommentRepository) : BaseService(){
 
     private val commentLength: Int = 3
 

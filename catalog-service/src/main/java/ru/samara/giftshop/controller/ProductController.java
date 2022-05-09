@@ -1,6 +1,7 @@
 package ru.samara.giftshop.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,34 +28,33 @@ public class ProductController {
     private final CategoryService categoryService;
 
     @PostMapping("/product/{categoryId}")
-    public ResponseEntity<?> addProduct
+    public Product addProduct
             (@PathVariable Long categoryId,@RequestBody Product product){
-        productService.saveNewItem(product, categoryId);
-        return ResponseEntity.status(201).body("Товар успешно добавлен");
+        return productService.saveNewItem(product, categoryId);
     }
 
     @GetMapping("/products/{categoryId}")
     public List<ProductDTO> getAllProducts(@PathVariable Long categoryId){
-        List<ProductDTO> l = productService.getByCategoryId(categoryId)
+        return productService.getByCategoryId(categoryId)
                 .stream()
                 .map(DTOMapper::toProductDTO)
                 .collect(Collectors.toList());
-        return l;
     }
 
     @GetMapping("/product/{id}")
     public ProductDetails getProductDetails(@PathVariable Long id){
-        ProductDetails p = DTOMapper.toProductDetails(
+        return DTOMapper.toProductDetails(
                 productRepository.findById(id).orElseThrow(()-> new ApiException(DataNotFoundResponse.PRODUCT_NOT_FOUND)));
-        return p;
     }
 
     @DeleteMapping("/product/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteProduct(@PathVariable Long id){
         productService.delete(id);
     }
 
     @PatchMapping("/product")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateProduct(@RequestBody Product p){
         productService.update(p);
     }
