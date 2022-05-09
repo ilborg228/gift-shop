@@ -1,7 +1,9 @@
 package ru.samara.giftshop.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.stereotype.Service;
+import ru.samara.giftshop.dto.MyMail;
 import ru.samara.giftshop.entity.Product;
 import ru.samara.giftshop.exceptions.*;
 import ru.samara.giftshop.repository.CategoryRepository;
@@ -16,6 +18,7 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
+    private final AmqpTemplate template;
 
     @Override
     public void saveNewItem(Product product, Long categoryId) {

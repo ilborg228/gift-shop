@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-import ru.samara.giftshop.model.Mail;
+import ru.samara.giftshop.dto.MyMail;
 
 @Service
 public class EmailService {
@@ -13,12 +13,12 @@ public class EmailService {
     private JavaMailSender emailSender;
 
     public void sendSimpleMessage(
-            Mail mail) {
+            MyMail myMail) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("noreply@baeldung.com");
-        message.setTo(mail.getTo());
-        message.setSubject(mail.getSubject());
-        message.setText(mail.getText());
+        message.setTo(myMail.getTo());
+        message.setSubject(myMail.getSubject());
+        message.setText(myMail.getText());
         emailSender.send(message);
     }
 }

@@ -1,6 +1,8 @@
 package ru.samara.giftshop.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,9 +31,9 @@ public class CategoryController {
     }
 
     @PostMapping("/category")
-    public ResponseEntity<?> addCategory(@RequestBody Category category){
-        Category c = categoryService.saveNewItem(category);
-        return ResponseEntity.status(201).body(c);
+    @ResponseStatus(HttpStatus.CREATED)
+    public Category addCategory(@RequestBody Category category) throws JsonProcessingException {
+        return categoryService.saveNewItem(category);
     }
 
     @DeleteMapping("/category/{id}")

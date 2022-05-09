@@ -1,7 +1,11 @@
 package ru.samara.giftshop.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.stereotype.Service;
+import ru.samara.giftshop.dto.MyMail;
 import ru.samara.giftshop.entity.Category;
 import ru.samara.giftshop.entity.Product;
 import ru.samara.giftshop.exceptions.*;
@@ -15,11 +19,20 @@ import java.util.Optional;
 public class CategoryServiceImpl implements CategoryService{
 
     private final CategoryRepository repo;
+    private final AmqpTemplate template;
+    private final ObjectMapper jsonMapper;
 
     @Override
-    public Category saveNewItem(Category category){
-        if (!repo.existsByCategoryName(category.getCategoryName()))
+    public Category saveNewItem(Category category) throws JsonProcessingException {
+        if (!repo.existsByCategoryName(category.getCategoryName())){
+            MyMail mail = MyMail.builder()
+                    .to("shirokih_i@mail.ru")
+                    .subject(category.getCategoryName())
+                    .text("New category was created!!")
+                    .build();
+            template.convertAndSend("notificationQueue", jsonMapper.writeValueAsString(mail));
             return repo.save(category);
+        }
         else
             throw new ApiException(DataValidationResponse.CATEGORY_ALREADY_EXIST);
     }
