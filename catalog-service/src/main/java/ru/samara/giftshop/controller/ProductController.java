@@ -24,8 +24,6 @@ import java.util.stream.Collectors;
 public class ProductController {
 
     private final ProductService productService;
-    private final ProductRepository productRepository;
-    private final CategoryService categoryService;
 
     @PostMapping("/product/{categoryId}")
     public Product addProduct
@@ -43,8 +41,7 @@ public class ProductController {
 
     @GetMapping("/product/{id}")
     public ProductDetails getProductDetails(@PathVariable Long id){
-        return DTOMapper.toProductDetails(
-                productRepository.findById(id).orElseThrow(()-> new ApiException(DataNotFoundResponse.PRODUCT_NOT_FOUND)));
+        return productService.getProductDetails(id);
     }
 
     @DeleteMapping("/product/{id}")
