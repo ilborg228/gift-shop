@@ -6,6 +6,7 @@
     <modules>
         <module>notification-service</module>
         <module>catalog-service</module>
+        <module>discovery-server</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
