@@ -1,5 +1,6 @@
 package ru.samara.giftshop.configuration;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -10,14 +11,23 @@ import java.util.Properties;
 @Configuration
 public class MailConfiguration {
 
+    @Value("${spring.myMail.username}")
+    private String userName;
+    @Value("${spring.myMail.password}")
+    private String password;
+    @Value("${spring.myMail.host}")
+    private String host;
+    @Value("${spring.myMail.port}")
+    private Integer port;
+
     @Bean
     public JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost("smtp.gmail.com");
-        mailSender.setPort(587);
+        mailSender.setHost(host);
+        mailSender.setPort(port);
 
-        mailSender.setUsername("asd120200@gmail.com");
-        mailSender.setPassword("rvktywrqvegicphy");
+        mailSender.setUsername(userName);
+        mailSender.setPassword(password);
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
