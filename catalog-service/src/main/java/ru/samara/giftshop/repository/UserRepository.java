@@ -6,5 +6,6 @@ import ru.samara.giftshop.entity.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User,Long> {
-    User getUserByUsername(String name);
+
+    User getByUsername(String name);
 }
