@@ -21,36 +21,29 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-public class ProductController {
+public class ProductController extends BaseController{
 
     private final ProductService productService;
 
-    @PostMapping("/product/{categoryId}")
+    @PostMapping("/products/{categoryId}")
+    @ResponseStatus(HttpStatus.CREATED)
     public Product addProduct
             (@PathVariable Long categoryId,@RequestBody Product product){
         return productService.saveNewItem(product, categoryId);
     }
 
-    @GetMapping("/products/{categoryId}")
-    public List<ProductDTO> getAllProducts(@PathVariable Long categoryId){
-        return productService.getByCategoryId(categoryId)
-                .stream()
-                .map(DTOMapper::toProductDTO)
-                .collect(Collectors.toList());
-    }
-
-    @GetMapping("/product/{id}")
+    @GetMapping("/products/{id}")
     public ProductDetails getProductDetails(@PathVariable Long id){
         return productService.getProductDetails(id);
     }
 
-    @DeleteMapping("/product/{id}")
+    @DeleteMapping("/products/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteProduct(@PathVariable Long id){
         productService.delete(id);
     }
 
-    @PatchMapping("/product")
+    @PatchMapping("/products")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateProduct(@RequestBody Product p){
         productService.update(p);
