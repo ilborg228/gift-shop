@@ -6,9 +6,9 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name="product_delivery")
+@Table(name="orders")
 @Data
-public class ProductDelivery {
+public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

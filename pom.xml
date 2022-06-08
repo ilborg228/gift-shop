@@ -8,6 +8,7 @@
         <module>notification-service</module>
         <module>catalog-service</module>
         <module>discovery-server</module>
+        <module>auth</module>
     </modules>
 
     <parent>

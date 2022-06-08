@@ -4,26 +4,31 @@
 ### Prerequisites
 * [Java Development Kit (JDK) 11](https://www.oracle.com/java/technologies/downloads/#java11)
 * [Maven 3](https://maven.apache.org/download.cgi)
+* MySQL 8
 
 ### Technology stack:
 * Spring Boot
 * Spring Data JPA
 * MySQL
+* RabbitMQ
+* Liquibase
 
-All endpoints for CRUD operations can be seen in:
- - [EndpointsController](https://github.com/ilborg228/gift-shop/blob/master/src/main/java/ru/samara/giftshop/controller/EndpoitsController.java) 
-```
 
-For any listed request:
-/category/** - endpoint for CRUD operations on categories  
-/product/** - endpoint for CRUD operations on products
-```
+### This project implements microservice architecture:
+
+* catalog-service: everything related to the product catalog
+* notification-service: need to send emails by SMTP
+* discovery-service: Eureka server
+* auth: responsible for authorization and authentication (not working right now)
+
 Build and Run
 -------------
 
-1. Run in the command line:
+1. Move to service base package
+
+2. Run in the command line:
     ```
     mvn clean install spring-boot:run
     ```
 
-2. Open `http://localhost:8080` in a web browser.
+3. Open `http://localhost:8080` in a web browser.

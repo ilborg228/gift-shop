@@ -3,6 +3,8 @@ package ru.samara.giftshop.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.stereotype.Service;
+import ru.samara.giftshop.dto.DTOMapper;
+import ru.samara.giftshop.dto.ProductDetails;
 import ru.samara.giftshop.entity.Product;
 import ru.samara.giftshop.exceptions.*;
 import ru.samara.giftshop.repository.CategoryRepository;
@@ -17,7 +19,6 @@ public class ProductService extends BaseService {
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
-    private final AmqpTemplate template;
 
     public Product saveNewItem(Product product, Long categoryId) {
         if(productRepository.existsByName(product.getName())){
@@ -61,5 +62,11 @@ public class ProductService extends BaseService {
         else {
             throw new ApiException(DataNotFoundResponse.PRODUCT_NOT_FOUND);
         }
+    }
+
+    public ProductDetails getProductDetails(Long id) {
+        return DTOMapper.toProductDetails(productRepository
+                .findById(id)
+                .orElseThrow(()-> new ApiException(DataNotFoundResponse.PRODUCT_NOT_FOUND)));
     }
 }
