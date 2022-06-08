@@ -8,6 +8,7 @@ import ru.samara.giftshop.entity.User;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UserDetailsImpl implements UserDetails {
 
@@ -19,7 +20,9 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        GrantedAuthority g = new OAuth2UserAuthority(new HashMap<>());
+        Map<String, Object> attributes = new HashMap<>();
+        attributes.put("123",new Object());
+        GrantedAuthority g = new OAuth2UserAuthority(attributes);
         return List.of(g);
     }
 
