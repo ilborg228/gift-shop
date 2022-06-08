@@ -2,6 +2,8 @@ package ru.samara.giftshop.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.samara.giftshop.dto.CategoryDTO;
@@ -38,9 +40,10 @@ public class CategoryService extends BaseService{
             throw new ApiException(DataValidationResponse.CATEGORY_ALREADY_EXIST);
     }
 
-    public List<CategoryDTO> findAll(Integer offset, Integer limit, OrderBy orderBy, OrderByType orderByType) {
+    public List<CategoryDTO> findAll(Integer page, Integer pageSize, OrderBy orderBy, OrderByType orderByType) {
         Sort sort = Sort.by(Sort.Direction.fromString(orderByType.getDirection()),orderBy.getColumn());
-        return categoryRepository.getAll(offset,limit, sort).stream()
+        Pageable pageable = PageRequest.of(page,pageSize,sort);
+        return categoryRepository.findAll(pageable).stream()
                 .map(DTOMapper::toCategoryDTO)
                 .collect(Collectors.toList());
     }
@@ -66,7 +69,7 @@ public class CategoryService extends BaseService{
     }
 
     public List<Product> findByName(String categoryName) {
-        Category c = categoryRepository.getByCategoryName(categoryName)
+        Category c = categoryRepository.findByCategoryName(categoryName)
                 .orElseThrow(()->new ApiException(DataNotFoundResponse.CATEGORY_NOT_FOUND));
         return c.getProducts();
     }

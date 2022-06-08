@@ -1,17 +1,23 @@
 package ru.samara.giftshop.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.samara.giftshop.dto.DTOMapper;
+import ru.samara.giftshop.dto.ProductDTO;
 import ru.samara.giftshop.dto.ProductDetails;
 import ru.samara.giftshop.entity.Product;
 import ru.samara.giftshop.exceptions.*;
+import ru.samara.giftshop.helpers.OrderBy;
+import ru.samara.giftshop.helpers.OrderByType;
 import ru.samara.giftshop.repository.CategoryRepository;
 import ru.samara.giftshop.repository.ProductRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,14 +33,19 @@ public class ProductService extends BaseService {
         if(!categoryRepository.existsById(categoryId)){
             throw new ApiException(DataNotFoundResponse.CATEGORY_NOT_FOUND);
         }
-        return productRepository.saveAndFlush(product);
+        return productRepository.save(product);
     }
 
-    public List<Product> getByCategoryId(Long categoryId) {
+    public List<ProductDTO> getByCategoryId(Long categoryId, Integer page, Integer pageSize, OrderBy orderBy, OrderByType orderByType) {
         if(!categoryRepository.existsById(categoryId)){
             throw new ApiException(DataNotFoundResponse.CATEGORY_NOT_FOUND);
         }
-        return productRepository.getProductsByCategoryId(categoryId);
+
+        Sort sort = Sort.by(Sort.Direction.fromString(orderByType.getDirection()),orderBy.getColumn());
+        Pageable pageable = PageRequest.of(page,pageSize,sort);
+        return productRepository.findProductsByCategoryId(categoryId,pageable).stream()
+                .map(DTOMapper::toProductDTO)
+                .collect(Collectors.toList());
     }
 
     public Product delete(Long id){

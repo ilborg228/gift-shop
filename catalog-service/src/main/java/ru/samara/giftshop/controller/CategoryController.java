@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.samara.giftshop.dto.CategoryDTO;
 import ru.samara.giftshop.dto.DTOMapper;
@@ -21,26 +20,28 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-public class CategoryController extends BaseController{
+public class CategoryController extends BaseController {
 
     private final CategoryService categoryService;
     private final ProductService productService;
 
     @GetMapping("/categories")
     public List<CategoryDTO> getAllCategories(
-            @RequestParam(required = false, defaultValue = DEF_PARAM_OFFSET) Integer offset,
-            @RequestParam(required = false, defaultValue = DEF_PARAM_LIMIT) Integer limit,
+            @RequestParam(required = false, defaultValue = DEF_PARAM_PAGE) Integer page,
+            @RequestParam(required = false, defaultValue = DEF_PARAM_PAGE_SIZE) Integer pageSize,
             @RequestParam(required = false, name = ORDER_BY) OrderBy orderBy,
-            @RequestParam(required = false, name = ORDER_BY_TYPE, defaultValue = DEF_PARAM_ORDER_BY_TYPE) OrderByType orderByType){
-        return categoryService.findAll(offset,limit,orderBy,orderByType);
+            @RequestParam(required = false, name = ORDER_BY_TYPE, defaultValue = DEF_PARAM_ORDER_BY_TYPE) OrderByType orderByType) {
+        return categoryService.findAll(page, pageSize, orderBy, orderByType);
     }
 
     @GetMapping("/categories/{categoryId}/products")
-    public List<ProductDTO> getAllProducts(@PathVariable Long categoryId){
-        return productService.getByCategoryId(categoryId)
-                .stream()
-                .map(DTOMapper::toProductDTO)
-                .collect(Collectors.toList());
+    public List<ProductDTO> getAllProducts(
+            @PathVariable Long categoryId,
+            @RequestParam(required = false, defaultValue = DEF_PARAM_PAGE) Integer page,
+            @RequestParam(required = false, defaultValue = DEF_PARAM_PAGE_SIZE) Integer pageSize,
+            @RequestParam(required = false, name = ORDER_BY) OrderBy orderBy,
+            @RequestParam(required = false, name = ORDER_BY_TYPE, defaultValue = DEF_PARAM_ORDER_BY_TYPE) OrderByType orderByType) {
+        return productService.getByCategoryId(categoryId,page, pageSize, orderBy, orderByType);
     }
 
     @PostMapping("/categories")
@@ -51,13 +52,13 @@ public class CategoryController extends BaseController{
 
     @DeleteMapping("/categories/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteCategory(@PathVariable Long id){
+    public void deleteCategory(@PathVariable Long id) {
         categoryService.delete(id);
     }
 
     @PatchMapping("/categories")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateCategory(@RequestBody Category entity){
+    public void updateCategory(@RequestBody Category entity) {
         categoryService.update(entity);
     }
 }
