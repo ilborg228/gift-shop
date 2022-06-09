@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @Builder
 @AllArgsConstructor
-public class CategoryDTO{
+public class CategoryDto {
     private String categoryName;
 
     private String imgSource;

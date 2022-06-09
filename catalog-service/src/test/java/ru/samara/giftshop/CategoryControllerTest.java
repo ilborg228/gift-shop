@@ -9,7 +9,7 @@ import org.springframework.util.MultiValueMap;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import ru.samara.giftshop.dto.CategoryDTO;
+import ru.samara.giftshop.dto.CategoryDto;
 import ru.samara.giftshop.helpers.OrderBy;
 import ru.samara.giftshop.helpers.OrderByType;
 
@@ -44,8 +44,8 @@ public class CategoryControllerTest extends BaseTest{
         ResultActions receivedResponse = this.mockMvc
                 .perform(get("/categories").params(params))
                 .andExpect(status().is(HttpStatus.OK.value()));
-        List<CategoryDTO> res =
+        List<CategoryDto> res =
                 jsonMapper.readValue(receivedResponse.andReturn().getResponse().getContentAsString(),
-                        new TypeReference<List<CategoryDTO>>() {});
+                        new TypeReference<List<CategoryDto>>() {});
     }
 }

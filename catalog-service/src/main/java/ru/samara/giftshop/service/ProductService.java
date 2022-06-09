@@ -5,8 +5,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import ru.samara.giftshop.dto.DTOMapper;
-import ru.samara.giftshop.dto.ProductDTO;
+import ru.samara.giftshop.dto.CommentDto;
+import ru.samara.giftshop.dto.DtoMapper;
+import ru.samara.giftshop.dto.ProductDto;
 import ru.samara.giftshop.dto.ProductDetails;
 import ru.samara.giftshop.entity.Comment;
 import ru.samara.giftshop.entity.Product;
@@ -29,17 +30,17 @@ public class ProductService extends BaseService {
     private final CategoryRepository categoryRepository;
     private final CommentRepository commentRepository;
 
-    public Product saveNewItem(Product product, Long categoryId) {
-        if(productRepository.existsByName(product.getName())){
+    public Product saveNewItem(ProductDetails product) {
+        if(product.getCategoryId() == null)
+            throw new ApiException(DataValidationResponse.INVALID_REQUEST);
+        if(productRepository.existsByName(product.getName()))
             throw new ApiException(DataValidationResponse.PRODUCT_ALREADY_EXIST);
-        }
-        if(!categoryRepository.existsById(categoryId)){
+        if(!categoryRepository.existsById(product.getCategoryId()))
             throw new ApiException(DataNotFoundResponse.CATEGORY_NOT_FOUND);
-        }
-        return productRepository.save(product);
+        return productRepository.save(DtoMapper.toProduct(product));
     }
 
-    public List<ProductDTO> getByCategoryId(
+    public List<ProductDto> getByCategoryId(
             Long categoryId, Integer page, Integer pageSize, OrderBy orderBy, OrderByType orderByType) {
 
         if(!categoryRepository.existsById(categoryId)){
@@ -49,7 +50,7 @@ public class ProductService extends BaseService {
         Sort sort = Sort.by(Sort.Direction.fromString(orderByType.getDirection()),orderBy.getColumn());
         Pageable pageable = PageRequest.of(page,pageSize,sort);
         return productRepository.findProductsByCategoryId(categoryId,pageable).stream()
-                .map(DTOMapper::toProductDTO)
+                .map(DtoMapper::toProductDTO)
                 .collect(Collectors.toList());
     }
 
@@ -80,12 +81,21 @@ public class ProductService extends BaseService {
     }
 
     public ProductDetails getProductDetails(Long id) {
-        return DTOMapper.toProductDetails(productRepository
+        return DtoMapper.toProductDetails(productRepository
                 .findById(id)
                 .orElseThrow(()-> new ApiException(DataNotFoundResponse.PRODUCT_NOT_FOUND)));
     }
 
-    public List<Comment> getAllCommentsByProduct(Long productId) {
-        return commentRepository.findAllByProductIdAndOrderByCreationDesc(productId);
+    public List<CommentDto> getAllCommentsByProductId(Long productId) {
+        Sort sort = Sort.by(Sort.Direction.DESC,"creation");
+        Pageable pageable = PageRequest.of(0,5,sort);
+        Product product = new Product();
+        product.setId(productId);
+
+        return commentRepository
+                .findAllByProduct(product, pageable)
+                .stream()
+                .map(DtoMapper::toCommentDto)
+                .collect(Collectors.toList());
     }
 }

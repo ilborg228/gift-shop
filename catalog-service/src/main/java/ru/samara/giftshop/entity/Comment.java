@@ -19,10 +19,10 @@ public class Comment {
     @ManyToOne(fetch = FetchType.EAGER)
     private Product product;
 
-    private Date creation;
+    public Date creation;
 
     @Enumerated(EnumType.STRING)
-    private ScoreValue scoreValue;
+    public ScoreValue scoreValue;
 
     public enum ScoreValue {
         ONE, TWO, THREE, FOUR, FIVE

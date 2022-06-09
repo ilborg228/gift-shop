@@ -7,11 +7,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import ru.samara.giftshop.dto.CategoryDTO;
-import ru.samara.giftshop.dto.DTOMapper;
+import ru.samara.giftshop.dto.CategoryDto;
+import ru.samara.giftshop.dto.DtoMapper;
 import ru.samara.giftshop.dto.MyMail;
 import ru.samara.giftshop.entity.Category;
-import ru.samara.giftshop.entity.Product;
 import ru.samara.giftshop.exceptions.*;
 import ru.samara.giftshop.helpers.OrderBy;
 import ru.samara.giftshop.helpers.OrderByType;
@@ -19,7 +18,6 @@ import ru.samara.giftshop.repository.CategoryRepository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -41,11 +39,11 @@ public class CategoryService extends BaseService{
             throw new ApiException(DataValidationResponse.CATEGORY_ALREADY_EXIST);
     }
 
-    public List<CategoryDTO> findAll(Integer page, Integer pageSize, OrderBy orderBy, OrderByType orderByType) {
+    public List<CategoryDto> findAll(Integer page, Integer pageSize, OrderBy orderBy, OrderByType orderByType) {
         Sort sort = Sort.by(Sort.Direction.fromString(orderByType.getDirection()),orderBy.getColumn());
         Pageable pageable = PageRequest.of(page,pageSize,sort);
         Page<Category> categories = categoryRepository.findAll(pageable);
-        return categories.map(DTOMapper::toCategoryDTO).getContent();
+        return categories.map(DtoMapper::toCategoryDTO).getContent();
     }
 
     public void delete(Long id) {

@@ -27,7 +27,7 @@ create table users (
 
 create table comments (
     id bigint not null AUTO_INCREMENT,
-    creation datetime(6),
+    creation timestamp,
     score_value varchar(255),
     text varchar(255),
     product_id bigint references products(id),
@@ -45,7 +45,7 @@ create table favorites (
 create table orders (
     id bigint not null AUTO_INCREMENT,
     address varchar(255),
-    order_creation datetime(6),
+    order_creation timestamp,
     product_id bigint references products(id),
     user_id bigint references users(id),
     primary key (id)

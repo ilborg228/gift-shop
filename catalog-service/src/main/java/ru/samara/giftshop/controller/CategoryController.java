@@ -5,9 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import ru.samara.giftshop.dto.CategoryDTO;
-import ru.samara.giftshop.dto.DTOMapper;
-import ru.samara.giftshop.dto.ProductDTO;
+import ru.samara.giftshop.dto.CategoryDto;
+import ru.samara.giftshop.dto.ProductDto;
 import ru.samara.giftshop.entity.Category;
 import ru.samara.giftshop.helpers.OrderBy;
 import ru.samara.giftshop.helpers.OrderByType;
@@ -15,7 +14,6 @@ import ru.samara.giftshop.service.CategoryService;
 import ru.samara.giftshop.service.ProductService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,7 +24,7 @@ public class CategoryController extends BaseController {
     private final ProductService productService;
 
     @GetMapping("/categories")
-    public List<CategoryDTO> getAllCategories(
+    public List<CategoryDto> getAllCategories(
             @RequestParam(required = false, defaultValue = DEF_PARAM_PAGE) Integer page,
             @RequestParam(required = false, name = PAGE_SIZE, defaultValue = DEF_PARAM_PAGE_SIZE) Integer pageSize,
             @RequestParam(required = false, name = ORDER_BY) OrderBy orderBy,
@@ -35,7 +33,7 @@ public class CategoryController extends BaseController {
     }
 
     @GetMapping("/categories/{categoryId}/products")
-    public List<ProductDTO> getAllProducts(
+    public List<ProductDto> getAllProducts(
             @PathVariable Long categoryId,
             @RequestParam(required = false, defaultValue = DEF_PARAM_PAGE) Integer page,
             @RequestParam(required = false, defaultValue = DEF_PARAM_PAGE_SIZE) Integer pageSize,
