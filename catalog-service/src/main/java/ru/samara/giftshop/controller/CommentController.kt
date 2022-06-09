@@ -16,15 +16,15 @@ class CommentController(private val commentService: CommentService) : BaseContro
         return commentService.addComment(comment)
     }
 
-    @DeleteMapping("/comment/{productId}")
+    @DeleteMapping("/comments/{productId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun deleteComments(@PathVariable productId : Long) {
         commentService.deleteComment(productId)
     }
 
-    @PatchMapping("/comment/{productId}")
+    @PatchMapping("/comments")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun editComments(@PathVariable productId : Long, @RequestBody comment: Comment) {
-        commentService.editComment(productId,comment)
+    fun editComments(@RequestBody comment: Comment) {
+        commentService.editComment(comment)
     }
 }

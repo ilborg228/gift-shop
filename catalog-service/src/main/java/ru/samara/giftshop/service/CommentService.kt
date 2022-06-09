@@ -1,7 +1,6 @@
 package ru.samara.giftshop.service
 
 import org.springframework.stereotype.Service
-import ru.samara.giftshop.entity.Category
 import ru.samara.giftshop.entity.Comment
 import ru.samara.giftshop.exceptions.ApiException
 import ru.samara.giftshop.exceptions.DataNotFoundResponse
@@ -25,14 +24,14 @@ class CommentService (private val commentRepository: CommentRepository) : BaseSe
         commentRepository.deleteById(productId)
     }
 
-    fun editComment(productId: Long, comment: Comment) {
-        val op: Optional<Comment> = commentRepository.findById(comment.getId())
+    fun editComment(comment: Comment) {
+        val op: Optional<Comment> = commentRepository.findById(comment.id)
         if (op.isPresent) {
             val old = op.get()
             if (old.text != null && comment.text == null) {
                 comment.text = old.text
             }
-            commentRepository.save<Comment>(comment)
+            commentRepository.save(comment)
         } else {
             throw ApiException(DataNotFoundResponse.PRODUCT_NOT_FOUND)
         }
