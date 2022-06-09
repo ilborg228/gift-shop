@@ -8,11 +8,13 @@ import org.springframework.stereotype.Service;
 import ru.samara.giftshop.dto.DTOMapper;
 import ru.samara.giftshop.dto.ProductDTO;
 import ru.samara.giftshop.dto.ProductDetails;
+import ru.samara.giftshop.entity.Comment;
 import ru.samara.giftshop.entity.Product;
 import ru.samara.giftshop.exceptions.*;
 import ru.samara.giftshop.helpers.OrderBy;
 import ru.samara.giftshop.helpers.OrderByType;
 import ru.samara.giftshop.repository.CategoryRepository;
+import ru.samara.giftshop.repository.CommentRepository;
 import ru.samara.giftshop.repository.ProductRepository;
 
 import java.util.List;
@@ -25,6 +27,7 @@ public class ProductService extends BaseService {
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
+    private final CommentRepository commentRepository;
 
     public Product saveNewItem(Product product, Long categoryId) {
         if(productRepository.existsByName(product.getName())){
@@ -50,11 +53,10 @@ public class ProductService extends BaseService {
                 .collect(Collectors.toList());
     }
 
-    public Product delete(Long id){
+    public void delete(Long id){
         Optional<Product> op = productRepository.findById(id);
         if(op.isPresent()) {
             productRepository.delete(op.get());
-            return op.get();
         }
         else {
             throw new ApiException(DataNotFoundResponse.PRODUCT_NOT_FOUND);
@@ -81,5 +83,9 @@ public class ProductService extends BaseService {
         return DTOMapper.toProductDetails(productRepository
                 .findById(id)
                 .orElseThrow(()-> new ApiException(DataNotFoundResponse.PRODUCT_NOT_FOUND)));
+    }
+
+    public List<Comment> getAllCommentsByProduct(Long productId) {
+        return commentRepository.findAllByProductIdAndOrderByCreationDesc(productId);
     }
 }

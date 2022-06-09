@@ -61,7 +61,9 @@ public class CategoryService extends BaseService{
         Optional<Category> op = categoryRepository.findById(p.getId());
         if(op.isPresent()) {
             Category old = op.get();
-            if(old.getCategoryName()!=null && p.getCategoryName()==null) p.setCategoryName(old.getCategoryName());
+            if(old.getCategoryName()!=null && p.getCategoryName()==null) {
+                p.setCategoryName(old.getCategoryName());
+            }
             categoryRepository.save(p);
         }
         else {

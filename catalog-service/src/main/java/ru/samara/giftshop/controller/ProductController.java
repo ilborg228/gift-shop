@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.samara.giftshop.dto.DTOMapper;
 import ru.samara.giftshop.dto.ProductDTO;
 import ru.samara.giftshop.dto.ProductDetails;
+import ru.samara.giftshop.entity.Comment;
 import ru.samara.giftshop.entity.Product;
 import ru.samara.giftshop.exceptions.ApiException;
 import ru.samara.giftshop.exceptions.DataNotFoundResponse;
@@ -32,7 +33,10 @@ public class ProductController extends BaseController{
         return productService.saveNewItem(product, categoryId);
     }
 
-
+    @GetMapping("/products/{productId}/comments")
+    public List<Comment> getAllCommentsByProduct(@PathVariable Long productId){
+        return productService.getAllCommentsByProduct(productId);
+    }
 
     @GetMapping("/products/{id}")
     public ProductDetails getProductDetails(@PathVariable Long id){

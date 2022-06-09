@@ -8,7 +8,7 @@ import ru.samara.giftshop.service.CommentService
 
 @RestController
 @RequestMapping(produces = [MediaType.APPLICATION_JSON_VALUE])
-class CommentController(private val commentService: CommentService) {
+class CommentController(private val commentService: CommentService) : BaseController() {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/comments")
