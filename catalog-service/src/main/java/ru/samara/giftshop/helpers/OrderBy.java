@@ -2,7 +2,7 @@ package ru.samara.giftshop.helpers;
 
 public enum OrderBy {
     ID("id"),
-    CATEGORY_NAME("category_name");
+    CATEGORY_NAME("categoryName");
 
     String column;
 

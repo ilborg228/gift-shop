@@ -2,6 +2,7 @@ package ru.samara.giftshop.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -43,14 +44,14 @@ public class CategoryService extends BaseService{
     public List<CategoryDTO> findAll(Integer page, Integer pageSize, OrderBy orderBy, OrderByType orderByType) {
         Sort sort = Sort.by(Sort.Direction.fromString(orderByType.getDirection()),orderBy.getColumn());
         Pageable pageable = PageRequest.of(page,pageSize,sort);
-        return categoryRepository.findAll(pageable).stream()
-                .map(DTOMapper::toCategoryDTO)
-                .collect(Collectors.toList());
+        Page<Category> categories = categoryRepository.findAll(pageable);
+        return categories.map(DTOMapper::toCategoryDTO).getContent();
     }
 
     public void delete(Long id) {
-        if (categoryRepository.findById(id).isPresent()) {
-            categoryRepository.delete(categoryRepository.findById(id).get());
+        Optional<Category> opt = categoryRepository.findById(id);
+        if (opt.isPresent()) {
+            categoryRepository.delete(opt.get());
         } else {
             throw new ApiException(DataNotFoundResponse.PRODUCT_NOT_FOUND);
         }
@@ -66,11 +67,5 @@ public class CategoryService extends BaseService{
         else {
             throw new ApiException(DataNotFoundResponse.PRODUCT_NOT_FOUND);
         }
-    }
-
-    public List<Product> findByName(String categoryName) {
-        Category c = categoryRepository.findByCategoryName(categoryName)
-                .orElseThrow(()->new ApiException(DataNotFoundResponse.CATEGORY_NOT_FOUND));
-        return c.getProducts();
     }
 }

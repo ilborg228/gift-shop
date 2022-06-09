@@ -32,6 +32,8 @@ public class ProductController extends BaseController{
         return productService.saveNewItem(product, categoryId);
     }
 
+
+
     @GetMapping("/products/{id}")
     public ProductDetails getProductDetails(@PathVariable Long id){
         return productService.getProductDetails(id);

@@ -36,7 +36,9 @@ public class ProductService extends BaseService {
         return productRepository.save(product);
     }
 
-    public List<ProductDTO> getByCategoryId(Long categoryId, Integer page, Integer pageSize, OrderBy orderBy, OrderByType orderByType) {
+    public List<ProductDTO> getByCategoryId(
+            Long categoryId, Integer page, Integer pageSize, OrderBy orderBy, OrderByType orderByType) {
+
         if(!categoryRepository.existsById(categoryId)){
             throw new ApiException(DataNotFoundResponse.CATEGORY_NOT_FOUND);
         }
