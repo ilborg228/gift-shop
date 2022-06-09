@@ -10,11 +10,12 @@ public class DataValidationResponse extends AbstractResponse {
 
     public static final DataValidationResponse CATEGORY_ALREADY_EXIST =
             new DataValidationResponse(1000,"Category already exists");
-
     public static final DataValidationResponse PRODUCT_ALREADY_EXIST =
             new DataValidationResponse(1001,"Product already exists");
     public static final DataValidationResponse COMMENT_LENGTH_IS_NOT_CORRET =
             new DataValidationResponse(1001,"Comment length must be greater, then {0}");
+    public static final DataValidationResponse INVALID_REQUEST =
+            new DataValidationResponse(1002,"Invalid request");
 
     DataValidationResponse(int code, String error) {
         super(code, error, BAD_STATUS);

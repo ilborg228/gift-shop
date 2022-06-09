@@ -3,8 +3,10 @@ package ru.samara.giftshop.service
 import org.springframework.stereotype.Service
 import ru.samara.giftshop.entity.Comment
 import ru.samara.giftshop.exceptions.ApiException
+import ru.samara.giftshop.exceptions.DataNotFoundResponse
 import ru.samara.giftshop.exceptions.DataValidationResponse
 import ru.samara.giftshop.repository.CommentRepository
+import java.util.*
 
 @Service
 class CommentService (private val commentRepository: CommentRepository) : BaseService(){
@@ -18,7 +20,20 @@ class CommentService (private val commentRepository: CommentRepository) : BaseSe
             throw ApiException(DataValidationResponse.COMMENT_LENGTH_IS_NOT_CORRET,commentLength)
     }
 
-    fun getComments(productId: Long): MutableIterable<Comment>? {
-        return commentRepository.getAllByProductId(productId);
+    fun deleteComment(productId: Long) {
+        commentRepository.deleteById(productId)
+    }
+
+    fun editComment(comment: Comment) {
+        val op: Optional<Comment> = commentRepository.findById(comment.id)
+        if (op.isPresent) {
+            val old = op.get()
+            if (old.text != null && comment.text == null) {
+                comment.text = old.text
+            }
+            commentRepository.save(comment)
+        } else {
+            throw ApiException(DataNotFoundResponse.PRODUCT_NOT_FOUND)
+        }
     }
 }

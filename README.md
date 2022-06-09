@@ -5,6 +5,7 @@
 * [Java Development Kit (JDK) 11](https://www.oracle.com/java/technologies/downloads/#java11)
 * [Maven 3](https://maven.apache.org/download.cgi)
 * MySQL 8
+* [RabbitMQ](https://www.rabbitmq.com/download.html)
 
 ### Technology stack:
 * Spring Boot
