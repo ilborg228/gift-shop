@@ -20,32 +20,4 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 public class CategoryControllerTest extends BaseTest{
-
-    @BeforeClass
-    public void before() {
-        for (int i = 0; i < 15; i++) {
-            dataPreparer.addCategory();
-        }
-    }
-
-    @AfterClass
-    public void after() {
-        clearTable("categories","products");
-    }
-
-    @Test
-    public void getAll() throws Exception {
-        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        params.add("order_by_type", OrderByType.ASC.name());
-        params.add("order_by", OrderBy.CATEGORY_NAME.name());
-        params.add("page", String.valueOf(0));
-        params.add("page_size", String.valueOf(10));
-
-        ResultActions receivedResponse = this.mockMvc
-                .perform(get("/categories").params(params))
-                .andExpect(status().is(HttpStatus.OK.value()));
-        List<CategoryDto> res =
-                jsonMapper.readValue(receivedResponse.andReturn().getResponse().getContentAsString(),
-                        new TypeReference<List<CategoryDto>>() {});
-    }
 }
