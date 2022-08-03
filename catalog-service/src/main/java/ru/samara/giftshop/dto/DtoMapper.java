@@ -7,7 +7,7 @@ import ru.samara.giftshop.entity.Product;
 public class DtoMapper {
 
     public static CategoryDto toCategoryDTO(Category c){
-        return new CategoryDto(c.getCategoryName(),c.getImgSource(),c.getId());
+        return new CategoryDto(c.getId(), c.getCategoryName(), c.getImgSource());
     }
 
     public static ProductDto toProductDTO(Product p){
@@ -50,7 +50,7 @@ public class DtoMapper {
         Comment comment = new Comment();
         comment.setCreation(commentDto.getCreation());
         comment.setId(commentDto.getId());
-        comment.setScoreValue(Comment.ScoreValue.valueOf(commentDto.getScoreValue()));
+        comment.setScoreValue(commentDto.getScoreValue());
         comment.setText(commentDto.getText());
         Product product = new Product();
         product.setId(commentDto.getProductId());
@@ -62,7 +62,7 @@ public class DtoMapper {
         CommentDto commentDto = new CommentDto();
         commentDto.setCreation(comment.getCreation());
         commentDto.setId(comment.getId());
-        commentDto.setScoreValue(comment.scoreValue.name());
+        commentDto.setScoreValue(comment.getScoreValue());
         commentDto.setText(comment.getText());
         commentDto.setProductId(comment.getProduct().getId());
         return commentDto;

@@ -21,10 +21,5 @@ public class Comment {
 
     public Date creation;
 
-    @Enumerated(EnumType.STRING)
-    public ScoreValue scoreValue;
-
-    public enum ScoreValue {
-        ONE, TWO, THREE, FOUR, FIVE
-    }
+    public Integer scoreValue;
 }

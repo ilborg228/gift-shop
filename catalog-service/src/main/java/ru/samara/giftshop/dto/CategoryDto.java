@@ -10,9 +10,7 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 public class CategoryDto {
+    private Long id;
     private String categoryName;
-
     private String imgSource;
-
-    private Long categoryId;
 }

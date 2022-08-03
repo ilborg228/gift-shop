@@ -9,7 +9,6 @@ import ru.samara.giftshop.dto.CommentDto;
 import ru.samara.giftshop.dto.DtoMapper;
 import ru.samara.giftshop.dto.ProductDto;
 import ru.samara.giftshop.dto.ProductDetails;
-import ru.samara.giftshop.entity.Comment;
 import ru.samara.giftshop.entity.Product;
 import ru.samara.giftshop.exceptions.*;
 import ru.samara.giftshop.helpers.OrderBy;
@@ -86,7 +85,7 @@ public class ProductService extends BaseService {
                 .orElseThrow(()-> new ApiException(DataNotFoundResponse.PRODUCT_NOT_FOUND)));
     }
 
-    public List<CommentDto> getAllCommentsByProductId(Long productId) {
+    public List<CommentDto> getCommentsByProductId(Long productId) {
         Sort sort = Sort.by(Sort.Direction.DESC,"creation");
         Pageable pageable = PageRequest.of(0,5,sort);
         Product product = new Product();

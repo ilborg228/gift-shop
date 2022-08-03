@@ -25,11 +25,6 @@ public class ProductController extends BaseController{
         return productService.saveNewItem(product);
     }
 
-    @GetMapping("/products/{productId}/comments")
-    public List<CommentDto> getAllCommentsByProduct(@PathVariable Long productId){
-        return productService.getAllCommentsByProductId(productId);
-    }
-
     @GetMapping("/products/{id}")
     public ProductDetails getProductDetails(@PathVariable Long id){
         return productService.getProductDetails(id);

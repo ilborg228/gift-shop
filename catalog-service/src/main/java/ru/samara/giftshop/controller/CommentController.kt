@@ -4,12 +4,16 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
 import ru.samara.giftshop.dto.CommentDto
+import ru.samara.giftshop.dto.CommentsSummary
 import ru.samara.giftshop.entity.Comment
+import ru.samara.giftshop.helpers.HttpHeaders
 import ru.samara.giftshop.service.CommentService
+import ru.samara.giftshop.service.ProductService
 
 @RestController
 @RequestMapping(produces = [MediaType.APPLICATION_JSON_VALUE])
-class CommentController(private val commentService: CommentService) : BaseController() {
+class CommentController(private val commentService: CommentService,
+                        private val productService: ProductService) : BaseController() {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/comments")
@@ -27,5 +31,16 @@ class CommentController(private val commentService: CommentService) : BaseContro
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun editComments(@PathVariable id: Long, @RequestBody comment: Comment) {
         commentService.editComment(id, comment)
+    }
+
+
+    @GetMapping("/products/{productId}/comments")
+    fun getCommentsByProduct(@PathVariable productId: Long): List<CommentDto?> {
+        return productService.getCommentsByProductId(productId)
+    }
+
+    @GetMapping("products/{productId}/comments", headers = [HttpHeaders.PRODUCE_VIEW + "=" + HttpHeaders.COMMENTS_SUMMARY])
+    fun getCommentsSummary(@PathVariable productId: Long): CommentsSummary {
+        return commentService.getCommentsSummary(productId)
     }
 }

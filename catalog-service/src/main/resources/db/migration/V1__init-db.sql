@@ -7,7 +7,7 @@ create table categories (
 
 create table products (
       id bigint not null AUTO_INCREMENT,
-      description varchar(255),
+      description varchar(2048),
       height integer,
       img_source varchar(255),
       name varchar(255),
@@ -28,8 +28,8 @@ create table users (
 create table comments (
     id bigint not null AUTO_INCREMENT,
     creation timestamp,
-    score_value varchar(255),
-    text varchar(255),
+    score_value INTEGER not null,
+    text varchar(2048),
     product_id bigint references products(id),
     user_id bigint references users(id),
     primary key (id)
@@ -44,7 +44,7 @@ create table favorites (
 
 create table orders (
     id bigint not null AUTO_INCREMENT,
-    address varchar(255),
+    address varchar(2048),
     order_creation timestamp,
     product_id bigint references products(id),
     user_id bigint references users(id),

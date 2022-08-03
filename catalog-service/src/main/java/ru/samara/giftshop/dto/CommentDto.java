@@ -7,16 +7,9 @@ import java.util.Date;
 
 @Data
 public class CommentDto {
-
     private Long id;
-
-    public String text;
-
-    @JsonProperty("product_id")
+    private String text;
     private Long productId;
-
-    public Date creation;
-
-    @JsonProperty("score_value")
-    private String scoreValue;
+    private Date creation;
+    private Integer scoreValue;
 }
