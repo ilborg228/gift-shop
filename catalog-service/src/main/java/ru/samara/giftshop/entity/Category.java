@@ -20,4 +20,7 @@ public class Category {
 
     @OneToMany(mappedBy = "category",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Product> products;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    private Category child;
 }

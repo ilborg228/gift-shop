@@ -7,7 +7,8 @@ import ru.samara.giftshop.entity.Product;
 public class DtoMapper {
 
     public static CategoryDto toCategoryDTO(Category c){
-        return new CategoryDto(c.getId(), c.getCategoryName(), c.getImgSource());
+        return new CategoryDto(c.getId(), c.getCategoryName(), c.getImgSource(),
+                c.getChild() != null ? toCategoryDTO(c.getChild()) : null);
     }
 
     public static ProductDto toProductDTO(Product p){
@@ -15,7 +16,6 @@ public class DtoMapper {
         dto.setId(p.getId());
         dto.setName(p.getName());
         dto.setPrice(p.getPrice());
-        dto.setImgSource(p.getImgSource());
         dto.setCategoryId(p.getCategory().getId());
         return dto;
     }
@@ -25,7 +25,6 @@ public class DtoMapper {
         dto.setId(p.getId());
         dto.setName(p.getName());
         dto.setPrice(p.getPrice());
-        dto.setImgSource(p.getImgSource());
         dto.setCategoryId(p.getCategory().getId());
         dto.setDescription(p.getDescription());
         dto.setHeight(p.getHeight());
@@ -39,7 +38,6 @@ public class DtoMapper {
         product.setHeight(productDetails.getHeight());
         product.setPrice(productDetails.getPrice());
         product.setDescription(productDetails.getDescription());
-        product.setImgSource(productDetails.getImgSource());
         Category category = new Category();
         category.setId(productDetails.getCategoryId());
         product.setCategory(category);

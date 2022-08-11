@@ -1,6 +1,6 @@
 spring:
   datasource:
-    username: finley
+    username: root
     password: password
     url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/gift_shop
   jpa:

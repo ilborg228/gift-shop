@@ -3,23 +3,19 @@ package ru.samara.giftshop.entity;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
-@Table(name="comments")
+@Table(name="product_images")
 @Data
-public class Comment {
-
+public class ProductImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String text;
+    private String imgSource;
+
+    private Boolean primaryImage;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Product product;
-
-    private Date creation;
-
-    private Integer scoreValue;
 }

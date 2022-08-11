@@ -40,6 +40,7 @@ public class CategoryService extends BaseService{
     }
 
     public List<CategoryDto> findAll(Integer page, Integer pageSize, OrderBy orderBy, OrderByType orderByType) {
+        orderBy = orderBy == null ? OrderBy.ID : orderBy;
         Sort sort = Sort.by(Sort.Direction.fromString(orderByType.getDirection()),orderBy.getColumn());
         Pageable pageable = PageRequest.of(page,pageSize,sort);
         Page<Category> categories = categoryRepository.findAll(pageable);

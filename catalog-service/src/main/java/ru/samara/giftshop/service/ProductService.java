@@ -69,7 +69,6 @@ public class ProductService extends BaseService {
             Product old = op.get();
             if(old.getName()!=null && p.getName()==null) p.setName(old.getName());
             if(old.getPrice()!=null && p.getPrice()==null) p.setPrice(old.getPrice());
-            if(old.getImgSource()!=null && p.getImgSource()==null) p.setImgSource(old.getImgSource());
             if(old.getHeight()!=null && p.getHeight()==null) p.setHeight(old.getHeight());
             if(old.getCategory()!=null && p.getCategory()==null) p.setCategory(old.getCategory());
             productRepository.save(p);

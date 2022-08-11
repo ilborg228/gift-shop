@@ -5,9 +5,9 @@ import lombok.Data;
 import javax.persistence.*;
 
 @Entity
-@Table(name="favorites")
+@Table(name="product_favorites")
 @Data
-public class FavoriteProduct {
+public class ProductFavorite {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
