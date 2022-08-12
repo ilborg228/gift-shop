@@ -26,4 +26,10 @@ public class Product {
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Comment> comments;
+
+    public Product (Long id) {
+        this.id = id;
+    }
+
+    public Product(){}
 }

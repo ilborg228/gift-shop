@@ -5,16 +5,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import ru.samara.giftshop.dto.CommentDto;
-import ru.samara.giftshop.dto.DtoMapper;
-import ru.samara.giftshop.dto.ProductDto;
-import ru.samara.giftshop.dto.ProductDetails;
+import ru.samara.giftshop.dto.*;
 import ru.samara.giftshop.entity.Product;
 import ru.samara.giftshop.exceptions.*;
 import ru.samara.giftshop.helpers.OrderBy;
 import ru.samara.giftshop.helpers.OrderByType;
 import ru.samara.giftshop.repository.CategoryRepository;
 import ru.samara.giftshop.repository.CommentRepository;
+import ru.samara.giftshop.repository.ProductImageRepository;
 import ru.samara.giftshop.repository.ProductRepository;
 
 import java.util.List;
@@ -28,6 +26,7 @@ public class ProductService extends BaseService {
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
     private final CommentRepository commentRepository;
+    private final ProductImageRepository productImageRepository;
 
     public Product saveNewItem(ProductDetails product) {
         if(product.getCategoryId() == null)
@@ -79,19 +78,24 @@ public class ProductService extends BaseService {
     }
 
     public ProductDetails getProductDetails(Long id) {
-        return DtoMapper.toProductDetails(productRepository
+        ProductDetails product = DtoMapper
+                .toProductDetails(productRepository
                 .findById(id)
-                .orElseThrow(()-> new ApiException(DataNotFoundResponse.PRODUCT_NOT_FOUND)));
+                .orElseThrow(() -> new ApiException(DataNotFoundResponse.PRODUCT_NOT_FOUND)));
+        product.setImages(productImageRepository
+                .findAllByProduct(new Product(id))
+                .stream()
+                .map(DtoMapper::toProductImageDto)
+                .collect(Collectors.toList()));
+        return product;
     }
 
     public List<CommentDto> getCommentsByProductId(Long productId) {
         Sort sort = Sort.by(Sort.Direction.DESC,"creation");
         Pageable pageable = PageRequest.of(0,5,sort);
-        Product product = new Product();
-        product.setId(productId);
 
         return commentRepository
-                .findAllByProduct(product, pageable)
+                .findAllByProduct(new Product(productId), pageable)
                 .stream()
                 .map(DtoMapper::toCommentDto)
                 .collect(Collectors.toList());

@@ -24,7 +24,7 @@ public class CategoryController extends BaseController {
     private final ProductService productService;
 
     @GetMapping("/categories")
-    public List<CategoryDto> getAllCategories(
+    public List<CategoryDto> getCategories(
             @RequestParam(required = false, defaultValue = DEF_PARAM_PAGE) Integer page,
             @RequestParam(required = false, name = PAGE_SIZE, defaultValue = DEF_PARAM_PAGE_SIZE) Integer pageSize,
             @RequestParam(required = false, name = ORDER_BY) OrderBy orderBy,
@@ -33,7 +33,7 @@ public class CategoryController extends BaseController {
     }
 
     @GetMapping("/categories/{categoryId}/products")
-    public List<ProductDto> getAllProducts(
+    public List<ProductDto> getProducts(
             @PathVariable Long categoryId,
             @RequestParam(required = false, defaultValue = DEF_PARAM_PAGE) Integer page,
             @RequestParam(required = false, defaultValue = DEF_PARAM_PAGE_SIZE) Integer pageSize,

@@ -3,6 +3,7 @@ package ru.samara.giftshop.dto;
 import ru.samara.giftshop.entity.Category;
 import ru.samara.giftshop.entity.Comment;
 import ru.samara.giftshop.entity.Product;
+import ru.samara.giftshop.entity.ProductImage;
 
 public class DtoMapper {
 
@@ -64,5 +65,13 @@ public class DtoMapper {
         commentDto.setText(comment.getText());
         commentDto.setProductId(comment.getProduct().getId());
         return commentDto;
+    }
+
+    public static ProductImageDto toProductImageDto(ProductImage image) {
+        ProductImageDto productImageDto = new ProductImageDto();
+        productImageDto.setId(image.getId());
+        productImageDto.setPrimaryImage(image.getPrimaryImage());
+        productImageDto.setImgSource(image.getImgSource());
+        return productImageDto;
     }
 }
