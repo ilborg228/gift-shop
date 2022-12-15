@@ -4,6 +4,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 import ru.samara.giftshop.entity.Product;
+import ru.samara.giftshop.entity.ProductImage;
 
 import java.util.List;
 
@@ -11,5 +12,5 @@ import java.util.List;
 public interface ProductRepository extends PagingAndSortingRepository<Product, Long> {
     boolean existsByName(String name);
 
-    List<Product> findProductsByCategoryId(Long categoryId, Pageable pageable);
+    List<Product> findProductsByCategoryIdAndProductImages(Long categoryId, List<ProductImage> productImages , Pageable pageable);
 }

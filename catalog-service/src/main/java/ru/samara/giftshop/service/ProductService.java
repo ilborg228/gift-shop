@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.samara.giftshop.dto.*;
 import ru.samara.giftshop.entity.Product;
+import ru.samara.giftshop.entity.ProductImage;
 import ru.samara.giftshop.exceptions.*;
 import ru.samara.giftshop.helpers.OrderBy;
 import ru.samara.giftshop.helpers.OrderByType;
@@ -63,7 +64,9 @@ public class ProductService extends BaseService {
 
         Sort sort = Sort.by(Sort.Direction.fromString(orderByType.getDirection()),orderBy.getColumn());
         Pageable pageable = PageRequest.of(page,pageSize,sort);
-        return productRepository.findProductsByCategoryId(categoryId,pageable).stream()
+        List<ProductImage> images = List.of();
+        return productRepository.findProductsByCategoryIdAndProductImages(categoryId, images, pageable)
+                .stream()
                 .map(DtoMapper::toProductDTO)
                 .collect(Collectors.toList());
     }
