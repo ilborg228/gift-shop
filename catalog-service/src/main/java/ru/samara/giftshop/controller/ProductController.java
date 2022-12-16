@@ -6,8 +6,11 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ru.samara.giftshop.dto.CommentDto;
 import ru.samara.giftshop.dto.ProductDetails;
+import ru.samara.giftshop.dto.ProductDto;
 import ru.samara.giftshop.entity.Comment;
 import ru.samara.giftshop.entity.Product;
+import ru.samara.giftshop.helpers.OrderBy;
+import ru.samara.giftshop.helpers.OrderByType;
 import ru.samara.giftshop.service.ProductService;
 
 import java.util.List;
@@ -28,6 +31,16 @@ public class ProductController extends BaseController{
     @GetMapping("/products/{id}")
     public ProductDetails getProductDetails(@PathVariable Long id){
         return productService.getProductDetails(id);
+    }
+
+    @GetMapping("/categories/{categoryId}/products")
+    public List<ProductDto> getProducts(
+            @PathVariable Long categoryId,
+            @RequestParam(required = false, defaultValue = DEF_PARAM_PAGE) Integer page,
+            @RequestParam(required = false, defaultValue = DEF_PARAM_PAGE_SIZE) Integer pageSize,
+            @RequestParam(required = false, name = ORDER_BY) OrderBy orderBy,
+            @RequestParam(required = false, name = ORDER_BY_TYPE, defaultValue = DEF_PARAM_ORDER_BY_TYPE) OrderByType orderByType) {
+        return productService.getByCategoryId(categoryId,page, pageSize, orderBy, orderByType);
     }
 
     @DeleteMapping("/products/{id}")

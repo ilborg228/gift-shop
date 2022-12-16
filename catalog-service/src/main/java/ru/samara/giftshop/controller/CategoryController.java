@@ -6,7 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ru.samara.giftshop.dto.CategoryDto;
-import ru.samara.giftshop.dto.ProductDto;
 import ru.samara.giftshop.entity.Category;
 import ru.samara.giftshop.helpers.OrderBy;
 import ru.samara.giftshop.helpers.OrderByType;
@@ -30,16 +29,6 @@ public class CategoryController extends BaseController {
             @RequestParam(required = false, name = ORDER_BY) OrderBy orderBy,
             @RequestParam(required = false, name = ORDER_BY_TYPE, defaultValue = DEF_PARAM_ORDER_BY_TYPE) OrderByType orderByType) {
         return categoryService.findAll(page, pageSize, orderBy, orderByType);
-    }
-
-    @GetMapping("/categories/{categoryId}/products")
-    public List<ProductDto> getProducts(
-            @PathVariable Long categoryId,
-            @RequestParam(required = false, defaultValue = DEF_PARAM_PAGE) Integer page,
-            @RequestParam(required = false, defaultValue = DEF_PARAM_PAGE_SIZE) Integer pageSize,
-            @RequestParam(required = false, name = ORDER_BY) OrderBy orderBy,
-            @RequestParam(required = false, name = ORDER_BY_TYPE, defaultValue = DEF_PARAM_ORDER_BY_TYPE) OrderByType orderByType) {
-        return productService.getByCategoryId(categoryId,page, pageSize, orderBy, orderByType);
     }
 
     @PostMapping("/categories")
