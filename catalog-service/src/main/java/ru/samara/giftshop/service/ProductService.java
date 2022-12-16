@@ -1,6 +1,9 @@
 package ru.samara.giftshop.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -23,18 +26,31 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ProductService extends BaseService {
 
+    Logger logger = LoggerFactory.getLogger(ProductService.class);
+
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
     private final CommentRepository commentRepository;
     private final ProductImageRepository productImageRepository;
 
-    public Product saveNewItem(ProductDetails product) {
+    public Product saveNewItem(ProductDetails product){
         if(product.getCategoryId() == null)
             throw new ApiException(DataValidationResponse.INVALID_REQUEST);
         if(productRepository.existsByName(product.getName()))
             throw new ApiException(DataValidationResponse.PRODUCT_ALREADY_EXIST);
         if(!categoryRepository.existsById(product.getCategoryId()))
             throw new ApiException(DataNotFoundResponse.CATEGORY_NOT_FOUND);
+
+        MyMail mail = MyMail.builder()
+                .to("shirokih_i@mail.ru")
+                .subject(product.getName())
+                .text("New product was created!!")
+                .build();
+        try {
+            rabbitTemplate.convertAndSend("notificationQueue", jsonMapper.writeValueAsString(mail));
+        } catch (JsonProcessingException ex) {
+            logger.error(ex.getMessage());
+        }
         return productRepository.save(DtoMapper.toProduct(product));
     }
 
