@@ -5,10 +5,13 @@ import org.springframework.stereotype.Repository;
 import ru.samara.giftshop.entity.Product;
 import ru.samara.giftshop.entity.ProductImage;
 
+import javax.persistence.NamedQuery;
 import java.util.List;
 
 @Repository
 public interface ProductImageRepository extends JpaRepository<ProductImage, Long> {
+
     List<ProductImage> findAllByProduct(Product product);
-    ProductImage findProductImageByProductAndPrimaryImage(Product product, Boolean primaryImage);
+
+    List<String> findAllByProducts(List<Long> productIds);
 }

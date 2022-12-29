@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class ProductImageDto {
     private Long id;
-    private String imgSource;
+    private String imageUrl;
     private Boolean primaryImage;
 }

@@ -12,5 +12,5 @@ import java.util.List;
 public interface ProductRepository extends PagingAndSortingRepository<Product, Long> {
     boolean existsByName(String name);
 
-    List<Product> findProductsByCategoryIdAndProductImages(Long categoryId, List<ProductImage> productImages , Pageable pageable);
+    List<Product> findProductsByCategoryId(Long categoryId, Pageable pageable);
 }

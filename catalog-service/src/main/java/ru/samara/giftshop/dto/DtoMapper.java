@@ -5,6 +5,9 @@ import ru.samara.giftshop.entity.Comment;
 import ru.samara.giftshop.entity.Product;
 import ru.samara.giftshop.entity.ProductImage;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class DtoMapper {
 
     public static CategoryDto toCategoryDTO(Category c){
@@ -18,6 +21,11 @@ public class DtoMapper {
         dto.setName(p.getName());
         dto.setPrice(p.getPrice());
         dto.setCategoryId(p.getCategory().getId());
+        dto.setImageUrl(p.getProductImages().stream()
+                .filter(ProductImage::getPrimaryImage)
+                .findFirst()
+                .map(ProductImage::getImageUrl)
+                .orElse(null));
         return dto;
     }
 
@@ -29,6 +37,14 @@ public class DtoMapper {
         dto.setCategoryId(p.getCategory().getId());
         dto.setDescription(p.getDescription());
         dto.setHeight(p.getHeight());
+        dto.setImageUrl(p.getProductImages().stream()
+                .filter(ProductImage::getPrimaryImage)
+                .findFirst().map(ProductImage::getImageUrl)
+                .orElse(null));
+        dto.setImages(p.getProductImages().stream()
+                .filter(i->!i.getPrimaryImage())
+                .map(ProductImage::getImageUrl)
+                .collect(Collectors.toList()));
         return dto;
     }
 
@@ -71,7 +87,7 @@ public class DtoMapper {
         ProductImageDto productImageDto = new ProductImageDto();
         productImageDto.setId(image.getId());
         productImageDto.setPrimaryImage(image.getPrimaryImage());
-        productImageDto.setImgSource(image.getImgSource());
+        productImageDto.setImageUrl(image.getImageUrl());
         return productImageDto;
     }
 }

@@ -8,5 +8,5 @@ import java.util.List;
 public class ProductDetails extends ProductDto {
     private String description;
     private Integer height;
-    private List<ProductImageDto> images;
+    private List<String> images;
 }

@@ -41,13 +41,6 @@
             <artifactId>spring-rabbit</artifactId>
         </dependency>
 
-        <!-- LOMBOK -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
-
         <!-- EUREKA CLIENT-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

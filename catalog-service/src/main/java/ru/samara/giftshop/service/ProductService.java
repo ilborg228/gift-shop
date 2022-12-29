@@ -19,6 +19,7 @@ import ru.samara.giftshop.repository.CommentRepository;
 import ru.samara.giftshop.repository.ProductImageRepository;
 import ru.samara.giftshop.repository.ProductRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -64,8 +65,7 @@ public class ProductService extends BaseService {
 
         Sort sort = Sort.by(Sort.Direction.fromString(orderByType.getDirection()),orderBy.getColumn());
         Pageable pageable = PageRequest.of(page,pageSize,sort);
-        List<ProductImage> images = List.of();
-        return productRepository.findProductsByCategoryIdAndProductImages(categoryId, images, pageable)
+        return productRepository.findProductsByCategoryId(categoryId, pageable)
                 .stream()
                 .map(DtoMapper::toProductDTO)
                 .collect(Collectors.toList());
@@ -97,16 +97,10 @@ public class ProductService extends BaseService {
     }
 
     public ProductDetails getProductDetails(Long id) {
-        ProductDetails product = DtoMapper
-                .toProductDetails(productRepository
+        Product product = productRepository
                 .findById(id)
-                .orElseThrow(() -> new ApiException(DataNotFoundResponse.PRODUCT_NOT_FOUND)));
-        product.setImages(productImageRepository
-                .findAllByProduct(new Product(id))
-                .stream()
-                .map(DtoMapper::toProductImageDto)
-                .collect(Collectors.toList()));
-        return product;
+                .orElseThrow(() -> new ApiException(DataNotFoundResponse.PRODUCT_NOT_FOUND));
+        return DtoMapper.toProductDetails(product);
     }
 
     public List<CommentDto> getCommentsByProductId(Long productId) {
