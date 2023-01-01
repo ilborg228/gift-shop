@@ -17,29 +17,22 @@ class CommentController(private val commentService: CommentService,
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/comments")
-    fun addComment(@RequestBody comment: CommentDto): Comment {
+    fun addComment(@RequestBody comment: CommentDto): CommentDto {
         return commentService.addComment(comment)
-    }
-
-    @DeleteMapping("/comments/{productId}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun deleteComments(@PathVariable productId: Long) {
-        commentService.deleteComment(productId)
     }
 
     @PatchMapping("/comments/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun editComments(@PathVariable id: Long, @RequestBody comment: Comment) {
+    fun editComment(@PathVariable id: Long, @RequestBody comment: Comment) {
         commentService.editComment(id, comment)
     }
-
 
     @GetMapping("/products/{productId}/comments")
     fun getCommentsByProduct(@PathVariable productId: Long): List<CommentDto?> {
         return productService.getCommentsByProductId(productId)
     }
 
-    @GetMapping("products/{productId}/comments", headers = [HttpHeaders.PRODUCE_VIEW + "=" + HttpHeaders.COMMENTS_SUMMARY])
+    @GetMapping("/products/{productId}/comments", headers = [HttpHeaders.PRODUCE_VIEW + "=" + HttpHeaders.COMMENTS_SUMMARY])
     fun getCommentsSummary(@PathVariable productId: Long): CommentsSummary {
         return commentService.getCommentsSummary(productId)
     }

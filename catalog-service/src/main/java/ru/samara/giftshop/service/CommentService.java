@@ -28,17 +28,13 @@ public class CommentService extends BaseService {
         this.commentRepository = commentRepository;
     }
 
-    public Comment addComment(CommentDto data) {
-        if (!StringUtils.hasText(data.getText()) && data.getText().length() > commentLength) {
+    public CommentDto addComment(CommentDto data) {
+        if (StringUtils.hasText(data.getText()) && data.getText().length() > commentLength) {
             data.setCreation(new Date());
-            return this.commentRepository.save(DtoMapper.toComment(data));
+            return DtoMapper.toCommentDto(commentRepository.save(DtoMapper.toComment(data)));
         } else {
             throw new ApiException(DataValidationResponse.COMMENT_LENGTH_IS_NOT_CORRET, this.commentLength);
         }
-    }
-
-    public final void deleteComment(long productId) {
-        this.commentRepository.deleteById(productId);
     }
 
     public final void editComment(long id, Comment comment) {
@@ -48,7 +44,7 @@ public class CommentService extends BaseService {
             if (old.getText() != null && comment.getText() == null) {
                 comment.setText(old.getText());
             }
-            this.commentRepository.save(comment);
+            commentRepository.save(comment);
         } else {
             throw new ApiException(DataNotFoundResponse.PRODUCT_NOT_FOUND);
         }
