@@ -43,6 +43,11 @@ public class ProductController extends BaseController{
         return productService.getByCategoryId(categoryId,page, pageSize, orderBy, orderByType);
     }
 
+    @GetMapping("/products")
+    public List<ProductDto> getMostViewed() {
+        return productService.getMostViewed();
+    }
+
     @DeleteMapping("/products/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteProduct(@PathVariable Long id){

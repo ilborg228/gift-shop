@@ -100,17 +100,31 @@ public class ProductService extends BaseService {
         Product product = productRepository
                 .findById(id)
                 .orElseThrow(() -> new ApiException(DataNotFoundResponse.PRODUCT_NOT_FOUND));
+
+        productRepository.incrementView(product.getId());
+
         return DtoMapper.toProductDetails(product);
     }
 
     public List<CommentDto> getCommentsByProductId(Long productId) {
-        Sort sort = Sort.by(Sort.Direction.DESC,"creation");
+        Sort sort = Sort.by(Sort.Direction.DESC, OrderBy.CREATION.getColumn());
         Pageable pageable = PageRequest.of(0,5,sort);
 
         return commentRepository
                 .findAllByProduct(new Product(productId), pageable)
                 .stream()
                 .map(DtoMapper::toCommentDto)
+                .collect(Collectors.toList());
+    }
+
+    public List<ProductDto> getMostViewed() {
+        Sort sort = Sort.by(Sort.Direction.DESC, OrderBy.VIEWS.getColumn());
+        Pageable pageable = PageRequest.of(0,5,sort);
+
+        return productRepository
+                .findAll(pageable)
+                .stream()
+                .map(DtoMapper::toProductDTO)
                 .collect(Collectors.toList());
     }
 }

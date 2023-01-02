@@ -8,6 +8,7 @@ import java.util.List;
 @Entity
 @Table(name="products")
 @Data
+@NamedQuery(name = "Product.incrementView", query = "update Product set views = views + 1 where id = :productId")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,6 +21,8 @@ public class Product {
     private Integer height;
 
     private String description;
+
+    private Long views;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Category category;
