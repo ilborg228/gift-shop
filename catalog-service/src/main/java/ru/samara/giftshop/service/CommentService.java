@@ -52,7 +52,7 @@ public class CommentService extends BaseService {
 
     public final CommentsSummary getCommentsSummary(long productId) {
         List<Comment> comments = commentRepository
-                .findAllByProduct(new Product(productId));
+                .findAllByProductId(productId);
         CommentsSummary res = new CommentsSummary();
         res.setAverageScore(comments.stream()
                 .mapToInt(Comment::getScoreValue)

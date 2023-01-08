@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.samara.giftshop.dto.CommentDto;
 import ru.samara.giftshop.dto.ProductDetails;
 import ru.samara.giftshop.dto.ProductDto;
+import ru.samara.giftshop.dto.ProductListDto;
 import ru.samara.giftshop.entity.Comment;
 import ru.samara.giftshop.entity.Product;
 import ru.samara.giftshop.helpers.OrderBy;
@@ -34,7 +35,7 @@ public class ProductController extends BaseController{
     }
 
     @GetMapping("/categories/{categoryId}/products")
-    public List<ProductDto> getProducts(
+    public ProductListDto getProducts(
             @PathVariable Long categoryId,
             @RequestParam(required = false, defaultValue = DEF_PARAM_PAGE) Integer page,
             @RequestParam(required = false, defaultValue = DEF_PARAM_PAGE_SIZE) Integer pageSize,

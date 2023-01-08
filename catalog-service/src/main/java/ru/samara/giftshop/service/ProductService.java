@@ -56,19 +56,23 @@ public class ProductService extends BaseService {
         return productRepository.save(DtoMapper.toProduct(product));
     }
 
-    public List<ProductDto> getByCategoryId(
+    public ProductListDto getByCategoryId(
             Long categoryId, Integer page, Integer pageSize, OrderBy orderBy, OrderByType orderByType) {
 
         if(!categoryRepository.existsById(categoryId)){
             throw new ApiException(DataNotFoundResponse.CATEGORY_NOT_FOUND);
         }
 
-        Sort sort = Sort.by(Sort.Direction.fromString(orderByType.getDirection()),orderBy.getColumn());
-        Pageable pageable = PageRequest.of(page,pageSize,sort);
-        return productRepository.findProductsByCategoryId(categoryId, pageable)
+        Long count = productRepository.countAllByCategoryId(categoryId);
+
+        Sort sort = Sort.by(Sort.Direction.fromString(orderByType.getDirection()), orderBy.getColumn());
+        Pageable pageable = PageRequest.of(page, pageSize, sort);
+        List<ProductDto> products = productRepository.findProductsByCategoryId(categoryId, pageable)
                 .stream()
                 .map(DtoMapper::toProductDTO)
                 .collect(Collectors.toList());
+
+        return new ProductListDto(products, count);
     }
 
     public void delete(Long id){
@@ -111,7 +115,7 @@ public class ProductService extends BaseService {
         Pageable pageable = PageRequest.of(0,5,sort);
 
         return commentRepository
-                .findAllByProduct(new Product(productId), pageable)
+                .findAllByProductId(productId, pageable)
                 .stream()
                 .map(DtoMapper::toCommentDto)
                 .collect(Collectors.toList());
