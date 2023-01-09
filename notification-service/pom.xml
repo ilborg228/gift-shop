@@ -23,19 +23,6 @@
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
 
-        <!-- LOMBOK -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
-
-        <!-- RabbitMQ -->
-        <dependency>
-            <groupId>org.springframework.amqp </groupId>
-            <artifactId>spring-rabbit</artifactId>
-        </dependency>
-
         <!-- EUREKA CLIENT-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

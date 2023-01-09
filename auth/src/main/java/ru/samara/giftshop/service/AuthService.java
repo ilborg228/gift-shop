@@ -5,7 +5,6 @@ import ru.samara.giftshop.entity.User;
 import ru.samara.giftshop.exceptions.ApiException;
 import ru.samara.giftshop.exceptions.DataNotFoundResponse;
 import ru.samara.giftshop.exceptions.DataValidationResponse;
-import ru.samara.giftshop.model.AuthResponseDto;
 import ru.samara.giftshop.model.TokenRequest;
 import ru.samara.giftshop.repository.UserRepository;
 
