@@ -5,14 +5,12 @@ import ru.samara.giftshop.entity.Comment;
 import ru.samara.giftshop.entity.Product;
 import ru.samara.giftshop.entity.ProductImage;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class DtoMapper {
 
     public static CategoryDto toCategoryDTO(Category c){
-        return new CategoryDto(c.getId(), c.getCategoryName(), c.getImgSource(),
-                c.getChild() != null ? toCategoryDTO(c.getChild()) : null);
+        return new CategoryDto(c.getId(), c.getCategoryName(), c.getImageUrl());
     }
 
     public static ProductDto toProductDTO(Product p){

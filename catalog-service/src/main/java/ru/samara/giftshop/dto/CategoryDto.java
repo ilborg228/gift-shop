@@ -13,5 +13,4 @@ public class CategoryDto {
     private Long id;
     private String categoryName;
     private String imgSource;
-    private CategoryDto child;
 }

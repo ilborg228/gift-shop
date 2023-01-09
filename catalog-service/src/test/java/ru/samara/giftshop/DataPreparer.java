@@ -18,7 +18,7 @@ public class DataPreparer {
     public Category buildCategory(){
         Category category = new Category();
         category.setCategoryName(RandomStringUtils.random(32,true,true));
-        category.setImgSource(RandomStringUtils.random(32,true,true));
+        category.setImageUrl(RandomStringUtils.random(32,true,true));
         return category;
     }
 

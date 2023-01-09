@@ -16,11 +16,8 @@ public class Category {
 
     private String categoryName;
 
-    private String imgSource;
+    private String imageUrl;
 
-    @OneToMany(mappedBy = "category",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Product> products;
-
-    @OneToOne(fetch = FetchType.EAGER)
-    private Category child;
 }
