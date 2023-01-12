@@ -10,7 +10,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.samara.giftshop.dto.*;
 import ru.samara.giftshop.entity.Product;
-import ru.samara.giftshop.entity.ProductImage;
 import ru.samara.giftshop.exceptions.*;
 import ru.samara.giftshop.helpers.OrderBy;
 import ru.samara.giftshop.helpers.OrderByType;
@@ -19,7 +18,6 @@ import ru.samara.giftshop.repository.CommentRepository;
 import ru.samara.giftshop.repository.ProductImageRepository;
 import ru.samara.giftshop.repository.ProductRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
