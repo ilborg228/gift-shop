@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="orders")
@@ -14,8 +15,8 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Product product;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Product> product;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;

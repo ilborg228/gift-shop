@@ -10,7 +10,26 @@ import java.util.stream.Collectors;
 public class DtoMapper {
 
     public static CategoryDto toCategoryDTO(Category c){
-        return new CategoryDto(c.getId(), c.getCategoryName(), c.getImageUrl());
+        CategoryDto category = new CategoryDto();
+        category.setId(c.getId());
+        category.setCategoryName(c.getCategoryName());
+        category.setImageUrl(c.getImageUrl());
+        category.setParentId(c.getParent() != null ? c.getParent().getId() : null);
+        return category;
+    }
+
+
+    public static Category toCategory(CategoryDto dto) {
+        Category category = new Category();
+        category.setId(dto.getId());
+        category.setCategoryName(dto.getCategoryName());
+        category.setImageUrl(dto.getImageUrl());
+        if (dto.getParentId() != null) {
+            Category parent = new Category();
+            parent.setId(dto.getParentId());
+            category.setParent(parent);
+        }
+        return category;
     }
 
     public static ProductDto toProductDTO(Product p){

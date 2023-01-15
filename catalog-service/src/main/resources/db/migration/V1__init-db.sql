@@ -1,17 +1,19 @@
 create table categories (
     id            bigint auto_increment primary key,
     category_name varchar(255) null,
-    image_url     varchar(255) null
+    image_url     varchar(255) null,
+    parent_id     bigint       null,
+    has_child     boolean      default false
 );
 
 create table products (
-    id          bigint auto_increment primary key,
+    id          bigint        auto_increment primary key,
     description varchar(2048) null,
     height      int           null,
     name        varchar(255)  null,
     price       double        null,
     category_id bigint        null,
-    views       int default 0 null
+    views       bigint        default 0
 );
 
 create table users (
@@ -40,8 +42,12 @@ create table orders (
     id             bigint auto_increment primary key,
     address        varchar(2048) null,
     order_creation timestamp     null,
-    product_id     bigint        null,
     user_id        bigint        null
+);
+
+create table orders_product (
+    order_id       bigint     null,
+    product_id     bigint     null
 );
 
 create table product_images (
@@ -52,7 +58,8 @@ create table product_images (
 );
 
 
-insert into categories(category_name, image_url) values ('Test123', 'https://www.rabbitmq.com/img/logo-rabbitmq.svg');
+insert into categories(category_name, image_url, has_child) values ('Test123', 'https://www.rabbitmq.com/img/logo-rabbitmq.svg', 1);
+insert into categories(category_name, image_url, parent_id) values ('Test1', 'https://www.rabbitmq.com/img/logo-rabbitmq.svg', 1);
 
 insert into products(description, height, name, price, category_id) values ('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus animi asperiores cum debitis dolor, dolorem doloremque eum explicabo facilis id ipsum molestiae, nam odio optio quam reiciendis soluta vero voluptatibus?,',
                                                                             100,'Фантастический прикол', 2100, 1);

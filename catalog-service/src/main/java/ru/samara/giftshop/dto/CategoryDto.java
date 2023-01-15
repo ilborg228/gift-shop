@@ -1,16 +1,12 @@
 package ru.samara.giftshop.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
-@Builder
-@AllArgsConstructor
+@Data
 public class CategoryDto {
     private Long id;
     private String categoryName;
-    private String imgSource;
+    private String imageUrl;
+    private Long parentId;
+    private Boolean hasChild;
 }

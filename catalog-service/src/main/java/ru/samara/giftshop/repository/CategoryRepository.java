@@ -1,5 +1,6 @@
 package ru.samara.giftshop.repository;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 import ru.samara.giftshop.entity.Category;
@@ -10,5 +11,5 @@ public interface CategoryRepository extends PagingAndSortingRepository<Category,
 
     boolean existsByCategoryName(String name);
 
-    Optional<Category> findByCategoryName(String name);
+    List<Category> findAllByParentId(Long parentId, Pageable pageable);
 }

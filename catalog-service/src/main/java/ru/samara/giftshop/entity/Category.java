@@ -20,4 +20,9 @@ public class Category {
 
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Product> products;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Category parent;
+
+    private boolean hasChild;
 }
