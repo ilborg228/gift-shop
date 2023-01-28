@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.samara.giftshop.dto.*;
+import ru.samara.giftshop.entity.Category;
 import ru.samara.giftshop.entity.Product;
 import ru.samara.giftshop.exceptions.*;
 import ru.samara.giftshop.helpers.OrderBy;
@@ -70,7 +71,8 @@ public class ProductService extends BaseService {
                 .map(DtoMapper::toProductDTO)
                 .collect(Collectors.toList());
 
-        return new ProductListDto(products, count);
+        Optional<Category> category = categoryRepository.findById(categoryId);
+        return new ProductListDto(products, count, category.map(Category::getCategoryName).orElse(null));
     }
 
     public void delete(Long id){

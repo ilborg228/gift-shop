@@ -10,4 +10,5 @@ import java.util.List;
 public class ProductListDto {
     private List<ProductDto> products;
     private Long count;
+    private String categoryName;
 }

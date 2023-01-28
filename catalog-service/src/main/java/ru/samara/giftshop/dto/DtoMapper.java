@@ -15,6 +15,7 @@ public class DtoMapper {
         category.setCategoryName(c.getCategoryName());
         category.setImageUrl(c.getImageUrl());
         category.setParentId(c.getParent() != null ? c.getParent().getId() : null);
+        category.setHasChild(c.isHasChild());
         return category;
     }
 
