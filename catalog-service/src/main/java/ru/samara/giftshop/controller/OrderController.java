@@ -17,8 +17,14 @@ public class OrderController extends BaseController {
 
     @PostMapping("/orders")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void addToCart(@RequestBody OrderDto order) {
-        orderService.addProductToCart(order);
+    public void addToCart(@RequestBody OrderDto req) {
+        orderService.addProductToCart(req);
+    }
+
+    @PostMapping("/orders/submit")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void submitOrder(@RequestBody OrderDto req) {
+        orderService.submitOrder(req);
     }
 
     @DeleteMapping("/orders/{orderId}/products/{productId}")

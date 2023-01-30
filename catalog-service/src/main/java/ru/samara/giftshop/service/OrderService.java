@@ -39,7 +39,7 @@ public class OrderService extends BaseService {
                 new ApiException(DataNotFoundResponse.PRODUCT_NOT_FOUND));
         User user = userRepository.findById(userId).orElseThrow(() ->
                 new ApiException(DataNotFoundResponse.USER_NOT_FOUND));
-        Optional<Order> opt = orderRepository.findOrderByUserId(userId);
+        Optional<Order> opt = orderRepository.findOrderByUserIdAndStatus(userId, Order.Status.CREATED);
         if (opt.isPresent()) {
             List<Product> products = opt.get().getProducts();
             products.add(product);
@@ -50,6 +50,7 @@ public class OrderService extends BaseService {
             order.setProducts(List.of(product));
             order.setUser(user);
             order.setOrderCreation(new Date());
+            order.setStatus(Order.Status.CREATED);
             orderRepository.save(order);
         }
     }
@@ -71,10 +72,23 @@ public class OrderService extends BaseService {
     public OrderDto getOrder(Long userId) {
         return DtoMapper.toOrderDto(
                 orderRepository
-                        .findOrderByUserId(userId)
+                        .findOrderByUserIdAndStatus(userId, Order.Status.CREATED)
                         .orElseThrow(() ->
                                 new ApiException(DataNotFoundResponse.ORDER_NOT_FOUND)
                         )
         );
+    }
+
+    public void submitOrder(OrderDto req) {
+        notNull(req.getAddress());
+        notNull(req.getId());
+
+        Order order = orderRepository.findOrderByIdAndStatus(req.getId(), Order.Status.CREATED)
+                .orElseThrow(() -> new ApiException(DataNotFoundResponse.ORDER_NOT_FOUND));
+
+        order.setStatus(Order.Status.SUBMITTED);
+        order.setAddress(req.getAddress());
+
+        orderRepository.save(order);
     }
 }

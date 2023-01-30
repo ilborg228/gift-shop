@@ -28,4 +28,11 @@ public class Order {
     private String address;
 
     private Date orderCreation;
+
+    @Enumerated(EnumType.ORDINAL)
+    private Status status;
+
+    public enum Status {
+        CREATED, SUBMITTED, APPROVED, REJECTED;
+    }
 }

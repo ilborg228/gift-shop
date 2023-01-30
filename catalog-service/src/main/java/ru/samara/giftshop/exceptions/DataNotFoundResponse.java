@@ -3,7 +3,7 @@ package ru.samara.giftshop.exceptions;
 import org.springframework.http.HttpStatus;
 
 public class DataNotFoundResponse extends AbstractResponse{
-    private static final HttpStatus BAD_STATUS = HttpStatus.BAD_REQUEST;
+    private static final HttpStatus BAD_STATUS = HttpStatus.NOT_FOUND;
     static final int MIN_CODE = 2000;
     static final int MAX_CODE = 2999;
 

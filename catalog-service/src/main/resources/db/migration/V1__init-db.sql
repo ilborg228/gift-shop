@@ -42,7 +42,8 @@ create table orders (
     id             bigint auto_increment primary key,
     address        varchar(2048) null,
     order_creation timestamp     null,
-    user_id        bigint        null
+    user_id        bigint        null,
+    status         integer        null
 );
 
 create table order_products (
