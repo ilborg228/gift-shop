@@ -45,7 +45,7 @@ create table orders (
     user_id        bigint        null
 );
 
-create table orders_product (
+create table order_products (
     order_id       bigint     null,
     product_id     bigint     null
 );
@@ -62,7 +62,7 @@ insert into categories(category_name, image_url, has_child) values ('Test123', '
 insert into categories(category_name, image_url, parent_id) values ('Test1', 'https://www.rabbitmq.com/img/logo-rabbitmq.svg', 1);
 
 insert into products(description, height, name, price, category_id) values ('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus animi asperiores cum debitis dolor, dolorem doloremque eum explicabo facilis id ipsum molestiae, nam odio optio quam reiciendis soluta vero voluptatibus?,',
-                                                                            100,'Фантастический прикол', 2100, 1);
+                                                                            100,'Фантастический прикол', 2100, 2);
 insert into product_images(image_url, primary_image, product_id) VALUES ('http://samaragiftshop.ru/src/shop/2.jpg', 1, 1);
 insert into product_images(image_url, primary_image, product_id) VALUES ('http://samaragiftshop.ru/src/shop/3.jpg', 0, 1);
 insert into product_images(image_url, primary_image, product_id) VALUES ('http://samaragiftshop.ru/src/shop/4.jpg', 0, 1);

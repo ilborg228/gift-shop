@@ -35,8 +35,9 @@ public class ProductService extends BaseService {
     private final ProductImageRepository productImageRepository;
 
     public Product saveNewItem(ProductDetails product){
-        if(product.getCategoryId() == null)
-            throw new ApiException(DataValidationResponse.INVALID_REQUEST);
+        notNull(product);
+        notNull(product.getCategoryId());
+
         if(productRepository.existsByName(product.getName()))
             throw new ApiException(DataValidationResponse.PRODUCT_ALREADY_EXIST);
         if(!categoryRepository.existsById(product.getCategoryId()))

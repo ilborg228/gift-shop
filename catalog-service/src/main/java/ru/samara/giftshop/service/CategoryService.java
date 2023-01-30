@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class CategoryService extends BaseService{
+public class CategoryService extends BaseService {
 
     private final CategoryRepository categoryRepository;
 

@@ -1,9 +1,6 @@
 package ru.samara.giftshop.dto;
 
-import ru.samara.giftshop.entity.Category;
-import ru.samara.giftshop.entity.Comment;
-import ru.samara.giftshop.entity.Product;
-import ru.samara.giftshop.entity.ProductImage;
+import ru.samara.giftshop.entity.*;
 
 import java.util.stream.Collectors;
 
@@ -107,5 +104,20 @@ public class DtoMapper {
         productImageDto.setPrimaryImage(image.getPrimaryImage());
         productImageDto.setImageUrl(image.getImageUrl());
         return productImageDto;
+    }
+
+    public static OrderDto toOrderDto(Order order) {
+        OrderDto orderDto = new OrderDto();
+        orderDto.setId(order.getId());
+        orderDto.setUserId(order.getUser() != null ? order.getUser().getId() : null);
+        orderDto.setAddress(order.getAddress());
+        orderDto.setOrderCreation(order.getOrderCreation());
+        orderDto.setProducts(
+                order.getProducts()
+                        .stream()
+                        .map(DtoMapper::toProductDTO)
+                        .collect(Collectors.toList())
+        );
+        return orderDto;
     }
 }

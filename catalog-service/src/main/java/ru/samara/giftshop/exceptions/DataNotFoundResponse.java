@@ -16,6 +16,9 @@ public class DataNotFoundResponse extends AbstractResponse{
     public static final DataNotFoundResponse USER_NOT_FOUND =
             new DataNotFoundResponse(2002,"User not found");
 
+    public static final DataNotFoundResponse ORDER_NOT_FOUND =
+            new DataNotFoundResponse(2003,"Order not found");
+
     DataNotFoundResponse(int code, String error) {
         super(code, error, BAD_STATUS);
     }
