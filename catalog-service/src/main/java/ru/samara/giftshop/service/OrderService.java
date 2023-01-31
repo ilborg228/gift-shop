@@ -70,6 +70,8 @@ public class OrderService extends BaseService {
     }
 
     public OrderDto getOrder(Long userId) {
+        notNull(userId);
+
         return DtoMapper.toOrderDto(
                 orderRepository
                         .findOrderByUserIdAndStatus(userId, Order.Status.CREATED)

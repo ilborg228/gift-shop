@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.samara.giftshop.dto.OrderDto;
-import ru.samara.giftshop.entity.Order;
 import ru.samara.giftshop.service.OrderService;
-
-import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
