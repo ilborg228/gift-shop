@@ -1,4 +1,4 @@
-package ru.samara.giftshop.helpers;
+package ru.samara.giftshop.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import ru.samara.giftshop.exceptions.ApiException;
 import ru.samara.giftshop.exceptions.DataValidationResponse;
 import ru.samara.giftshop.exceptions.IResponse;
+import ru.samara.giftshop.helpers.ExceptionHandlerUtil;
 
 import javax.servlet.http.HttpServletRequest;
 

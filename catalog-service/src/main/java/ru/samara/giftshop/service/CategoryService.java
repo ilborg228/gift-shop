@@ -76,4 +76,9 @@ public class CategoryService extends BaseService {
             throw new ApiException(DataNotFoundResponse.PRODUCT_NOT_FOUND);
         }
     }
+
+    public CategoryDto getCategory(Long id) {
+        return DtoMapper.toCategoryDTO(categoryRepository.findById(id).orElseThrow(() ->
+                new ApiException(DataNotFoundResponse.CATEGORY_NOT_FOUND)));
+    }
 }

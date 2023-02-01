@@ -29,6 +29,8 @@ public class CommentService extends BaseService {
     }
 
     public CommentDto addComment(CommentDto data) {
+        notNull(data.getProductId());
+
         if (StringUtils.hasText(data.getText()) && data.getText().length() > commentLength) {
             data.setCreation(new Date());
             return DtoMapper.toCommentDto(commentRepository.save(DtoMapper.toComment(data)));
@@ -37,8 +39,8 @@ public class CommentService extends BaseService {
         }
     }
 
-    public final void editComment(long id, Comment comment) {
-        Optional<Comment> op = this.commentRepository.findById(id);
+    public final void editComment(Long id, Comment comment) {
+        Optional<Comment> op = commentRepository.findById(id);
         if (op.isPresent()) {
             Comment old = op.get();
             if (old.getText() != null && comment.getText() == null) {

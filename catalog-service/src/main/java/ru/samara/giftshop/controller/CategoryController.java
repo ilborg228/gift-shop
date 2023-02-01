@@ -29,6 +29,11 @@ public class CategoryController extends BaseController {
         return categoryService.findAll(parentId, page, pageSize, orderBy, orderByType);
     }
 
+    @GetMapping("/categories/{id}")
+    public CategoryDto getCategory(@PathVariable Long id) {
+        return categoryService.getCategory(id);
+    }
+
     @PostMapping("/categories")
     @ResponseStatus(HttpStatus.CREATED)
     public Category addCategory(@RequestBody CategoryDto category) throws Exception {
