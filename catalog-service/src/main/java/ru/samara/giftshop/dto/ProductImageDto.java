@@ -7,4 +7,5 @@ public class ProductImageDto {
     private Long id;
     private String imageUrl;
     private Boolean primaryImage;
+    private Long productId;
 }

@@ -103,7 +103,20 @@ public class DtoMapper {
         productImageDto.setId(image.getId());
         productImageDto.setPrimaryImage(image.getPrimaryImage());
         productImageDto.setImageUrl(image.getImageUrl());
+        productImageDto.setProductId(image.getProduct().getId());
         return productImageDto;
+    }
+
+    public static ProductImage toProductImage(ProductImageDto dto) {
+        ProductImage image = new ProductImage();
+        image.setId(dto.getId());
+        image.setPrimaryImage(dto.getPrimaryImage());
+        image.setImageUrl(dto.getImageUrl());
+
+        Product product = new Product();
+        product.setId(dto.getProductId());
+        image.setProduct(product);
+        return image;
     }
 
     public static OrderDto toOrderDto(Order order) {
