@@ -36,6 +36,7 @@ public class ProductService extends BaseService {
 
     public Product saveNewItem(ProductDetails product){
         notNull(product);
+        notNull(product.getName());
         notNull(product.getCategoryId());
 
         if(productRepository.existsByName(product.getName()))
@@ -50,7 +51,7 @@ public class ProductService extends BaseService {
                 .build();
         try {
             rabbitTemplate.convertAndSend("notificationQueue", jsonMapper.writeValueAsString(mail));
-        } catch (JsonProcessingException ex) {
+        } catch (Exception ex) {
             logger.error(ex.getMessage());
         }
         return productRepository.save(DtoMapper.toProduct(product));

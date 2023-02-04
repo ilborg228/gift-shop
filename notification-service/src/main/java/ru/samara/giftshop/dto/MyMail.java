@@ -1,10 +1,11 @@
 package ru.samara.giftshop.dto;
 
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 
 @Builder
-@Getter
+@Data
 public class MyMail {
     private String to;
     private String subject;
