@@ -66,7 +66,7 @@ public class ControllerLoggingAspect {
                     log = jsonMapper.writeValueAsString(apiResult);
 
                 } catch (IOException e) {
-                    logger.error(e.getMessage(), e);
+                    //logger.error(e.getMessage(), e);
                 }
             logger.warn("API {} result : {}", joinPoint.getSignature().toShortString(), log);
         } else {
