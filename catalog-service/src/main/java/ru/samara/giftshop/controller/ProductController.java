@@ -21,9 +21,9 @@ public class ProductController extends BaseController{
     private final ProductService productService;
 
     @PostMapping("/products")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Product addProduct(@RequestBody ProductDetails product){
-        return productService.saveNewItem(product);
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void addProduct(@RequestBody ProductDetails product){
+        productService.saveNewItem(product);
     }
 
     @GetMapping("/products/{id}")

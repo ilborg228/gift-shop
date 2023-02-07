@@ -32,17 +32,18 @@ public class ProductService extends BaseService {
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
     private final CommentRepository commentRepository;
-    private final ProductImageRepository productImageRepository;
 
-    public Product saveNewItem(ProductDetails product){
+    public void saveNewItem(ProductDetails product){
         notNull(product);
         notNull(product.getName());
-        notNull(product.getCategoryId());
+        notNull(product.getCategoryName());
 
         if(productRepository.existsByName(product.getName()))
             throw new ApiException(DataValidationResponse.PRODUCT_ALREADY_EXIST);
-        if(!categoryRepository.existsById(product.getCategoryId()))
-            throw new ApiException(DataNotFoundResponse.CATEGORY_NOT_FOUND);
+
+        Category category = categoryRepository.findByCategoryName(product.getCategoryName())
+                .orElseThrow(()->new ApiException(DataNotFoundResponse.CATEGORY_NOT_FOUND));
+        product.setCategoryId(category.getId());
 
         MyMail mail = MyMail.builder()
                 .to("shirokih_i@mail.ru")
@@ -54,7 +55,7 @@ public class ProductService extends BaseService {
         } catch (Exception ex) {
             logger.error(ex.getMessage());
         }
-        return productRepository.save(DtoMapper.toProduct(product));
+        productRepository.save(DtoMapper.toProduct(product));
     }
 
     public ProductListDto getByCategoryId(

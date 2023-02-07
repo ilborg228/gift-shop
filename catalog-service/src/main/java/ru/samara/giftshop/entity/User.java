@@ -18,5 +18,10 @@ public class User {
 
     private String password;
 
-    private String role;
+    @Enumerated(EnumType.ORDINAL)
+    private Status role;
+
+    public enum Status {
+        GUEST, ADMIN;
+    }
 }
