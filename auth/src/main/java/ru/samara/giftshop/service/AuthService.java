@@ -43,6 +43,7 @@ public class AuthService {
                 User user = new User();
                 user.setUsername(tokenRequest.getUsername());
                 user.setPassword(tokenRequest.getPassword());
+                user.setRole(User.Status.ADMIN);
                 return userRepository.save(user);
         }
         throw new ApiException(DataValidationResponse.INVALID_REQUEST);
