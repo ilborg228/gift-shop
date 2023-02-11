@@ -2,12 +2,13 @@ package ru.samara.giftshop.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import ru.samara.giftshop.dto.CommentsSummary;
 import ru.samara.giftshop.dto.ProductDetails;
 import ru.samara.giftshop.dto.ProductDto;
 import ru.samara.giftshop.dto.ProductListDto;
 import ru.samara.giftshop.entity.Product;
+import ru.samara.giftshop.helpers.HttpHeaders;
 import ru.samara.giftshop.helpers.OrderBy;
 import ru.samara.giftshop.helpers.OrderByType;
 import ru.samara.giftshop.service.ProductService;
@@ -24,6 +25,12 @@ public class ProductController extends BaseController{
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void addProduct(@RequestBody ProductDetails product){
         productService.saveNewItem(product);
+    }
+
+    @GetMapping(value = "/products",
+            headers = HttpHeaders.PRODUCE_VIEW + "=" + HttpHeaders.PRODUCT_BY_NAME)
+    public Long getProductId(@RequestParam String name) {
+        return productService.getProductIdByName(name);
     }
 
     @GetMapping("/products/{id}")

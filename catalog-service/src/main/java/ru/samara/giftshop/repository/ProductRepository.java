@@ -9,11 +9,15 @@ import ru.samara.giftshop.entity.Product;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @Transactional
 public interface ProductRepository extends JpaRepository<Product, Long> {
+
     boolean existsByName(String name);
+
+    Optional<Product> findByName(String name);
 
     List<Product> findProductsByCategoryId(Long categoryId, Pageable pageable);
 

@@ -4,4 +4,5 @@ public interface HttpHeaders {
     String PRODUCE_VIEW = "produce-view";
 
     String COMMENTS_SUMMARY = "COMMENTS_SUMMARY";
+    String PRODUCT_BY_NAME = "PRODUCT_BY_NAME";
 }

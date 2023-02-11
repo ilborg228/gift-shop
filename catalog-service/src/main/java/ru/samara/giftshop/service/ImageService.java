@@ -1,4 +1,5 @@
 package ru.samara.giftshop.service;
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.FileAlreadyExistsException;
@@ -9,7 +10,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -20,7 +20,6 @@ import ru.samara.giftshop.dto.DtoMapper;
 import ru.samara.giftshop.dto.ProductImageDto;
 import ru.samara.giftshop.entity.ProductImage;
 import ru.samara.giftshop.exceptions.ApiException;
-import ru.samara.giftshop.exceptions.DataNotFoundResponse;
 import ru.samara.giftshop.exceptions.DataValidationResponse;
 import ru.samara.giftshop.repository.ProductImageRepository;
 

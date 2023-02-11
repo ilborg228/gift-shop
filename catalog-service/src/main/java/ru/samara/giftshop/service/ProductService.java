@@ -58,6 +58,12 @@ public class ProductService extends BaseService {
         productRepository.save(DtoMapper.toProduct(product));
     }
 
+    public Long getProductIdByName(String name) {
+        return productRepository.findByName(name)
+                .orElseThrow(()-> new ApiException(DataNotFoundResponse.PRODUCT_NOT_FOUND))
+                .getId();
+    }
+
     public ProductListDto getByCategoryId(
             Long categoryId, Integer page, Integer pageSize, OrderBy orderBy, OrderByType orderByType) {
 
