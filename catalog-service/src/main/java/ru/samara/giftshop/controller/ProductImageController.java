@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import ru.samara.giftshop.entity.ProductImage;
 import ru.samara.giftshop.service.ImageService;
 
 @RestController
@@ -25,8 +26,13 @@ public class ProductImageController extends BaseController {
     }
 
     @PostMapping("/products/{productId}/images")
-    public Long uploadFile(@PathVariable Long productId, @RequestParam("file") MultipartFile file) {
-        return imageService.uploadFile(productId, file);
+    public ProductImage uploadProductFile(@PathVariable Long productId, @RequestParam("file") MultipartFile file) {
+        return imageService.uploadProductFile(productId, file);
+    }
+
+    @PostMapping("/categories/{categoryId}/images")
+    public void uploadCategoryFile(@PathVariable Long categoryId, @RequestParam("file") MultipartFile file) {
+        imageService.uploadCategoryFile(categoryId, file);
     }
 
     @PatchMapping("/products/{productId}/images/{id}")

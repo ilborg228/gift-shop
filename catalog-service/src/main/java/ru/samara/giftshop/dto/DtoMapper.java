@@ -6,14 +6,14 @@ import java.util.stream.Collectors;
 
 public class DtoMapper {
 
-    public static CategoryDto toCategoryDTO(Category c){
-        CategoryDto category = new CategoryDto();
-        category.setId(c.getId());
-        category.setCategoryName(c.getCategoryName());
-        category.setImageUrl(c.getImageUrl());
-        category.setParentId(c.getParent() != null ? c.getParent().getId() : null);
-        category.setHasChild(c.isHasChild());
-        return category;
+    public static CategoryDto toCategoryDTO(Category category){
+        CategoryDto dto = new CategoryDto();
+        dto.setId(category.getId());
+        dto.setCategoryName(category.getCategoryName());
+        dto.setImageUrl(category.getImageUrl());
+        dto.setParentId(category.getParent() != null ? category.getParent().getId() : null);
+        dto.setHasChild(category.isHasChild());
+        return dto;
     }
 
 

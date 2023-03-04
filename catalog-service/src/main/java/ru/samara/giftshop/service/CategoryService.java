@@ -32,7 +32,8 @@ public class CategoryService extends BaseService {
                     .text(category.getCategoryName() + "was created")
                     .build();
             rabbitTemplate.convertAndSend("notificationQueue", jsonMapper.writeValueAsString(mail));
-            updateParentCategory(category.getParentId());
+            if (category.getParentId() != null)
+                updateParentCategory(category.getParentId());
             return categoryRepository.save(DtoMapper.toCategory(category));
         }
         else
@@ -80,5 +81,14 @@ public class CategoryService extends BaseService {
     public CategoryDto getCategory(Long id) {
         return DtoMapper.toCategoryDTO(categoryRepository.findById(id).orElseThrow(() ->
                 new ApiException(DataNotFoundResponse.CATEGORY_NOT_FOUND)));
+    }
+
+    public CategoryDto getCategoryByName(String name) {
+        return DtoMapper.toCategoryDTO(categoryRepository
+                .findByCategoryName(name)
+                .orElseThrow(()->
+                        new ApiException(DataNotFoundResponse.CATEGORY_NOT_FOUND)
+                )
+        );
     }
 }

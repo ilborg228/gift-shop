@@ -6,6 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ru.samara.giftshop.dto.CategoryDto;
 import ru.samara.giftshop.entity.Category;
+import ru.samara.giftshop.helpers.HttpHeaders;
 import ru.samara.giftshop.helpers.OrderBy;
 import ru.samara.giftshop.helpers.OrderByType;
 import ru.samara.giftshop.service.CategoryService;
@@ -38,6 +39,12 @@ public class CategoryController extends BaseController {
     @ResponseStatus(HttpStatus.CREATED)
     public Category addCategory(@RequestBody CategoryDto category) throws Exception {
         return categoryService.addCategory(category);
+    }
+
+    @GetMapping(value = "/categories",
+            headers = HttpHeaders.PRODUCE_VIEW + "=" + HttpHeaders.CATEGORY_BY_NAME)
+    public CategoryDto getCategoryByName(@RequestParam String name) {
+        return categoryService.getCategoryByName(name);
     }
 
     @DeleteMapping("/categories/{id}")

@@ -5,4 +5,5 @@ public interface HttpHeaders {
 
     String COMMENTS_SUMMARY = "COMMENTS_SUMMARY";
     String PRODUCT_BY_NAME = "PRODUCT_BY_NAME";
+    String CATEGORY_BY_NAME = "CATEGORY_BY_NAME";
 }
