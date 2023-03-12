@@ -2,6 +2,8 @@ package ru.samara.giftshop.helpers;
 
 public enum OrderBy {
     ID("id"),
+    NAME("name"),
+    PRICE("price"),
     CATEGORY_NAME("categoryName"),
     CREATION("creation"),
     VIEWS("views");

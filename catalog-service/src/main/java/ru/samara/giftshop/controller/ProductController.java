@@ -3,7 +3,6 @@ package ru.samara.giftshop.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.samara.giftshop.dto.CommentsSummary;
 import ru.samara.giftshop.dto.ProductDetails;
 import ru.samara.giftshop.dto.ProductDto;
 import ru.samara.giftshop.dto.ProductListDto;
@@ -45,7 +44,7 @@ public class ProductController extends BaseController{
             @RequestParam(required = false, defaultValue = DEF_PARAM_PAGE_SIZE) Integer pageSize,
             @RequestParam(required = false, name = ORDER_BY) OrderBy orderBy,
             @RequestParam(required = false, name = ORDER_BY_TYPE, defaultValue = DEF_PARAM_ORDER_BY_TYPE) OrderByType orderByType) {
-        return productService.getByCategoryId(categoryId,page, pageSize, orderBy, orderByType);
+        return productService.getByCategoryId(categoryId, page, pageSize, orderBy, orderByType);
     }
 
     @GetMapping("/products")
