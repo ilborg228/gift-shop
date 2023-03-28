@@ -28,8 +28,8 @@ public class CategoryService extends BaseService {
         if (!categoryRepository.existsByCategoryName(category.getCategoryName())){
             MyMail mail = MyMail.builder()
                     .to("shirokih_i@mail.ru")
-                    .subject("New category was created")
-                    .text(category.getCategoryName() + "was created")
+                    .subject("Новая категория создана")
+                    .text("Категория с именем: \"" + category.getCategoryName() + "\" была создана")
                     .build();
             rabbitTemplate.convertAndSend("notificationQueue", jsonMapper.writeValueAsString(mail));
             if (category.getParentId() != null)

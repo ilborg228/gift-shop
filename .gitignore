@@ -37,3 +37,4 @@ build/
 notification-service/src/main/resources/application.properties
 auth/src/main/resources/application.properties
 catalog-service/src/main/resources/application.yml
+uploads

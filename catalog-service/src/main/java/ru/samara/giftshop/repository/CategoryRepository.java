@@ -7,7 +7,7 @@ import ru.samara.giftshop.entity.Category;
 import java.util.*;
 
 @Repository
-public interface CategoryRepository extends PagingAndSortingRepository<Category,Long> {
+public interface CategoryRepository extends PagingAndSortingRepository<Category, Long> {
 
     boolean existsByCategoryName(String name);
 

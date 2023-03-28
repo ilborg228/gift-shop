@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -30,6 +32,7 @@ import ru.samara.giftshop.repository.ProductImageRepository;
 public class ImageService {
 
     private final Path root = Paths.get("uploads");
+    private final Logger logger = LoggerFactory.getLogger(ImageService.class);
 
     @Value("${image-service.image-host}")
     private String imageHost;
@@ -57,19 +60,15 @@ public class ImageService {
 
             Path path = this.root.resolve(Objects.requireNonNull(file.getOriginalFilename()));
             Files.copy(file.getInputStream(), path);
-
-            ProductImageDto dto = new ProductImageDto();
-            dto.setProductId(productId);
-            dto.setPrimaryImage(false);
-            dto.setImageUrl(imageHost + file.getOriginalFilename());
-            return productImageRepository.save(DtoMapper.toProductImage(dto));
         } catch (Exception ex) {
-            if (ex instanceof FileAlreadyExistsException) {
-                throw new ApiException(DataValidationResponse.FILE_ALREADY_EXIST);
-            }
-
-            throw new RuntimeException(ex.getMessage());
+            logger.debug(ex.getMessage());
         }
+
+        ProductImageDto dto = new ProductImageDto();
+        dto.setProductId(productId);
+        dto.setPrimaryImage(false);
+        dto.setImageUrl(imageHost + file.getOriginalFilename());
+        return productImageRepository.save(DtoMapper.toProductImage(dto));
     }
 
     public void uploadCategoryFile(Long categoryId, MultipartFile file) {
@@ -78,18 +77,14 @@ public class ImageService {
 
             Path path = this.root.resolve(Objects.requireNonNull(file.getOriginalFilename()));
             Files.copy(file.getInputStream(), path);
-
-            Category category = categoryRepository.findById(categoryId)
-                    .orElseThrow(()->new ApiException(DataNotFoundResponse.CATEGORY_NOT_FOUND));
-            category.setImageUrl(imageHost + file.getOriginalFilename());
-            categoryRepository.save(category);
         } catch (Exception ex) {
-            if (ex instanceof FileAlreadyExistsException) {
-                throw new ApiException(DataValidationResponse.FILE_ALREADY_EXIST);
-            }
-
-            throw new RuntimeException(ex.getMessage());
+            logger.debug(ex.getMessage());
         }
+
+        Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(()->new ApiException(DataNotFoundResponse.CATEGORY_NOT_FOUND));
+        category.setImageUrl(imageHost + file.getOriginalFilename());
+        categoryRepository.save(category);
     }
 
     public void makePrimary(Long productId, Long id) {
