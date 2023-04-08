@@ -5,6 +5,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.samara.giftshop.dto.CategoryDto;
 import ru.samara.giftshop.dto.DtoMapper;
 import ru.samara.giftshop.dto.MyMail;
@@ -24,6 +25,7 @@ public class CategoryService extends BaseService {
 
     private final CategoryRepository categoryRepository;
 
+    @Transactional
     public Category addCategory(CategoryDto category) throws Exception {
         if (!categoryRepository.existsByCategoryName(category.getCategoryName())){
             MyMail mail = MyMail.builder()
@@ -33,25 +35,21 @@ public class CategoryService extends BaseService {
                     .build();
             rabbitTemplate.convertAndSend("notificationQueue", jsonMapper.writeValueAsString(mail));
             if (category.getParentId() != null)
-                updateParentCategory(category.getParentId());
+                categoryRepository.updateParentCategory(category.getParentId());
             return categoryRepository.save(DtoMapper.toCategory(category));
         }
         else
             throw new ApiException(DataValidationResponse.CATEGORY_ALREADY_EXIST);
     }
 
-    private void updateParentCategory(Long parentId) {
-        Category category = new Category();
-        category.setId(parentId);
-        category.setHasChild(true);
-        update(category);
-    }
-
-    public List<CategoryDto> findAll(Long parentId, Integer page, Integer pageSize, OrderBy orderBy, OrderByType orderByType) {
+    public List<CategoryDto> findAll(Boolean all, Long parentId, Integer page, Integer pageSize, OrderBy orderBy, OrderByType orderByType) {
         orderBy = orderBy == null ? OrderBy.ID : orderBy;
         Sort sort = Sort.by(Sort.Direction.fromString(orderByType.getDirection()),orderBy.getColumn());
         Pageable pageable = PageRequest.of(page,pageSize,sort);
         List<Category> categories = categoryRepository.findAllByParentId(parentId, pageable);
+
+        if (Boolean.TRUE.equals(all))
+            return categoryRepository.findAll(pageable).stream().map(DtoMapper::toCategoryDTO).collect(Collectors.toList());
         return categories.stream().map(DtoMapper::toCategoryDTO).collect(Collectors.toList());
     }
 
@@ -68,13 +66,13 @@ public class CategoryService extends BaseService {
         Optional<Category> op = categoryRepository.findById(category.getId());
         if(op.isPresent()) {
             Category old = op.get();
-            if(old.getCategoryName()!=null && category.getCategoryName()==null) {
+            if(old.getCategoryName() != null && category.getCategoryName() == null) {
                 category.setCategoryName(old.getCategoryName());
             }
             categoryRepository.save(category);
         }
         else {
-            throw new ApiException(DataNotFoundResponse.PRODUCT_NOT_FOUND);
+            throw new ApiException(DataNotFoundResponse.CATEGORY_NOT_FOUND);
         }
     }
 

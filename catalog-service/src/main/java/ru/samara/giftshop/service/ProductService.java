@@ -36,12 +36,12 @@ public class ProductService extends BaseService {
     public void saveNewItem(ProductDetails product){
         notNull(product);
         notNull(product.getName());
-        notNull(product.getCategoryName());
+        notNull(product.getCategoryId());
 
         if(productRepository.existsByName(product.getName()))
             throw new ApiException(DataValidationResponse.PRODUCT_ALREADY_EXIST);
 
-        Category category = categoryRepository.findByCategoryName(product.getCategoryName())
+        Category category = categoryRepository.findById(product.getCategoryId())
                 .orElseThrow(()->new ApiException(DataNotFoundResponse.CATEGORY_NOT_FOUND));
         product.setCategoryId(category.getId());
 

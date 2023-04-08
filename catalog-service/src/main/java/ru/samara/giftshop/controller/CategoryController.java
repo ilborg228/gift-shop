@@ -23,11 +23,12 @@ public class CategoryController extends BaseController {
     @GetMapping("/categories")
     public List<CategoryDto> getCategories(
             @RequestParam(required = false, name = PARENT_ID) Long parentId,
+            @RequestParam(required = false) Boolean all,
             @RequestParam(required = false, defaultValue = DEF_PARAM_PAGE) Integer page,
             @RequestParam(required = false, name = PAGE_SIZE, defaultValue = DEF_PARAM_PAGE_SIZE) Integer pageSize,
             @RequestParam(required = false, name = ORDER_BY) OrderBy orderBy,
             @RequestParam(required = false, name = ORDER_BY_TYPE, defaultValue = DEF_PARAM_ORDER_BY_TYPE) OrderByType orderByType) {
-        return categoryService.findAll(parentId, page, pageSize, orderBy, orderByType);
+        return categoryService.findAll(all, parentId, page, pageSize, orderBy, orderByType);
     }
 
     @GetMapping("/categories/{id}")
