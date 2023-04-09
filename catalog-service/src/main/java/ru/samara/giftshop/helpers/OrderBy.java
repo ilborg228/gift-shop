@@ -6,6 +6,7 @@ public enum OrderBy {
     PRICE("price"),
     CATEGORY_NAME("categoryName"),
     CREATION("creation"),
+    ORDER_CREATION("orderCreation"),
     VIEWS("views");
 
     String column;

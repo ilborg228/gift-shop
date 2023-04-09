@@ -131,6 +131,7 @@ public class DtoMapper {
                         .map(DtoMapper::toProductDTO)
                         .collect(Collectors.toList())
         );
+        orderDto.setStatusId(order.getStatus().getStatusId());
         return orderDto;
     }
 }

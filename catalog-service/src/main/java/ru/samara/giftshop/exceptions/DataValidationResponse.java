@@ -18,8 +18,8 @@ public class DataValidationResponse extends AbstractResponse {
             new DataValidationResponse(1003,"Comment length must be greater, then {0}");
     public static final DataValidationResponse USER_ALREADY_EXIST =
             new DataValidationResponse(1004,"User already exists");
-    public static final DataValidationResponse FILE_ALREADY_EXIST =
-            new DataValidationResponse(1005,"A file of that name already exists.");
+    public static final DataValidationResponse INVALID_STATUS =
+            new DataValidationResponse(1005,"Invalid status id.");
 
     DataValidationResponse(int code, String error) {
         super(code, error, BAD_STATUS);

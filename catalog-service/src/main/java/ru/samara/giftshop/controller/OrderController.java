@@ -4,7 +4,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.samara.giftshop.dto.OrderDto;
+import ru.samara.giftshop.dto.OrderListDto;
 import ru.samara.giftshop.service.OrderService;
+
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -29,8 +32,21 @@ public class OrderController extends BaseController {
         return orderService.removeFromCart(orderId, productId);
     }
 
-    @GetMapping("/orders")
-    public OrderDto getOrder(@RequestParam Long userId) {
+    @GetMapping("/orders/{userId}")
+    public OrderDto getOrder(@PathVariable Long userId) {
         return orderService.getOrder(userId);
+    }
+
+    @GetMapping("/orders")
+    public OrderListDto getOrders(
+            @RequestParam(required = false, defaultValue = DEF_PARAM_PAGE) Integer page,
+            @RequestParam(required = false, name = PAGE_SIZE, defaultValue = DEF_PARAM_PAGE_SIZE) Integer pageSize) {
+        return orderService.getOrders(page, pageSize);
+    }
+
+    @PatchMapping("/orders/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateStatus(@PathVariable Long id, @RequestParam Long statusId) {
+        orderService.updateStatus(id, statusId);
     }
 }
