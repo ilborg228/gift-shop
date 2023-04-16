@@ -27,8 +27,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ProductService extends BaseService {
 
-    Logger logger = LoggerFactory.getLogger(ProductService.class);
-
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
     private final CommentRepository commentRepository;
@@ -44,17 +42,6 @@ public class ProductService extends BaseService {
         Category category = categoryRepository.findById(product.getCategoryId())
                 .orElseThrow(()->new ApiException(DataNotFoundResponse.CATEGORY_NOT_FOUND));
         product.setCategoryId(category.getId());
-
-        MyMail mail = MyMail.builder()
-                .to("shirokih_i@mail.ru")
-                .subject(product.getName())
-                .text("New product was created!!")
-                .build();
-        try {
-            rabbitTemplate.convertAndSend("notificationQueue", jsonMapper.writeValueAsString(mail));
-        } catch (Exception ex) {
-            logger.error(ex.getMessage());
-        }
         productRepository.save(DtoMapper.toProduct(product));
     }
 

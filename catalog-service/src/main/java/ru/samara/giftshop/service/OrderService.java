@@ -1,15 +1,17 @@
 package ru.samara.giftshop.service;
 
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.samara.giftshop.dto.DtoMapper;
+import ru.samara.giftshop.dto.MyMail;
 import ru.samara.giftshop.dto.OrderDto;
 import ru.samara.giftshop.dto.OrderListDto;
-import ru.samara.giftshop.entity.Category;
 import ru.samara.giftshop.entity.Order;
 import ru.samara.giftshop.entity.Product;
 import ru.samara.giftshop.entity.User;
@@ -29,6 +31,8 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class OrderService extends BaseService {
+
+    private final Logger logger = LoggerFactory.getLogger(OrderService.class);
 
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
@@ -98,6 +102,20 @@ public class OrderService extends BaseService {
         order.setStatus(Order.Status.SUBMITTED);
         order.setAddress(req.getAddress());
 
+        StringBuilder text = new StringBuilder("Адрес доставки:\n" + order.getAddress() + "\n\nСписок товаров:\n");
+        order.getProducts().forEach(p->{
+            text.append(p.getName()).append(";\n");
+        });
+        MyMail mail = MyMail.builder()
+                .to("shirokih_i@mail.ru")
+                .subject("Создан новый заказ")
+                .text(text.toString())
+                .build();
+        try {
+            rabbitTemplate.convertAndSend("notificationQueue", jsonMapper.writeValueAsString(mail));
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+        }
         orderRepository.save(order);
     }
 

@@ -28,12 +28,6 @@ public class CategoryService extends BaseService {
     @Transactional
     public Category addCategory(CategoryDto category) throws Exception {
         if (!categoryRepository.existsByCategoryName(category.getCategoryName())){
-            MyMail mail = MyMail.builder()
-                    .to("shirokih_i@mail.ru")
-                    .subject("Новая категория создана")
-                    .text("Категория с именем: \"" + category.getCategoryName() + "\" была создана")
-                    .build();
-            rabbitTemplate.convertAndSend("notificationQueue", jsonMapper.writeValueAsString(mail));
             if (category.getParentId() != null)
                 categoryRepository.updateParentCategory(category.getParentId());
             return categoryRepository.save(DtoMapper.toCategory(category));
