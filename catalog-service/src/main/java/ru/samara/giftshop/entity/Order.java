@@ -35,16 +35,30 @@ public class Order {
     private Status status;
 
     public enum Status {
-        CREATED(0), SUBMITTED(1), ACCEPTED(2), DELIVERED(3), CANCELLED(4);
+        CREATED(0),
+        SUBMITTED(1, "Создан"),
+        ACCEPTED(2, "Подтвержден"),
+        DELIVERED(3, "Доставлен"),
+        CANCELLED(4, "Отменен");
 
         private long statusId;
+        private String statusRuName;
 
         Status(long statusId) {
             this.statusId = statusId;
         }
 
+        Status(long statusId, String statusRuName) {
+            this.statusId = statusId;
+            this.statusRuName = statusRuName;
+        }
+
         public long getStatusId() {
             return statusId;
+        }
+
+        public String getStatusRuName() {
+            return statusRuName;
         }
 
         public static Status getByStatusId(Long statusId) throws ApiException {

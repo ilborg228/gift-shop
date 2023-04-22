@@ -18,8 +18,8 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     Optional<Order> findOrderByIdAndStatus(Long id, Order.Status status);
 
     @Modifying
-    @Query("update Order set status = :status where id = :id")
-    void updateStatus(Long id, Order.Status status);
+    @Query("update Order set status = :status where id = :orderId")
+    void updateStatus(Long orderId, Order.Status status);
 
     List<Order> findAllByStatusIsNot(Order.Status status, Pageable pageable);
 
