@@ -106,12 +106,18 @@ public class OrderService extends BaseService {
         orderRepository.save(order);
     }
 
-    public OrderListDto getOrders(Integer page, Integer pageSize) {
+    public OrderListDto getOrders(Long statusId, Integer page, Integer pageSize) {
         Sort sort = Sort.by(Sort.Direction.DESC, OrderBy.ORDER_CREATION.getColumn());
         Pageable pageable = PageRequest.of(page, pageSize, sort);
-        List<OrderDto> orders = orderRepository.findAllByStatusIsNot(Order.Status.CREATED, pageable).stream().map(DtoMapper::toOrderDto).collect(Collectors.toList());
-
-        Long count = orderRepository.countAllByStatusIsNot(Order.Status.CREATED);
+        List<OrderDto> orders;Long count;
+        if (statusId != null && statusId != 0) {
+            Order.Status status = Order.Status.getByStatusId(statusId);
+            orders = orderRepository.findAllByStatus(status, pageable).stream().map(DtoMapper::toOrderDto).collect(Collectors.toList());
+            count = orderRepository.countAllByStatus(status);
+        } else {
+            orders = orderRepository.findAllByStatusIsNot(Order.Status.CREATED, pageable).stream().map(DtoMapper::toOrderDto).collect(Collectors.toList());
+            count = orderRepository.countAllByStatusIsNot(Order.Status.CREATED);
+        }
 
         return new OrderListDto(orders, count);
     }

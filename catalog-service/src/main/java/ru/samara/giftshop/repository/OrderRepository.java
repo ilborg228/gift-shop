@@ -22,6 +22,8 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     void updateStatus(Long orderId, Order.Status status);
 
     List<Order> findAllByStatusIsNot(Order.Status status, Pageable pageable);
+    List<Order> findAllByStatus(Order.Status status, Pageable pageable);
 
     Long countAllByStatusIsNot(Order.Status status);
+    Long countAllByStatus(Order.Status status);
 }
