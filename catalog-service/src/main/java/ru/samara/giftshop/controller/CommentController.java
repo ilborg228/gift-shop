@@ -24,10 +24,10 @@ public class CommentController extends BaseController {
         return commentService.addComment(comment);
     }
 
-    @PatchMapping("/comments/{id}")
+    @DeleteMapping("/comments/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void editComment(@PathVariable Long id, @RequestBody Comment comment) {
-        commentService.editComment(id, comment);
+    public void editComment(@PathVariable Long id) {
+        commentService.deleteComment(id);
     }
 
     @GetMapping("/products/{productId}/comments")

@@ -39,16 +39,12 @@ public class CommentService extends BaseService {
         }
     }
 
-    public final void editComment(Long id, Comment comment) {
+    public final void deleteComment(Long id) {
         Optional<Comment> op = commentRepository.findById(id);
         if (op.isPresent()) {
-            Comment old = op.get();
-            if (old.getText() != null && comment.getText() == null) {
-                comment.setText(old.getText());
-            }
-            commentRepository.save(comment);
+            commentRepository.deleteById(id);
         } else {
-            throw new ApiException(DataNotFoundResponse.PRODUCT_NOT_FOUND);
+            throw new ApiException(DataNotFoundResponse.COMMENT_NOT_FOUND);
         }
     }
 
