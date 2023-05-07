@@ -1,12 +1,14 @@
 package ru.samara.giftshop.entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name="users")
 @Data
+@NoArgsConstructor
 public class User {
 
     @Id
@@ -23,5 +25,9 @@ public class User {
 
     public enum Status {
         GUEST, ADMIN;
+    }
+
+    public User(Long id) {
+        this.id = id;
     }
 }

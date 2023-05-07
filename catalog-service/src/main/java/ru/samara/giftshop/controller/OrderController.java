@@ -39,10 +39,11 @@ public class OrderController extends BaseController {
 
     @GetMapping("/orders")
     public OrderListDto getOrders(
+            @RequestParam(required = false, name = USER_ID) Long userId,
             @RequestParam(required = false, name = ORDER_STATUS) Long statusId,
             @RequestParam(required = false, defaultValue = DEF_PARAM_PAGE) Integer page,
             @RequestParam(required = false, name = PAGE_SIZE, defaultValue = DEF_PARAM_PAGE_SIZE) Integer pageSize) {
-        return orderService.getOrders(statusId, page, pageSize);
+        return orderService.getOrders(userId, statusId, page, pageSize);
     }
 
     @PatchMapping("/orders/{id}")

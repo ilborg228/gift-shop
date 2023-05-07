@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ru.samara.giftshop.entity.Order;
+import ru.samara.giftshop.entity.User;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,4 +27,10 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     Long countAllByStatusIsNot(Order.Status status);
     Long countAllByStatus(Order.Status status);
+
+    List<Order> findAllByStatusIsNotAndUser(Order.Status status, User user, Pageable pageable);
+    List<Order> findAllByStatusAndUser(Order.Status status, User user, Pageable pageable);
+
+    Long countAllByStatusIsNotAndUser(Order.Status status, User user);
+    Long countAllByStatusAndUser(Order.Status status, User user);
 }

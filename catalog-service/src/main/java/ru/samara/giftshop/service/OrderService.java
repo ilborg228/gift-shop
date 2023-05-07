@@ -1,16 +1,12 @@
 package ru.samara.giftshop.service;
 
 import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.samara.giftshop.dto.DtoMapper;
-import ru.samara.giftshop.dto.MyMail;
 import ru.samara.giftshop.dto.OrderDto;
 import ru.samara.giftshop.dto.OrderListDto;
 import ru.samara.giftshop.entity.Order;
@@ -72,7 +68,7 @@ public class OrderService extends BaseService {
 
         Product toRemove = order.getProducts()
                 .stream()
-                .filter(p-> Objects.equals(p.getId(), productId))
+                .filter(p -> Objects.equals(p.getId(), productId))
                 .findFirst().get();
         order.getProducts().remove(toRemove);
 
@@ -83,8 +79,7 @@ public class OrderService extends BaseService {
     public OrderDto getOrder(Long userId) {
         notNull(userId);
 
-        return DtoMapper.toOrderDto(
-                orderRepository
+        return DtoMapper.toOrderDto(orderRepository
                         .findOrderByUserIdAndStatus(userId, Order.Status.CREATED)
                         .orElseThrow(() ->
                                 new ApiException(DataNotFoundResponse.ORDER_NOT_FOUND)
@@ -106,17 +101,29 @@ public class OrderService extends BaseService {
         orderRepository.save(order);
     }
 
-    public OrderListDto getOrders(Long statusId, Integer page, Integer pageSize) {
+    public OrderListDto getOrders(Long userId, Long statusId, Integer page, Integer pageSize) {
         Sort sort = Sort.by(Sort.Direction.DESC, OrderBy.ORDER_CREATION.getColumn());
         Pageable pageable = PageRequest.of(page, pageSize, sort);
-        List<OrderDto> orders;Long count;
-        if (statusId != null && statusId != 0) {
-            Order.Status status = Order.Status.getByStatusId(statusId);
-            orders = orderRepository.findAllByStatus(status, pageable).stream().map(DtoMapper::toOrderDto).collect(Collectors.toList());
-            count = orderRepository.countAllByStatus(status);
+        List<OrderDto> orders;
+        Long count;
+        if (userId != null) { // TODO попытаться это отрефакторить
+            if (statusId != null && statusId != 0) {
+                Order.Status status = Order.Status.getByStatusId(statusId);
+                orders = orderRepository.findAllByStatusAndUser(status, new User(userId), pageable).stream().map(DtoMapper::toOrderDto).collect(Collectors.toList());
+                count = orderRepository.countAllByStatusAndUser(status, new User(userId));
+            } else {
+                orders = orderRepository.findAllByStatusIsNotAndUser(Order.Status.CREATED, new User(userId), pageable).stream().map(DtoMapper::toOrderDto).collect(Collectors.toList());
+                count = orderRepository.countAllByStatusIsNotAndUser(Order.Status.CREATED, new User(userId));
+            }
         } else {
-            orders = orderRepository.findAllByStatusIsNot(Order.Status.CREATED, pageable).stream().map(DtoMapper::toOrderDto).collect(Collectors.toList());
-            count = orderRepository.countAllByStatusIsNot(Order.Status.CREATED);
+            if (statusId != null && statusId != 0) {
+                Order.Status status = Order.Status.getByStatusId(statusId);
+                orders = orderRepository.findAllByStatus(status, pageable).stream().map(DtoMapper::toOrderDto).collect(Collectors.toList());
+                count = orderRepository.countAllByStatus(status);
+            } else {
+                orders = orderRepository.findAllByStatusIsNot(Order.Status.CREATED, pageable).stream().map(DtoMapper::toOrderDto).collect(Collectors.toList());
+                count = orderRepository.countAllByStatusIsNot(Order.Status.CREATED);
+            }
         }
 
         return new OrderListDto(orders, count);
@@ -126,7 +133,7 @@ public class OrderService extends BaseService {
     public void updateStatus(Long orderId, Long statusId) {
         Order.Status status = Order.Status.getByStatusId(statusId);
 
-        Order order = orderRepository.findById(orderId).orElseThrow(()-> new ApiException(DataNotFoundResponse.ORDER_NOT_FOUND));
+        Order order = orderRepository.findById(orderId).orElseThrow(() -> new ApiException(DataNotFoundResponse.ORDER_NOT_FOUND));
 
         orderRepository.updateStatus(orderId, status);
 

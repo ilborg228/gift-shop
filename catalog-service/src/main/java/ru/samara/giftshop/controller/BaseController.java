@@ -6,6 +6,7 @@ public class BaseController {
     protected static final String PAGE_SIZE = "page_size";
     protected static final String PARENT_ID = "parent_id";
     protected static final String ORDER_STATUS = "order_status";
+    protected static final String USER_ID = "user_id";
 
     protected static final String DEF_PARAM_PAGE = "0";
     protected static final String DEF_PARAM_PAGE_SIZE = "16";
