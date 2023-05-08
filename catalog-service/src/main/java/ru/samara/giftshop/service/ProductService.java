@@ -1,9 +1,6 @@
 package ru.samara.giftshop.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -16,10 +13,10 @@ import ru.samara.giftshop.helpers.OrderBy;
 import ru.samara.giftshop.helpers.OrderByType;
 import ru.samara.giftshop.repository.CategoryRepository;
 import ru.samara.giftshop.repository.CommentRepository;
-import ru.samara.giftshop.repository.ProductImageRepository;
 import ru.samara.giftshop.repository.ProductRepository;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -81,19 +78,12 @@ public class ProductService extends BaseService {
         }
     }
 
-    public void update(Product p){
-        Optional<Product> op = productRepository.findById(p.getId());
-        if(op.isPresent()) {
-            Product old = op.get();
-            if(old.getName()!=null && p.getName()==null) p.setName(old.getName());
-            if(old.getPrice()!=null && p.getPrice()==null) p.setPrice(old.getPrice());
-            if(old.getHeight()!=null && p.getHeight()==null) p.setHeight(old.getHeight());
-            if(old.getCategory()!=null && p.getCategory()==null) p.setCategory(old.getCategory());
-            productRepository.save(p);
-        }
-        else {
-            throw new ApiException(DataNotFoundResponse.PRODUCT_NOT_FOUND);
-        }
+    public void updateInStock(ProductDetails p){
+        Product product = productRepository.findById(p.getId())
+                .orElseThrow(()-> new ApiException(DataNotFoundResponse.PRODUCT_NOT_FOUND));
+        if(!Objects.equals(product.getInStock(), p.getInStock()))
+            product.setInStock(p.getInStock());
+        productRepository.save(product);
     }
 
     public ProductDetails getProductDetails(Long id) {

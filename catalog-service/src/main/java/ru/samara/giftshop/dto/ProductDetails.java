@@ -7,6 +7,6 @@ import java.util.List;
 @Data
 public class ProductDetails extends ProductDto {
     private String description;
-    private Integer height;
+    private Boolean inStock;
     private List<String> images;
 }

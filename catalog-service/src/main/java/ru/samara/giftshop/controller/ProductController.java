@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.samara.giftshop.dto.ProductDetails;
 import ru.samara.giftshop.dto.ProductDto;
 import ru.samara.giftshop.dto.ProductListDto;
-import ru.samara.giftshop.entity.Product;
 import ru.samara.giftshop.helpers.HttpHeaders;
 import ru.samara.giftshop.helpers.OrderBy;
 import ru.samara.giftshop.helpers.OrderByType;
@@ -60,7 +59,7 @@ public class ProductController extends BaseController{
 
     @PatchMapping("/products")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateProduct(@RequestBody Product p){
-        productService.update(p);
+    public void updateProduct(@RequestBody ProductDetails p){
+        productService.updateInStock(p);
     }
 }

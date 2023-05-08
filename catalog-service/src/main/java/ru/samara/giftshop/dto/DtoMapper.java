@@ -51,7 +51,7 @@ public class DtoMapper {
         dto.setPrice(p.getPrice());
         dto.setCategoryId(p.getCategory().getId());
         dto.setDescription(p.getDescription());
-        dto.setHeight(p.getHeight());
+        dto.setInStock(p.getInStock());
         dto.setImageUrl(p.getProductImages().stream()
                 .filter(ProductImage::getPrimaryImage)
                 .findFirst().map(ProductImage::getImageUrl)
@@ -67,7 +67,7 @@ public class DtoMapper {
         Product product = new Product();
         product.setId(productDetails.getId());
         product.setName(productDetails.getName());
-        product.setHeight(productDetails.getHeight());
+        product.setInStock(productDetails.getInStock());
         product.setPrice(productDetails.getPrice());
         product.setDescription(productDetails.getDescription());
         Category category = new Category();
