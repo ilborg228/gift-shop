@@ -9,6 +9,7 @@ import ru.samara.giftshop.model.TokenRequest;
 import ru.samara.giftshop.repository.UserRepository;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class AuthService {
@@ -38,6 +39,7 @@ public class AuthService {
                 });
 
                 User user = new User();
+                user.setId(UUID.randomUUID());
                 user.setUsername(tokenRequest.getUsername());
                 user.setPassword(tokenRequest.getPassword());
                 user.setRole(User.Status.GUEST);
