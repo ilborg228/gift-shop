@@ -4,7 +4,7 @@ import lombok.Data;
 import ru.samara.giftshop.exceptions.ApiException;
 import ru.samara.giftshop.exceptions.DataValidationResponse;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Date;
 import java.util.List;
 

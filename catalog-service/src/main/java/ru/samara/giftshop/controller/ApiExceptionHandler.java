@@ -5,7 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -15,7 +17,7 @@ import ru.samara.giftshop.exceptions.DataValidationResponse;
 import ru.samara.giftshop.exceptions.IResponse;
 import ru.samara.giftshop.helpers.ExceptionHandlerUtil;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 @ControllerAdvice
 @Order(1)
@@ -33,11 +35,14 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @Override
-    protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body,
-                                                             HttpHeaders headers, HttpStatus status, WebRequest request) {
+    protected ResponseEntity<Object> handleExceptionInternal(Exception ex, @Nullable Object body,
+                                                             HttpHeaders headers, HttpStatusCode statusCode,
+                                                             WebRequest request) {
         log.error("Caught Exception: ", ex);
         ExceptionHandlerUtil.logRequest(request);
         return new ResponseEntity<>(
-                DataValidationResponse.INVALID_REQUEST.withDescription(ex.getMessage()), headers, status);
+                DataValidationResponse.INVALID_REQUEST.withDescription(ex.getMessage()),
+                headers, HttpStatus.BAD_REQUEST.value()
+        );
     }
 }

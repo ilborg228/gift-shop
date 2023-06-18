@@ -7,6 +7,8 @@ import ru.samara.giftshop.model.TokenRequest;
 import ru.samara.giftshop.repository.UserRepository;
 import ru.samara.giftshop.service.AuthService;
 
+import java.util.UUID;
+
 @RestController
 public class AuthController {
 
@@ -25,7 +27,7 @@ public class AuthController {
 
     @PatchMapping("/users/{userId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateStatus(@PathVariable Long userId, @RequestParam String name) {
+    public void updateStatus(@PathVariable UUID userId, @RequestParam String name) {
         userRepository.findById(userId).ifPresent(user -> {
             user.setUsername(name);
             userRepository.save(user);

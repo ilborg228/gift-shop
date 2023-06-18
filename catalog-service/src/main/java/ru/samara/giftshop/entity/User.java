@@ -1,9 +1,10 @@
 package ru.samara.giftshop.entity;
 
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Table(name="users")
@@ -12,8 +13,8 @@ import javax.persistence.*;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Column(nullable = false, unique = true)
     private String username;
@@ -27,7 +28,7 @@ public class User {
         GUEST, ADMIN;
     }
 
-    public User(Long id) {
-        this.id = id;
+    public User(String id) {
+        this.id = UUID.fromString(id);
     }
 }

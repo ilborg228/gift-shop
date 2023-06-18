@@ -28,17 +28,14 @@ public class AuthService {
             case LOGIN:
                 Optional<User> optUser = userRepository.
                         findByUsernameAndPassword(tokenRequest.getUsername(), tokenRequest.getPassword());
-                if (optUser.isPresent()) {
-                    return optUser.get();
-                }
 
-                throw new ApiException(DataNotFoundResponse.USER_NOT_FOUND);
+                return optUser.orElseThrow(() -> new ApiException(DataNotFoundResponse.USER_NOT_FOUND));
             case REGISTRATION:
                 Optional<User> optUser1 = userRepository.
                         findByUsername(tokenRequest.getUsername());
-                if (optUser1.isPresent()) {
+                optUser1.ifPresent(user -> {
                     throw new ApiException(DataValidationResponse.USER_ALREADY_EXIST);
-                }
+                });
 
                 User user = new User();
                 user.setUsername(tokenRequest.getUsername());

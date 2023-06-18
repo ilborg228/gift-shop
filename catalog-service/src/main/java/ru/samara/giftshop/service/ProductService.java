@@ -37,7 +37,7 @@ public class ProductService extends BaseService {
             throw new ApiException(DataValidationResponse.PRODUCT_ALREADY_EXIST);
 
         Category category = categoryRepository.findById(product.getCategoryId())
-                .orElseThrow(()->new ApiException(DataNotFoundResponse.CATEGORY_NOT_FOUND));
+                .orElseThrow(()-> new ApiException(DataNotFoundResponse.CATEGORY_NOT_FOUND));
         product.setCategoryId(category.getId());
         productRepository.save(DtoMapper.toProduct(product));
     }

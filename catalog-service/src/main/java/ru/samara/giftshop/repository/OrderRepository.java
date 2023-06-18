@@ -10,11 +10,12 @@ import ru.samara.giftshop.entity.User;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
-    Optional<Order> findOrderByUserIdAndStatus(Long userId, Order.Status status);
+    Optional<Order> findOrderByUserIdAndStatus(UUID userId, Order.Status status);
 
     Optional<Order> findOrderByIdAndStatus(Long id, Order.Status status);
 

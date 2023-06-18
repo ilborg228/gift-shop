@@ -122,7 +122,7 @@ public class DtoMapper {
     public static OrderDto toOrderDto(Order order) {
         OrderDto orderDto = new OrderDto();
         orderDto.setId(order.getId());
-        orderDto.setUserId(order.getUser() != null ? order.getUser().getId() : null);
+        orderDto.setUserId(order.getUser() != null ? order.getUser().getId().toString() : null);
         orderDto.setAddress(order.getAddress());
         orderDto.setOrderCreation(order.getOrderCreation());
         orderDto.setProducts(

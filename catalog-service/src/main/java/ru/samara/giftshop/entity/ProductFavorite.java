@@ -2,7 +2,7 @@ package ru.samara.giftshop.entity;
 
 import lombok.Data;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name="product_favorites")

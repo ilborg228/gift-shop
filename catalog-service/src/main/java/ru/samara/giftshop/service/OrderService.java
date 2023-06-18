@@ -19,10 +19,7 @@ import ru.samara.giftshop.repository.OrderRepository;
 import ru.samara.giftshop.repository.ProductRepository;
 import ru.samara.giftshop.repository.UserRepository;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,15 +35,15 @@ public class OrderService extends BaseService {
         addProductToCart(order.getProducts().get(0).getId(), order.getUserId());
     }
 
-    private void addProductToCart(Long productId, Long userId) {
+    private void addProductToCart(Long productId, String userId) {
         notNull(productId);
         notNull(userId);
 
         Product product = productRepository.findById(productId).orElseThrow(() ->
                 new ApiException(DataNotFoundResponse.PRODUCT_NOT_FOUND));
-        User user = userRepository.findById(userId).orElseThrow(() ->
+        User user = userRepository.findById(UUID.fromString(userId)).orElseThrow(() ->
                 new ApiException(DataNotFoundResponse.USER_NOT_FOUND));
-        Optional<Order> opt = orderRepository.findOrderByUserIdAndStatus(userId, Order.Status.CREATED);
+        Optional<Order> opt = orderRepository.findOrderByUserIdAndStatus(UUID.fromString(userId), Order.Status.CREATED);
         if (opt.isPresent()) {
             List<Product> products = opt.get().getProducts();
             products.add(product);
@@ -76,11 +73,11 @@ public class OrderService extends BaseService {
         return DtoMapper.toOrderDto(order);
     }
 
-    public OrderDto getOrder(Long userId) {
+    public OrderDto getOrder(String userId) {
         notNull(userId);
 
         return DtoMapper.toOrderDto(orderRepository
-                        .findOrderByUserIdAndStatus(userId, Order.Status.CREATED)
+                        .findOrderByUserIdAndStatus(UUID.fromString(userId), Order.Status.CREATED)
                         .orElseThrow(() ->
                                 new ApiException(DataNotFoundResponse.ORDER_NOT_FOUND)
                         )
@@ -101,7 +98,7 @@ public class OrderService extends BaseService {
         orderRepository.save(order);
     }
 
-    public OrderListDto getOrders(Long userId, Long statusId, Integer page, Integer pageSize) {
+    public OrderListDto getOrders(String userId, Long statusId, Integer page, Integer pageSize) {
         Sort sort = Sort.by(Sort.Direction.DESC, OrderBy.ORDER_CREATION.getColumn());
         Pageable pageable = PageRequest.of(page, pageSize, sort);
         List<OrderDto> orders;

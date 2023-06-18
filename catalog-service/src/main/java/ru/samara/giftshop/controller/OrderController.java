@@ -33,13 +33,13 @@ public class OrderController extends BaseController {
     }
 
     @GetMapping("/orders/{userId}")
-    public OrderDto getOrder(@PathVariable Long userId) {
+    public OrderDto getOrder(@PathVariable String userId) {
         return orderService.getOrder(userId);
     }
 
     @GetMapping("/orders")
     public OrderListDto getOrders(
-            @RequestParam(required = false, name = USER_ID) Long userId,
+            @RequestParam(required = false, name = USER_ID) String userId,
             @RequestParam(required = false, name = ORDER_STATUS) Long statusId,
             @RequestParam(required = false, defaultValue = DEF_PARAM_PAGE) Integer page,
             @RequestParam(required = false, name = PAGE_SIZE, defaultValue = DEF_PARAM_PAGE_SIZE) Integer pageSize) {
